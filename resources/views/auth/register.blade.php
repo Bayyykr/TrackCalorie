@@ -271,18 +271,18 @@
             left: 75%;
         }
 
-        /* Sign Up Form - DIKECILKAN DAN DIATUR ULANG */
+        /* Sign Up Form - DIPERKECIL */
         .sign-up-form {
-            max-width: 380px;
+            max-width: 320px;
             width: 100%;
             padding: 0;
         }
 
         .sign-up-header {
-            font-size: 26px;
+            font-size: 22px;
             font-weight: 700;
             color: #333;
-            margin-bottom: 1.8rem;
+            margin-bottom: 1.5rem;
             text-align: center;
             position: relative;
             line-height: 1.2;
@@ -291,33 +291,33 @@
         .sign-up-header::after {
             content: "";
             position: absolute;
-            bottom: -10px;
+            bottom: -8px;
             left: 50%;
             transform: translateX(-50%);
-            width: 45px;
+            width: 40px;
             height: 3px;
             background: #4caf50;
             border-radius: 3px;
         }
 
         .form-group {
-            margin-bottom: 1.2rem;
+            margin-bottom: 1rem;
         }
 
         .form-label {
             font-weight: 600;
             color: #333;
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.3rem;
             display: block;
-            font-size: 14px;
+            font-size: 13px;
         }
 
         .form-control {
             width: 100%;
             border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 10px 14px;
-            font-size: 14px;
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-size: 13px;
             transition: all 0.3s ease;
             background: #fafafa;
         }
@@ -332,23 +332,23 @@
         .terms-checkbox {
             display: flex;
             align-items: flex-start;
-            margin: 1.2rem 0 1.8rem;
+            margin: 1rem 0 1.5rem;
         }
 
         .terms-checkbox input {
-            margin-top: 3px;
-            margin-right: 8px;
-            width: 16px;
-            height: 16px;
+            margin-top: 2px;
+            margin-right: 7px;
+            width: 14px;
+            height: 14px;
             cursor: pointer;
             accent-color: #4caf50;
         }
 
         .terms-checkbox label {
-            font-size: 13px;
+            font-size: 12px;
             color: #555;
             cursor: pointer;
-            line-height: 1.4;
+            line-height: 1.3;
         }
 
         .terms-checkbox label a {
@@ -364,9 +364,9 @@
         .btn-signup {
             background: #4caf50;
             border: none;
-            border-radius: 8px;
-            padding: 12px;
-            font-size: 15px;
+            border-radius: 6px;
+            padding: 10px;
+            font-size: 14px;
             font-weight: 600;
             color: white;
             width: 100%;
@@ -415,9 +415,9 @@
 
         .signin-link {
             text-align: center;
-            margin-top: 1.2rem;
+            margin-top: 1rem;
             color: #666;
-            font-size: 14px;
+            font-size: 13px;
         }
 
         .signin-link a {
@@ -437,18 +437,18 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 7px;
             background: white;
             border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 10px;
-            font-size: 15px;
+            border-radius: 6px;
+            padding: 8px;
+            font-size: 14px;
             font-weight: 600;
             color: #555;
             width: 100%;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin: 1.8rem 0;
+            margin: 1.5rem 0 1rem;
         }
 
         .google-signup:hover {
@@ -458,13 +458,13 @@
 
         .google-signup i {
             color: #4285F4;
-            font-size: 16px;
+            font-size: 15px;
         }
 
         .divider {
             display: flex;
             align-items: center;
-            margin: 20px 0;
+            margin: 18px 0;
             position: relative;
         }
 
@@ -476,9 +476,9 @@
         }
 
         .divider span {
-            padding: 0 12px;
+            padding: 0 10px;
             color: #777;
-            font-size: 13px;
+            font-size: 12px;
             background: white;
             position: relative;
             z-index: 1;
@@ -487,8 +487,8 @@
         .divider-title {
             text-align: center;
             color: #777;
-            font-size: 14px;
-            margin: 20px 0;
+            font-size: 13px;
+            margin: 18px 0 0;
             font-weight: 500;
         }
 
@@ -510,7 +510,7 @@
             }
 
             .sign-up-header {
-                font-size: 24px;
+                font-size: 21px;
             }
 
             .image-container {
@@ -529,7 +529,7 @@
             }
 
             .sign-up-header {
-                font-size: 22px;
+                font-size: 20px;
             }
 
             .image-container {
@@ -601,8 +601,8 @@
             }
 
             .sign-up-header {
-                font-size: 22px;
-                margin-bottom: 1.5rem;
+                font-size: 20px;
+                margin-bottom: 1.3rem;
             }
 
             .float1 {
@@ -653,12 +653,16 @@
             }
 
             .sign-up-header {
-                font-size: 21px;
+                font-size: 19px;
                 margin-bottom: 1.2rem;
             }
 
             .form-group {
-                margin-bottom: 1.1rem;
+                margin-bottom: 0.9rem;
+            }
+
+            .sign-up-form {
+                max-width: 300px;
             }
 
             .image-container {
@@ -699,19 +703,23 @@
             }
 
             .form-control {
-                padding: 9px 12px;
-                font-size: 13px;
+                padding: 7px 10px;
+                font-size: 12px;
             }
 
             .btn-signup {
-                padding: 10px;
-                font-size: 14px;
+                padding: 9px;
+                font-size: 13px;
             }
 
             .google-signup {
-                padding: 9px;
-                font-size: 14px;
-                margin: 1.5rem 0;
+                padding: 7px;
+                font-size: 13px;
+                margin: 1.3rem 0 0.8rem;
+            }
+
+            .terms-checkbox {
+                margin: 0.8rem 0 1.2rem;
             }
         }
     </style>
@@ -771,11 +779,11 @@
 
                 <button class="google-signup">
                     <i class="fab fa-google"></i>
-                    Sign up with Google 😊
+                    Sign up with Googl
                 </button>
 
                 <div class="signin-link">
-                    Already have an account? <a href="#">Sign In</a>
+                    Already have an account? <a href="{{ route('login') }}">Sign In</a>
                 </div>
             </div>
         </div>
