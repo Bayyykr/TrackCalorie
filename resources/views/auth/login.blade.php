@@ -6,30 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign In - CalorieTrack</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
     <link rel="stylesheet" href="{{ asset('css/login.css') }}">
 </head>
 
 <body>
-    <nav class="navbar-custom">
-        <div class="logo">
-            <img src="{{ asset('images/logogizi.png') }}" alt="logo" class="logo-icon">
-            CalorieTrack
-        </div>
-        <div class="nav-center">
-            <a href="#">Homepage</a>
-            <a href="#">Calculator</a>
-            <a href="#">Recommendations</a>
-            <a href="#">Forum</a>
-        </div>
-        <button class="mobile-menu-toggle">☰</button>
-    </nav>
+    {{-- @include('components.navbar') --}}
 
     <div class="login-container">
         <div class="left-section">
             <div class="sign-in-form">
                 <h1 class="sign-in-header">Sign in to your account</h1>
 
-                <form>
+                <form id="loginForm">
                     <div class="form-group">
                         <label for="email" class="form-label">Email Address</label>
                         <input type="email" class="form-control" id="email" name="email"
@@ -74,13 +63,6 @@
     </div>
 
     <script>
-        // Mobile menu toggle functionality
-        document.querySelector('.mobile-menu-toggle').addEventListener('click', function() {
-            const navCenter = document.querySelector('.nav-center');
-            navCenter.classList.toggle('show');
-            this.textContent = this.textContent === '☰' ? '✕' : '☰';
-        });
-
         // Form submission with validation
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();

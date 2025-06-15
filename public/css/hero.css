@@ -1,0 +1,42 @@
+.right-section {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    background-color: white;
+}
+
+/* Image container with wave animation */
+.image-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.food-image {
+    width: 100%;
+    height: 103%;
+    position: relative;
+    z-index: 3;
+    filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.2));
+    animation: wave 8s ease-in-out infinite;
+}
+
+.food-plate {
+    position: absolute;
+    width: 400px;
+    max-width: 80%;
+    z-index: 10;
+    animation: slideInFromRight 2s cubic-bezier(0.175, 0.885, 0.32, 1.275)
+            forwards,
+        rotatePlate 35s linear infinite;
+    animation-delay: 0s, 2s;
+}
