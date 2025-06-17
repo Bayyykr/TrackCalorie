@@ -1,5 +1,12 @@
 /* public/css/navbar.css */
 /* Navbar Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
 .navbar-custom {
     background: transparent;
     padding: 1.2rem 5%;

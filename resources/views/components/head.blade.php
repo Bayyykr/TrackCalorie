@@ -8,6 +8,9 @@
     <title>TrackCalorie</title>
 
     <link rel="stylesheet" href="{{ asset('css') }}/navbar.css">
+    <link rel="stylesheet" href="{{ asset('css') }}/hero.css">
+    <link rel="stylesheet" href="{{ asset('css') }}/about.css">
+    <link rel="stylesheet" href="{{ asset('css') }}/categori.css">
 </head>
 
 <body>
