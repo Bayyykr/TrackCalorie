@@ -1,0 +1,363 @@
+:root {
+    --primary-green: #8bc34a;
+    --dark-green: #7cb342;
+    --accent-blue: #4a90e2;
+    --accent-pink: #e91e63;
+    --text-dark: #2c3e50;
+    --text-gray: #6c757d;
+    --light-gray: #f5f7fa;
+    --border-color: #dee2e6;
+}
+
+/* Main Container */
+.main-container {
+    padding: 30px 0 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.content-wrapper {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.layout-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    background: white;
+    border-radius: 0;
+    overflow: hidden;
+    border: none;
+    background-color: orange;
+}
+
+.image-column {
+    flex: 1;
+    min-width: 45%;
+    padding: 25px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    border-right: none;
+}
+
+.form-column {
+    flex: 1;
+    min-width: 50%;
+    padding: 25px;
+    background-color: blue;
+}
+
+/* Calculator Section */
+.calculator-section {
+    background: yellow;
+    padding: 0;
+    height: 100%;
+}
+
+.calculator-title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.calculator-title h2 {
+    color: var(--text-dark);
+    font-weight: 700;
+    font-size: 1.8rem; /* Diperkecil dari 2.2rem */
+    margin-bottom: 5px;
+    letter-spacing: -0.5px;
+}
+
+/* Gender Selection */
+.gender-group {
+    margin-bottom: 20px;
+}
+
+.gender-label {
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 10px;
+    display: block;
+    font-size: 0.95rem; /* Diperkecil dari 1.1rem */
+}
+
+.gender-options {
+    display: flex;
+    gap: 10px;
+}
+
+.gender-btn {
+    flex: 1;
+    padding: 12px 8px; /* Diperkecil dari 16px 12px */
+    border: 2px solid var(--border-color);
+    background: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 0.95rem; /* Diperkecil dari 1.1rem */
+}
+
+.gender-btn i {
+    font-size: 1.1rem; /* Diperkecil dari 1.4rem */
+    color: #adb5bd;
+}
+
+.gender-btn span {
+    color: var(--text-gray);
+}
+
+.gender-btn.male.active {
+    background: var(--primary-green);
+    border-color: var(--primary-green);
+    color: white;
+}
+
+.gender-btn.female.active {
+    background: var(--primary-green);
+    border-color: var(--primary-green);
+    color: white;
+}
+
+.gender-btn.active i,
+.gender-btn.active span {
+    color: white;
+}
+
+/* Form Inputs */
+.form-label {
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 6px;
+    font-size: 0.95rem; /* Diperkecil dari 1.1rem */
+}
+
+.form-control,
+.form-select {
+    border: 2px solid var(--border-color);
+    border-radius: 6px;
+    padding: 12px 14px; /* Diperkecil dari 16px 18px */
+    font-size: 0.95rem; /* Diperkecil dari 1.1rem */
+    transition: all 0.3s ease;
+    background: white;
+    height: 46px; /* Diperkecil dari 56px */
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--primary-green);
+    box-shadow: none;
+}
+
+.form-text {
+    font-size: 0.85rem; /* Diperkecil dari 0.95rem */
+    color: var(--text-gray);
+    margin-top: 4px;
+    padding-left: 4px;
+}
+
+/* Buttons */
+.btn-calculate {
+    background: var(--primary-green);
+    border: none;
+    border-radius: 6px;
+    padding: 12px 20px; /* Diperkecil dari 16px 30px */
+    font-weight: 700;
+    font-size: 1rem; /* Diperkecil dari 1.2rem */
+    color: white;
+    transition: all 0.3s ease;
+    width: 100%;
+    margin-bottom: 10px;
+    height: 48px; /* Diperkecil dari 60px */
+}
+
+.btn-calculate:hover {
+    background: var(--dark-green);
+}
+
+.btn-clear {
+    background: white;
+    border: 2px solid var(--primary-green);
+    border-radius: 6px;
+    padding: 10px 20px; /* Diperkecil dari 14px 30px */
+    font-weight: 600;
+    color: var(--primary-green);
+    transition: all 0.3s ease;
+    width: 100%;
+    height: 46px; /* Diperkecil dari 56px */
+    font-size: 0.95rem; /* Diperkecil dari 1.1rem */
+}
+
+.btn-clear:hover {
+    background: var(--primary-green);
+    border-color: var(--dark-green);
+    color: white;
+}
+
+/* Results Section */
+.results-section {
+    margin-top: 25px;
+    padding: 20px;
+    background: var(--light-gray);
+    border-radius: 8px;
+    display: none;
+    border: 1px solid var(--border-color);
+}
+
+.results-cards {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.result-card {
+    flex: 1;
+    background: white;
+    padding: 18px 12px; /* Diperkecil dari 25px 15px */
+    border-radius: 6px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+}
+
+.result-card h6 {
+    color: var(--text-gray);
+    font-size: 0.85rem; /* Diperkecil dari 0.95rem */
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+}
+
+.result-value {
+    font-size: 1.8rem; /* Diperkecil dari 2.5rem */
+    font-weight: 800;
+    color: var(--primary-green);
+    margin-bottom: 4px;
+}
+
+.result-unit {
+    color: var(--text-gray);
+    font-size: 0.85rem; /* Diperkecil dari 0.95rem */
+    font-weight: 500;
+}
+
+.interpretation {
+    background: white;
+    padding: 15px;
+    border-radius: 6px;
+    border-left: 4px solid var(--primary-green);
+    border: 1px solid var(--border-color);
+}
+
+.interpretation h6 {
+    color: var(--text-dark);
+    font-weight: 700;
+    margin-bottom: 10px;
+    font-size: 0.95rem; /* Diperkecil dari 1.1rem */
+}
+
+.interpretation p {
+    color: var(--text-gray);
+    margin: 0;
+    line-height: 1.5;
+    font-size: 0.9rem; /* Diperkecil dari 1rem */
+}
+
+/* Food Image Styling */
+.food-image {
+    width: 100%;
+    max-width: 380px; /* Diperkecil dari 450px */
+    height: auto;
+    border-radius: 15px; /* Diperkecil dari 20px */
+    object-fit: cover;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* Penyesuaian untuk aktivitas level */
+#activity {
+    height: 46px; /* Diperkecil dari 56px */
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .layout-row {
+        flex-direction: column;
+    }
+
+    .image-column,
+    .form-column {
+        width: 100%;
+        max-width: 600px;
+        min-width: auto;
+        padding: 20px;
+    }
+
+    .image-column {
+        border-right: none;
+        border-bottom: none;
+    }
+
+    .food-image {
+        max-width: 320px;
+    }
+}
+
+@media (max-width: 768px) {
+    .calculator-section {
+        padding: 0;
+    }
+
+    .results-cards {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .image-column,
+    .form-column {
+        padding: 18px;
+    }
+
+    .calculator-title h2 {
+        font-size: 1.6rem;
+    }
+
+    .form-label,
+    .gender-label {
+        font-size: 0.9rem;
+    }
+
+    .gender-btn {
+        font-size: 0.9rem;
+        padding: 10px 8px;
+    }
+
+    .form-control,
+    .form-select {
+        font-size: 0.9rem;
+        height: 42px;
+        padding: 10px 12px;
+    }
+
+    .btn-calculate {
+        font-size: 0.95rem;
+        height: 44px;
+    }
+
+    .btn-clear {
+        font-size: 0.9rem;
+        height: 42px;
+    }
+
+    .result-value {
+        font-size: 1.6rem;
+    }
+}

@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{{ asset('css') }}/hero.css">
     <link rel="stylesheet" href="{{ asset('css') }}/about.css">
     <link rel="stylesheet" href="{{ asset('css') }}/categori.css">
+    <link rel="stylesheet" href="{{ asset('css') }}/calculator.css">
 </head>
 
 <body>
