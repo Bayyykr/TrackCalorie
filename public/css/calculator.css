@@ -273,7 +273,7 @@
 }
 
 /* Food Image Styling */
-.food-image {
+.food-image-calc {
     width: 100%;
     max-width: 380px; /* Diperkecil dari 450px */
     height: auto;

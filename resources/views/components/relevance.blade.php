@@ -6,8 +6,8 @@
 
     <div class="sdgs-container">
         <div class="sdgs-content">
-            <div class="sdgs-number">2</div>
-            <p class="sdgs-text">
+            <div class="sdgs-number-2">2</div>
+            <p class="sdgs2">
                 CalorieTrack empowers individuals to take control of their health by providing accessible tools such
                 as self-assessment features, calorie calculators, food recommendations, and daily intake graphs,
                 making it easier for everyone to build sustainable eating habits and achieve long-term well-being.

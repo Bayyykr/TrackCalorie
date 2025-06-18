@@ -29,6 +29,10 @@
     @include('components.relevance')
     {{-- Relevance End --}}
 
+    {{-- Footer --}}
+    @include('components.footer')
+    {{-- Footer End --}}
+
 </main>
 
 

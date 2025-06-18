@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="{{ asset('css') }}/benefit.css">
     <link rel="stylesheet" href="{{ asset('css') }}/infographic.css">
     <link rel="stylesheet" href="{{ asset('css') }}/relevance.css">
+    <link rel="stylesheet" href="{{ asset('css') }}/footer.css">
 </head>
 
 <body>
