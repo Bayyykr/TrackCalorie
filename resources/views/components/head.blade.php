@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="{{ asset('css') }}/about.css">
     <link rel="stylesheet" href="{{ asset('css') }}/categori.css">
     <link rel="stylesheet" href="{{ asset('css') }}/calculator.css">
+    <link rel="stylesheet" href="{{ asset('css') }}/benefit.css">
+    <link rel="stylesheet" href="{{ asset('css') }}/infographic.css">
+    <link rel="stylesheet" href="{{ asset('css') }}/relevance.css">
 </head>
 
 <body>

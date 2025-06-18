@@ -17,6 +17,18 @@
     @include('components.categori')
     {{-- Categori End --}}
 
+    {{-- Benefit --}}
+    @include('components.benefit')
+    {{-- Benefit End --}}
+
+    {{-- Infographic --}}
+    @include('components.infographic')
+    {{-- Infographic End --}}
+
+    {{-- Relevance --}}
+    @include('components.relevance')
+    {{-- Relevance End --}}
+
 </main>
 
 
