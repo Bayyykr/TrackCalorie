@@ -2,14 +2,14 @@
 
 @include('components.navbar')
 <!-- Main Content -->
-<div class="main-container">
-    <div class="content-wrapper">
+<div class="main-container main-calc">
+    <div class="content-wrapper content-calc">
         <div class="layout-row">
             <!-- Left Column - Food Image -->
             <div class="image-column">
                 <div class="image-section">
                     <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-                        alt="Healthy food bowl with vegetables, fruits, and protein" class="food-image">
+                        alt="Healthy food bowl with vegetables, fruits, and protein" class="food-image-calc">
                 </div>
             </div>
 
@@ -18,6 +18,7 @@
                 <div class="calculator-section">
                     <div class="calculator-title">
                         <h2>Calculate Your BMR & TDEE</h2>
+                        <p class="text-muted">Discover your daily calorie needs for weight management</p>
                     </div>
 
                     <!-- Gender Selection -->
@@ -75,10 +76,10 @@
                     <!-- Buttons -->
                     <div class="d-grid gap-2">
                         <button type="button" class="btn btn-calculate text-white" id="calculateBtn">
-                            Calculate
+                            <i class="fas fa-calculator me-2"></i>Calculate
                         </button>
                         <button type="button" class="btn btn-clear" id="clearBtn">
-                            Clear
+                            <i class="fas fa-eraser me-2"></i>Clear
                         </button>
                     </div>
 
@@ -100,8 +101,7 @@
                             <h6>What this means for you</h6>
                             <p>Your BMR is the number of calories your body needs to perform basic life-sustaining
                                 functions. Your TDEE is your total daily calorie expenditure including physical
-                                activity. To
-                                maintain your current weight, consume calories equal to your TDEE.</p>
+                                activity. To maintain your current weight, consume calories equal to your TDEE.</p>
                         </div>
                     </div>
                 </div>
