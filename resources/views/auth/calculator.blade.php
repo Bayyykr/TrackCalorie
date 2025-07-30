@@ -1,225 +1,317 @@
 @include('components.head')
 
 @include('components.navbar')
-<!-- Main Content -->
+
+
 <div class="main-container">
-    <div class="content-wrapper">
-        <div class="layout-row">
-            <!-- Left Column - Food Image -->
-            <div class="image-column">
-                <div class="image-section">
-                    <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-                        alt="Healthy food bowl with vegetables, fruits, and protein" class="food-image">
+    <!-- Left Column - Food Image -->
+    <div class="image-column">
+        <img class="food-image-bottom" src="{{ asset('images/image-bg-calc.png') }}" alt="bg-kubis" width="700"
+            height="700">
+        <img class="food-image-top" src="{{ asset('images/image-left-calc.png') }}" alt="piring-buah" width="400"
+            height="400">
+    </div>
+
+    <!-- Right Column - Calculator Form -->
+    <div class="form-column">
+        <div class="calculator-title">
+            <h1>Calculate Your BMR & TDEE</h1>
+        </div>
+
+        <form>
+            <!-- Gender Selection -->
+            <div class="form-group">
+                <label class="form-label">Gender</label>
+                <div class="gender-options">
+                    <div class="gender-option">
+                        <input type="radio" id="male" name="gender" value="male">
+                        <label for="male">
+                            <img src="{{ asset('images/male.png') }}" alt="male" width="30px" height="30px">
+                            <p>Male</p>
+                        </label>
+                    </div>
+                    <div class="gender-option">
+                        <input type="radio" id="female" name="gender" value="female">
+                        <label for="female">
+                            <img src="{{ asset('images/female.png') }}" alt="female" width="30px" height="30px">
+                            <p>Female</p>
+                        </label>
+                    </div>
                 </div>
             </div>
 
-            <!-- Right Column - Calculator -->
-            <div class="form-column">
-                <div class="calculator-section">
-                    <div class="calculator-title">
-                        <h2>Calculate Your BMR & TDEE</h2>
-                    </div>
+            <!-- Age Input -->
+            <div class="form-group">
+                <label for="age" class="form-label">Age</label>
+                <input type="number" id="age" class="form-control" placeholder="Enter your age" min="1"
+                    max="120">
+                <div class="form-text">years old</div>
+            </div>
 
-                    <!-- Gender Selection -->
-                    <div class="gender-group">
-                        <label class="gender-label">Gender</label>
-                        <div class="gender-options">
-                            <div class="gender-btn male active" id="maleBtn">
-                                <i class="fas fa-mars"></i>
-                                <span>Male</span>
-                            </div>
-                            <div class="gender-btn female" id="femaleBtn">
-                                <i class="fas fa-venus"></i>
-                                <span>Female</span>
-                            </div>
-                        </div>
-                    </div>
+            <!-- Weight Input -->
+            <div class="form-group">
+                <label for="weight" class="form-label">Weight</label>
+                <input type="number" id="weight" class="form-control" placeholder="Enter your weight" min="1"
+                    step="0.1">
+                <div class="form-text">Kg</div>
+            </div>
 
-                    <!-- Age Input -->
-                    <div class="mb-3">
-                        <label for="age" class="form-label">Age</label>
-                        <input type="number" class="form-control" id="age" placeholder="Enter your age" min="15"
-                            max="100">
-                        <div class="form-text">Years old</div>
-                    </div>
+            <!-- Height Input -->
+            <div class="form-group">
+                <label for="height" class="form-label">Height</label>
+                <input type="number" id="height" class="form-control" placeholder="Enter your height" min="1"
+                    step="0.1">
+                <div class="form-text">Cm</div>
+            </div>
 
-                    <!-- Weight Input -->
-                    <div class="mb-3">
-                        <label for="weight" class="form-label">Weight</label>
-                        <input type="number" class="form-control" id="weight" placeholder="Enter your weight" min="30"
-                            max="200">
-                        <div class="form-text">kg</div>
-                    </div>
+            <!-- Activity Level -->
+            <div class="form-group">
+                <label for="activity" class="form-label">Activity Level</label>
+                <select id="activity" class="form-control">
+                    <option value="" disabled selected>Select Activity Level</option>
+                    <option value="1.2">Sedentary</option>
+                    <option value="1.375">Lightly active</option>
+                    <option value="1.55">Moderately active</option>
+                    <option value="1.725">Very active</option>
+                    <option value="1.9">Extra active</option>
+                </select>
+            </div>
 
-                    <!-- Height Input -->
-                    <div class="mb-3">
-                        <label for="height" class="form-label">Height</label>
-                        <input type="number" class="form-control" id="height" placeholder="Enter your height" min="100"
-                            max="250">
-                        <div class="form-text">cm</div>
-                    </div>
-
-                    <!-- Activity Level -->
-                    <div class="mb-4">
-                        <label for="activity" class="form-label">Activity Level</label>
-                        <select class="form-select" id="activity">
-                            <option value="" disabled selected>Activity Level</option>
-                            <option value="1.2">Sedentary (little or no exercise)</option>
-                            <option value="1.375">Lightly active (light exercise 1-3 days/week)</option>
-                            <option value="1.55">Moderately active (moderate exercise 3-5 days/week)</option>
-                            <option value="1.725">Very active (hard exercise 6-7 days/week)</option>
-                            <option value="1.9">Extra active (very hard exercise & physical job)</option>
-                        </select>
-                    </div>
-
-                    <!-- Buttons -->
-                    <div class="d-grid gap-2">
-                        <button type="button" class="btn btn-calculate text-white" id="calculateBtn">
-                            Calculate
-                        </button>
-                        <button type="button" class="btn btn-clear" id="clearBtn">
-                            Clear
-                        </button>
-                    </div>
-
-                    <!-- Results Section -->
-                    <div class="results-section" id="resultsSection">
-                        <div class="results-cards">
-                            <div class="result-card">
-                                <h6>Basal Metabolic Rate (BMR)</h6>
-                                <div class="result-value" id="bmrResult">-</div>
-                                <div class="result-unit">calories per day</div>
-                            </div>
-                            <div class="result-card">
-                                <h6>Total Daily Energy Expenditure (TDEE)</h6>
-                                <div class="result-value" id="tdeeResult">-</div>
-                                <div class="result-unit">calories per day</div>
-                            </div>
-                        </div>
-                        <div class="interpretation">
-                            <h6>What this means for you</h6>
-                            <p>Your BMR is the number of calories your body needs to perform basic life-sustaining
-                                functions. Your TDEE is your total daily calorie expenditure including physical
-                                activity. To
-                                maintain your current weight, consume calories equal to your TDEE.</p>
-                        </div>
-                    </div>
-                </div>
+            <button type="button" class="btn-calculate" id="calculateBtn">Calculate</button>
+        </form>
+        <button type="button" class="btn-monitor" id="monitorBtn"
+            onclick="location.href='{{ route('calculate.monitor') }}'">Monitor
+            Calories</button>
+    </div>
+</div>
+<div id="calculationModal" class="calculation-modal">
+    <div class="modal-content">
+        {{-- Character --}}
+        <div class="chef-container">
+            <div class="chef-avatar">
+                <img src="/images/chef_p.png" alt="">
             </div>
         </div>
+
+        {{-- Title --}}
+        <h3 class="modal-title">Here are the calculation results</h3>
+
+        {{-- Results --}}
+        <div class="results-container">
+            <div class="result-row">
+                <span class="result-label">Basal Metabolic Rate (BMR)</span>
+                <span class="result-value" id="bmrResult">1,514 kcal/day</span>
+            </div>
+            <div class="result-row">
+                <span class="result-label">Total Daily Energy Expenditure (TDEE)</span>
+                <span class="result-value" id="tdeeResult">2,347 kcal/day</span>
+            </div>
+            <div class="result-row">
+                <span class="result-label">Body Mass Index (BMI)</span>
+                <span class="result-value" id="bmiResult">22.0</span>
+            </div>
+        </div>
+
+        {{-- OK Button --}}
+        <button onclick="closeModal()" class="ok-btn">OK</button>
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
-    // Gender selection
-        const maleBtn = document.getElementById('maleBtn');
-        const femaleBtn = document.getElementById('femaleBtn');
-        let selectedGender = 'male';
+    function calculateBMR(weight, height, age, gender) {
+        if (gender === 'male') {
+            // Rumus untuk pria: BMR = 88.362 + (13.397 x bb(kg)) + (4.799 x tb(cm)) - (5.677 x usia(tahun))
+            return Math.round(88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age));
+        } else {
+            // Rumus untuk wanita: BMR = 447.593 + (9.247 x bb(kg)) + (3.098 x tb(cm)) - (4.330 x usia)
+            return Math.round(447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age));
+        }
+    }
 
-        maleBtn.addEventListener('click', () => {
-            maleBtn.classList.add('active');
-            femaleBtn.classList.remove('active');
-            selectedGender = 'male';
-        });
+    // Fungsi perhitungan TDEE sesuai rumus: TDEE = BMR x Tingkat Aktivitas
+    function calculateTDEE(bmr, activityMultiplier) {
+        return Math.round(bmr * activityMultiplier);
+    }
 
-        femaleBtn.addEventListener('click', () => {
-            femaleBtn.classList.add('active');
-            maleBtn.classList.remove('active');
-            selectedGender = 'female';
-        });
+    // Fungsi perhitungan BMI sesuai rumus: BMI = berat badan (kg) / (tinggi badan (m))²
+    function calculateBMI(weight, height) {
+        // height dalam cm, konversi ke meter dengan membagi 100
+        const heightInMeters = height / 100;
+        // BMI = bb(kg) / (tb(m))²
+        return Math.round((weight / (heightInMeters * heightInMeters)) * 10) / 10;
+    }
 
-        // BMR calculation using Mifflin-St Jeor Equation
-        function calculateBMR(weight, height, age, gender) {
-            if (gender === 'male') {
-                return (10 * weight) + (6.25 * height) - (5 * age) + 5;
-            } else {
-                return (10 * weight) + (6.25 * height) - (5 * age) - 161;
-            }
+    // Fungsi untuk menampilkan modal
+    function showModal(bmr, tdee, bmi) {
+        // Update hasil di modal
+        document.getElementById('bmrResult').textContent = bmr.toLocaleString('id-ID') + ' kcal/day';
+        document.getElementById('tdeeResult').textContent = tdee.toLocaleString('id-ID') + ' kcal/day';
+        document.getElementById('bmiResult').textContent = bmi;
+
+        // Tampilkan modal
+        const modal = document.getElementById('calculationModal');
+        modal.classList.add('active');
+
+        // Disable scroll
+        document.body.style.overflow = 'hidden';
+    }
+
+    // Fungsi untuk menutup modal
+    function closeModal() {
+        const modal = document.getElementById('calculationModal');
+        modal.classList.remove('active');
+
+        // Enable scroll kembali
+        setTimeout(() => {
+            document.body.style.overflow = 'auto';
+        }, 300);
+    }
+
+    // Fungsi validasi form
+    function validateInputs() {
+        const gender = document.querySelector('input[name="gender"]:checked');
+        const age = document.getElementById('age').value;
+        const weight = document.getElementById('weight').value;
+        const height = document.getElementById('height').value;
+        const activity = document.getElementById('activity').value;
+
+        if (!gender) {
+            alert('Pilih jenis kelamin terlebih dahulu!');
+            return false;
         }
 
-        function calculateTDEE(bmr, activityLevel) {
-            return bmr * activityLevel;
+        if (!age || age <= 0 || age > 120) {
+            alert('Masukkan umur yang valid (1-120 tahun)!');
+            document.getElementById('age').focus();
+            return false;
         }
 
-        // Calculate button event
-        document.getElementById('calculateBtn').addEventListener('click', function() {
-            const age = parseFloat(document.getElementById('age').value);
-            const weight = parseFloat(document.getElementById('weight').value);
-            const height = parseFloat(document.getElementById('height').value);
-            const activityLevel = parseFloat(document.getElementById('activity').value);
+        if (!weight || weight <= 0) {
+            alert('Masukkan berat badan yang valid!');
+            document.getElementById('weight').focus();
+            return false;
+        }
 
-            // Validation
-            if (!age || !weight || !height || !activityLevel) {
-                alert('Please fill in all fields');
-                return;
-            }
+        if (!height || height <= 0) {
+            alert('Masukkan tinggi badan yang valid!');
+            document.getElementById('height').focus();
+            return false;
+        }
 
-            if (age < 15 || age > 100) {
-                alert('Please enter a valid age between 15 and 100');
-                return;
-            }
+        if (!activity) {
+            alert('Pilih tingkat aktivitas!');
+            document.getElementById('activity').focus();
+            return false;
+        }
 
-            if (weight < 30 || weight > 200) {
-                alert('Please enter a valid weight between 30 and 200 kg');
-                return;
-            }
+        return true;
+    }
 
-            if (height < 100 || height > 250) {
-                alert('Please enter a valid height between 100 and 250 cm');
-                return;
-            }
+    // Event listener untuk form
+    document.addEventListener('DOMContentLoaded', function() {
+        // Event listener untuk tombol Calculate
+        const calculateBtn = document.getElementById('calculateBtn');
+        if (calculateBtn) {
+            calculateBtn.addEventListener('click', function(e) {
+                e.preventDefault();
 
-            // Calculate BMR and TDEE
-            const bmr = calculateBMR(weight, height, age, selectedGender);
-            const tdee = calculateTDEE(bmr, activityLevel);
+                // Validasi input
+                if (!validateInputs()) {
+                    return;
+                }
 
-            // Display results
-            document.getElementById('bmrResult').textContent = Math.round(bmr).toLocaleString();
-            document.getElementById('tdeeResult').textContent = Math.round(tdee).toLocaleString();
+                // Ambil data from form
+                const gender = document.querySelector('input[name="gender"]:checked').value;
+                const age = parseInt(document.getElementById('age').value);
+                const weight = parseFloat(document.getElementById('weight').value);
+                const height = parseFloat(document.getElementById('height').value);
+                const activityLevel = document.getElementById('activity').value;
 
-            // Show results section
-            document.getElementById('resultsSection').style.display = 'block';
+                // Mapping activity level dari value ke multiplier (sama seperti di PHP)
+                const activityMapping = {
+                    '1.2': 1.2, // sedentary
+                    '1.375': 1.375, // light
+                    '1.55': 1.55, // moderate
+                    '1.725': 1.725, // active
+                    '1.9': 1.9 // very_active
+                };
 
-            // Smooth scroll to results
-            document.getElementById('resultsSection').scrollIntoView({
-                behavior: 'smooth',
-                block: 'nearest'
+                // Hitung BMI terlebih dahulu (sesuai urutan di gambar)
+                const bmi = calculateBMI(weight, height);
+
+                // Hitung BMR
+                const bmr = calculateBMR(weight, height, age, gender);
+
+                // Hitung TDEE dengan multiplier yang tepat
+                const activityMultiplier = activityMapping[activityLevel] || 1.2;
+                const tdee = calculateTDEE(bmr, activityMultiplier);
+
+                // Tampilkan modal dengan hasil
+                showModal(bmr, tdee, bmi);
             });
+        }
+
+        // Close modal ketika klik di luar area modal
+        const modal = document.getElementById('calculationModal');
+        if (modal) {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeModal();
+                }
+            });
+        }
+
+        // Close modal dengan tombol Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('calculationModal');
+                if (modal && modal.classList.contains('active')) {
+                    closeModal();
+                }
+            }
         });
+    });
+</script>
+<script>
+    document.getElementById('calculateBtn').addEventListener('click', function() {
+        const gender = document.querySelector('input[name="gender"]:checked')?.value;
+        const usia = document.getElementById('age').value;
+        const bb = document.getElementById('weight').value;
+        const tb = document.getElementById('height').value;
+        const aktivitas = document.getElementById('activity').selectedOptions[0]?.text;
 
-        // Clear button event
-        document.getElementById('clearBtn').addEventListener('click', function() {
-            // Clear all inputs
-            document.getElementById('age').value = '';
-            document.getElementById('weight').value = '';
-            document.getElementById('height').value = '';
-            document.getElementById('activity').selectedIndex = 0;
+        if (!gender || !usia || !bb || !tb || !aktivitas) {
+            alert('Please fill in all fields');
+            return;
+        }
 
-            // Reset results
-            document.getElementById('bmrResult').textContent = '-';
-            document.getElementById('tdeeResult').textContent = '-';
-            document.getElementById('resultsSection').style.display = 'none';
-
-            // Reset gender to male
-            maleBtn.classList.add('active');
-            femaleBtn.classList.remove('active');
-            selectedGender = 'male';
-        });
-
-        // Input validation on keyup
-        document.getElementById('age').addEventListener('keyup', function() {
-            if (this.value > 100) this.value = 100;
-            if (this.value < 0) this.value = '';
-        });
-
-        document.getElementById('weight').addEventListener('keyup', function() {
-            if (this.value > 200) this.value = 200;
-            if (this.value < 0) this.value = '';
-        });
-
-        document.getElementById('height').addEventListener('keyup', function() {
-            if (this.value > 250) this.value = 250;
-            if (this.value < 0) this.value = '';
-        });
+        fetch('{{ route('calc.save') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({
+                    jenis_kelamin: gender === 'male' ? 'L' : 'P',
+                    usia: parseInt(usia),
+                    bb: parseFloat(bb),
+                    tb: parseFloat(tb),
+                    aktivitas: aktivitas,
+                    image_path: '' // kalau mau tambahkan image path
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Data saved successfully');
+                } else {
+                    alert('Failed to save data');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Something went wrong');
+            });
+    });
 </script>

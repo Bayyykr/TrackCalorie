@@ -4,44 +4,26 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
-class CalculatorController extends Controller
+class HomePageController extends Controller
 {
-    public function showFormCalculator()
+    public function __construct()
     {
-        return view('auth.calculator');
+        $this->middleware('auth');
     }
 
-    public function save(Request $request)
-    {
-        $validated = $request->validate([
-            'usia' => 'required|integer',
-            'jenis_kelamin' => 'required|string',
-            'tb' => 'required|numeric',
-            'bb' => 'required|numeric',
-            'aktivitas' => 'required|string',
-        ]);
-        $userId = Auth::id();
-
-        // cek apakah sudah ada data untuk user ini
-        $calc = User::where('id', $userId)->first();
-
-        if ($calc) {
-            // jika sudah ada, update data
-            $calc->update($validated);
-        } else {
-            // jika belum ada, tambahkan data baru
-            $validated['id'] = $userId;
-            User::create($validated);
-        }
-    }
-
-    public function monitor()
+    public function showHomepage(Request $request)
     {
         $user = Auth::user();
 
+        $hour = Carbon::now()->hour;
+        $currentDateTime = Carbon::now()->format('j M Y, H:i');
+        $currentDay = Carbon::now()->format('l');
+        $user = Auth::user();
+
+        // Pastikan data user lengkap
         if (!$user || is_null($user->bb) || is_null($user->tb) || is_null($user->usia) || is_null($user->jenis_kelamin) || is_null($user->aktivitas)) {
             return null;
         }
@@ -78,6 +60,40 @@ class CalculatorController extends Controller
         $bmr = round($bmr);         // BMR dibulatkan ke bilangan bulat
         $tdee = round($tdee);       // TDEE dibulatkan ke bilangan bulat
 
-        return view('auth.calc_monitor', compact('bmi', 'bmr', 'tdee'));
+
+        $calorieNeeds = $tdee;
+        $calorieConsumed = 1000;
+
+
+        $caloriePercentage = $calorieNeeds ? round(($calorieConsumed / $calorieNeeds) * 100) : 0;
+
+        $lessCalorie = $calorieNeeds - $calorieConsumed;
+
+        if ($hour >= 5 && $hour < 12) {
+            $greeting = 'GOOD MORNING';
+        } elseif ($hour >= 12 && $hour < 17) {
+            $greeting = 'GOOD AFTERNOON';
+        } elseif ($hour >= 17 && $hour < 21) {
+            $greeting = 'GOOD EVENING';
+        } else {
+            $greeting = 'GOOD NIGHT';
+        }
+
+        return view('auth.homepage', compact(
+            'greeting',
+            'currentDateTime',
+            'currentDay',
+            'user',
+            'calorieNeeds',
+            'caloriePercentage',
+            'lessCalorie',
+            'calorieConsumed',
+            'bmi',
+            'bmr',
+            'tdee'
+        ));
     }
+
+
+    private function calculateCalorieNeeds($user) {}
 }

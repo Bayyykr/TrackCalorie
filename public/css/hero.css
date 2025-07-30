@@ -7,7 +7,7 @@
 
 html,
 body {
-    overflow-x: auto;
+    overflow-x: hidden; /* Ubah dari auto ke hidden untuk mencegah scroll horizontal */
     height: 100%;
 }
 
@@ -39,10 +39,12 @@ body {
 
 @keyframes slideInFromRight {
     0% {
-        transform: translateX(100vw) rotate(0deg);
+        transform: translateX(50vw) rotate(0deg); /* Kurangi jarak awal dari 100vw ke 50vw */
+        opacity: 0.5; /* Tambahkan opacity untuk transisi yang lebih smooth */
     }
     100% {
         transform: translateX(0) rotate(0deg);
+        opacity: 1;
     }
 }
 
@@ -62,7 +64,9 @@ body {
     background: transparent;
     display: flex;
     min-height: 100vh;
+    overflow: visible; /* Tambahkan ini untuk memastikan animasi tidak terpotong */
 }
+
 .left-section::before {
     content: "";
     position: absolute;
@@ -73,6 +77,7 @@ body {
     background: rgba(255, 255, 255, 0.7); /* Layer semi-transparan */
     z-index: 0; /* Di belakang konten */
 }
+
 .left-section {
     z-index: 0;
     background: transparent;
@@ -82,6 +87,8 @@ body {
     align-items: flex-start;
     justify-content: center;
     padding: 100px;
+    overflow: visible; /* Pastikan tidak ada clipping */
+    position: relative; /* Tambahkan untuk positioning context */
 }
 
 .main-features {
@@ -162,7 +169,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
+    overflow: visible; /* Ubah dari hidden ke visible */
     position: relative;
     background-color: white;
 }
@@ -177,7 +184,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
+    overflow: visible; /* Ubah dari hidden ke visible */
 }
 
 .food-image {
@@ -194,10 +201,10 @@ body {
     width: 400px;
     max-width: 80%;
     z-index: 10;
-    animation: slideInFromRight 2s cubic-bezier(0.175, 0.885, 0.32, 1.275)
+    animation: slideInFromRight 2.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)
             forwards,
         rotatePlate 35s linear infinite;
-    animation-delay: 0s, 2s;
+    animation-delay: 0s, 2.5s; /* Delay rotasi sedikit lebih lama */
 }
 
 .food-plate,
@@ -242,28 +249,28 @@ body {
 }
 
 .float1 {
-    animation-delay: 2s, 2.5s;
+    animation-delay: 2.5s, 3s; /* Delay sedikit lebih lama */
     width: 60px;
     height: 60px;
     top: 35%;
     left: 5%;
 }
 .float2 {
-    animation-delay: 2.2s, 2.7s;
+    animation-delay: 2.7s, 3.2s;
     width: 60px;
     height: 60px;
     top: 75%;
     left: 10%;
 }
 .float4 {
-    animation-delay: 2.4s, 2.9s;
+    animation-delay: 2.9s, 3.4s;
     width: 60px;
     height: 60px;
     top: 75%;
     left: 75%;
 }
 .float5 {
-    animation-delay: 2.6s, 3.1s;
+    animation-delay: 3.1s, 3.6s;
     width: 60px;
     height: 60px;
     top: 15%;
@@ -287,11 +294,11 @@ body {
     position: relative;
     line-height: 1.2;
 }
-.description {
+.description_hero {
     width: 100%;
     max-width: 450px;
     margin-bottom: 1rem;
-    color: #555;
+    color: #000000;
     line-height: 1.6;
     font-size: 14px;
 }
@@ -372,7 +379,7 @@ body {
         width: 300px;
     }
 
-    .description {
+    .description_hero {
         width: 100%;
         text-align: center;
     }
@@ -384,6 +391,18 @@ body {
     .main-features h3 {
         text-align: center;
         justify-content: center;
+    }
+
+    /* Perbaikan animasi untuk mobile */
+    @keyframes slideInFromRight {
+        0% {
+            transform: translateX(30vw) rotate(0deg); /* Kurangi jarak untuk mobile */
+            opacity: 0.5;
+        }
+        100% {
+            transform: translateX(0) rotate(0deg);
+            opacity: 1;
+        }
     }
 }
 
@@ -445,5 +464,17 @@ body {
 
     .card-content h4 {
         font-size: 14px;
+    }
+
+    /* Animasi lebih konservatif untuk layar kecil */
+    @keyframes slideInFromRight {
+        0% {
+            transform: translateX(20vw) rotate(0deg); /* Jarak lebih pendek untuk layar kecil */
+            opacity: 0.7;
+        }
+        100% {
+            transform: translateX(0) rotate(0deg);
+            opacity: 1;
+        }
     }
 }

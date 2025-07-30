@@ -4,7 +4,7 @@
             <div class="left-section">
                 <div class="sign-in-form">
                     <h1 class="judul">Track Your Calories, Transform Your Health</h1>
-                    <p class="description">An educational platform designed to help you understand the importance
+                    <p class="description_hero">An educational platform designed to help you understand the importance
                         of balanced nutrition, calculate your daily calorie needs, and build healthy habits empowering
                         you to reach your personal health and wellness goals with confidence</p>
                 </div>

@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-
     public function showLoginForm()
     {
         return view('auth.login');
@@ -26,7 +25,28 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials, $request->filled('remember'))) {
             $request->session()->regenerate();
-            return redirect()->intended('/dashboard');
+
+            // Check if request is AJAX/JSON
+            if ($request->expectsJson() || $request->ajax()) {
+                return response()->json([
+                    'success' => true,
+                    'redirect' => '/recomend',
+                    'message' => 'Login berhasil'
+                ], 200);
+            }
+
+            return redirect()->intended('/homepage');
+        }
+
+        // If login fails
+        if ($request->expectsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Email atau password salah',
+                'errors' => [
+                    'email' => 'Email atau password salah'
+                ]
+            ], 401);
         }
 
         return back()->withErrors([

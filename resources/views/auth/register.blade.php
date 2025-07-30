@@ -329,6 +329,11 @@
             background: white;
         }
 
+        .form-control.is-invalid {
+            border-color: #dc3545;
+            background: #fff5f5;
+        }
+
         .terms-checkbox {
             display: flex;
             align-items: flex-start;
@@ -501,6 +506,31 @@
             color: #666;
             cursor: pointer;
             z-index: 1001;
+        }
+
+        /* Alert Messages */
+        .alert {
+            padding: 0.75rem 1rem;
+            margin-bottom: 1rem;
+            border: 1px solid transparent;
+            border-radius: 0.375rem;
+            font-size: 13px;
+        }
+
+        .alert-danger {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+        }
+
+        .alert-success {
+            color: #155724;
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+
+        .d-none {
+            display: none !important;
         }
 
         /* Responsive Design */
@@ -745,29 +775,41 @@
             <div class="sign-up-form">
                 <h1 class="sign-up-header">Sign Up</h1>
 
+                <!-- Error/Success Messages -->
+                <div id="errorMessage" class="alert alert-danger d-none"></div>
+                <div id="successMessage" class="alert alert-success d-none"></div>
+
                 <form id="signupForm">
+                    @csrf
                     <div class="form-group">
                         <label for="name" class="form-label">Name</label>
                         <input type="text" class="form-control" id="name" name="name"
-                            placeholder="Enter your full name">
+                            placeholder="Enter your full name" required>
                     </div>
 
                     <div class="form-group">
                         <label for="email" class="form-label">Email Address</label>
                         <input type="email" class="form-control" id="email" name="email"
-                            placeholder="Enter your email address">
+                            placeholder="Enter your email address" required>
                     </div>
 
                     <div class="form-group">
                         <label for="password" class="form-label">Password</label>
                         <input type="password" class="form-control" id="password" name="password"
-                            placeholder="Create a password">
+                            placeholder="Create a password (min. 6 characters)" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password_confirmation" class="form-label">Confirm Password</label>
+                        <input type="password" class="form-control" id="password_confirmation"
+                            name="password_confirmation" placeholder="Confirm your password" required>
                     </div>
 
                     <div class="terms-checkbox">
-                        <input type="checkbox" id="terms">
+                        <input type="checkbox" id="terms" required>
                         <label for="terms">
-                            By signing up you agree with the <a href="#">Privacy policy</a> and <a href="#">Terms</a> of
+                            By signing up you agree with the <a href="#">Privacy policy</a> and <a
+                                href="#">Terms</a> of
                             CalorieTrack.
                         </label>
                     </div>
@@ -779,7 +821,7 @@
 
                 <button class="google-signup">
                     <i class="fab fa-google"></i>
-                    Sign up with Googl
+                    Sign up with Google
                 </button>
 
                 <div class="signin-link">
@@ -801,6 +843,37 @@
     </div>
 
     <script>
+        function showMessage(message, type = 'error') {
+            const errorDiv = document.getElementById('errorMessage');
+            const successDiv = document.getElementById('successMessage');
+
+            // Hide both messages first
+            errorDiv.classList.add('d-none');
+            successDiv.classList.add('d-none');
+
+            if (type === 'error') {
+                errorDiv.textContent = message;
+                errorDiv.classList.remove('d-none');
+            } else {
+                successDiv.textContent = message;
+                successDiv.classList.remove('d-none');
+            }
+        }
+
+        function validatePasswords() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('password_confirmation').value;
+            const confirmField = document.getElementById('password_confirmation');
+
+            if (password !== confirmPassword) {
+                confirmField.classList.add('is-invalid');
+                return false;
+            } else {
+                confirmField.classList.remove('is-invalid');
+                return true;
+            }
+        }
+
         // Mobile menu toggle functionality
         document.querySelector('.mobile-menu-toggle').addEventListener('click', function() {
             const navCenter = document.querySelector('.nav-center');
@@ -808,36 +881,97 @@
             this.textContent = this.textContent === '☰' ? '✕' : '☰';
         });
 
-        // Form submission with validation
-        document.getElementById('signupForm').addEventListener('submit', function(e) {
+        // Real-time password confirmation validation
+        document.getElementById('password_confirmation').addEventListener('input', validatePasswords);
+
+        // Form submission with validation and actual server request
+        document.getElementById('signupForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
+
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const passwordConfirmation = document.getElementById('password_confirmation').value.trim();
             const terms = document.getElementById('terms').checked;
+
             const btn = document.querySelector('.btn-signup');
             const originalText = btn.textContent;
 
-            if (name && email && password && terms) {
-                // Simulate loading state
-                btn.textContent = 'Creating account...';
-                btn.disabled = true;
+            // Client-side validation
+            if (!name || !email || !password || !passwordConfirmation) {
+                showMessage('Please fill in all required fields', 'error');
+                return;
+            }
 
-                setTimeout(() => {
-                    // Simulate successful signup
+            if (password.length < 6) {
+                showMessage('Password must be at least 6 characters long', 'error');
+                return;
+            }
+
+            if (!validatePasswords()) {
+                showMessage('Passwords do not match', 'error');
+                return;
+            }
+
+            if (!terms) {
+                showMessage('Please accept the terms and conditions', 'error');
+                return;
+            }
+
+            // Show loading state
+            btn.textContent = 'Creating account...';
+            btn.disabled = true;
+
+            try {
+                const response = await fetch("{{ route('register') }}", {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        email: email,
+                        password: password,
+                        password_confirmation: passwordConfirmation
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    showMessage(data.message, 'success');
                     btn.textContent = '✓ Account created!';
                     btn.style.background = '#2e7d32';
 
+                    // Reset form
+                    this.reset();
+
+                    // Redirect to login page after delay
                     setTimeout(() => {
-                        btn.textContent = originalText;
-                        btn.style.background = '#4caf50';
-                        btn.disabled = false;
-                        alert('Account created successfully!');
-                        this.reset();
-                    }, 1500);
-                }, 1500);
-            } else {
-                alert('Please fill in all required fields and accept the terms');
+                        window.location.href = data.redirect;
+                    }, 2000);
+                } else {
+                    // Handle validation errors
+                    if (data.errors) {
+                        const firstError = Object.values(data.errors)[0];
+                        showMessage(Array.isArray(firstError) ? firstError[0] : firstError, 'error');
+                    } else {
+                        showMessage(data.message || 'Registration failed. Please try again.', 'error');
+                    }
+
+                    btn.textContent = originalText;
+                    btn.style.background = '#4caf50';
+                    btn.disabled = false;
+                }
+            } catch (error) {
+                console.error('Registration error:', error);
+                showMessage('Network error. Please check your connection and try again.', 'error');
+
+                btn.textContent = originalText;
+                btn.style.background = '#4caf50';
+                btn.disabled = false;
             }
         });
     </script>
