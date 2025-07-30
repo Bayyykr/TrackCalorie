@@ -1,114 +1,119 @@
 @include('components.head')
 
 @include('components.navbar')
-
-
+<!-- Main Content -->
 <div class="main-container">
-    <!-- Left Column - Food Image -->
-    <div class="image-column">
-        <img class="food-image-bottom" src="{{ asset('images/image-bg-calc.png') }}" alt="bg-kubis" width="700"
-            height="700">
-        <img class="food-image-top" src="{{ asset('images/image-left-calc.png') }}" alt="piring-buah" width="400"
-            height="400">
-    </div>
-
-    <!-- Right Column - Calculator Form -->
-    <div class="form-column">
-        <div class="calculator-title">
-            <h1>Calculate Your BMR & TDEE</h1>
-        </div>
-
-        <form>
-            <!-- Gender Selection -->
-            <div class="form-group">
-                <label class="form-label">Gender</label>
-                <div class="gender-options">
-                    <div class="gender-option">
-                        <input type="radio" id="male" name="gender" value="male">
-                        <label for="male">
-                            <img src="{{ asset('images/male.png') }}" alt="male" width="30px" height="30px">
-                            <p>Male</p>
-                        </label>
-                    </div>
-                    <div class="gender-option">
-                        <input type="radio" id="female" name="gender" value="female">
-                        <label for="female">
-                            <img src="{{ asset('images/female.png') }}" alt="female" width="30px" height="30px">
-                            <p>Female</p>
-                        </label>
-                    </div>
+    <div class="content-wrapper">
+        <div class="layout-row">
+            <!-- Left Column - Food Image -->
+            <div class="image-column">
+                <div class="image-section">
+                    <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+                        alt="Healthy food bowl with vegetables, fruits, and protein" class="food-image">
                 </div>
             </div>
 
-            <!-- Age Input -->
-            <div class="form-group">
-                <label for="age" class="form-label">Age</label>
-                <input type="number" id="age" class="form-control" placeholder="Enter your age" min="1"
-                    max="120">
-                <div class="form-text">years old</div>
-            </div>
+            <!-- Right Column - Calculator -->
+            <div class="form-column">
+                <div class="calculator-section">
+                    <div class="calculator-title">
+                        <h2>Calculate Your BMR & TDEE</h2>
+                    </div>
 
-            <!-- Weight Input -->
-            <div class="form-group">
-                <label for="weight" class="form-label">Weight</label>
-                <input type="number" id="weight" class="form-control" placeholder="Enter your weight" min="1"
-                    step="0.1">
-                <div class="form-text">Kg</div>
-            </div>
+                    <form>
+                        <!-- Gender Selection -->
+                        <div class="form-group">
+                            <label class="form-label">Gender</label>
+                            <div class="gender-options">
+                                <div class="gender-option">
+                                    <input type="radio" id="male" name="gender" value="male">
+                                    <label for="male">
+                                        <img src="{{ asset('images/male.png') }}" alt="male" width="30px"
+                                            height="30px">
+                                        <p>Male</p>
+                                    </label>
+                                </div>
+                                <div class="gender-option">
+                                    <input type="radio" id="female" name="gender" value="female">
+                                    <label for="female">
+                                        <img src="{{ asset('images/female.png') }}" alt="female" width="30px"
+                                            height="30px">
+                                        <p>Female</p>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
 
-            <!-- Height Input -->
-            <div class="form-group">
-                <label for="height" class="form-label">Height</label>
-                <input type="number" id="height" class="form-control" placeholder="Enter your height" min="1"
-                    step="0.1">
-                <div class="form-text">Cm</div>
-            </div>
+                        <!-- Age Input -->
+                        <div class="form-group">
+                            <label for="age" class="form-label">Age</label>
+                            <input type="number" id="age" class="form-control" placeholder="Enter your age"
+                                min="1" max="120">
+                            <div class="form-text">years old</div>
+                        </div>
 
-            <!-- Activity Level -->
-            <div class="form-group">
-                <label for="activity" class="form-label">Activity Level</label>
-                <select id="activity" class="form-control">
-                    <option value="" disabled selected>Select Activity Level</option>
-                    <option value="1.2">Sedentary</option>
-                    <option value="1.375">Lightly active</option>
-                    <option value="1.55">Moderately active</option>
-                    <option value="1.725">Very active</option>
-                    <option value="1.9">Extra active</option>
-                </select>
-            </div>
+                        <!-- Weight Input -->
+                        <div class="form-group">
+                            <label for="weight" class="form-label">Weight</label>
+                            <input type="number" id="weight" class="form-control" placeholder="Enter your weight"
+                                min="1" step="0.1">
+                            <div class="form-text">Kg</div>
+                        </div>
 
-            <button type="button" class="btn-calculate" id="calculateBtn">Calculate</button>
-        </form>
-        <button type="button" class="btn-monitor" id="monitorBtn"
-            onclick="location.href='{{ route('calculate.monitor') }}'">Monitor
-            Calories</button>
-    </div>
-</div>
-<div id="calculationModal" class="calculation-modal">
-    <div class="modal-content">
-        {{-- Character --}}
-        <div class="chef-container">
-            <div class="chef-avatar">
-                <img src="/images/chef_p.png" alt="">
-            </div>
-        </div>
+                        <!-- Height Input -->
+                        <div class="form-group">
+                            <label for="height" class="form-label">Height</label>
+                            <input type="number" id="height" class="form-control" placeholder="Enter your height"
+                                min="1" step="0.1">
+                            <div class="form-text">Cm</div>
+                        </div>
 
-        {{-- Title --}}
-        <h3 class="modal-title">Here are the calculation results</h3>
+                        <!-- Activity Level -->
+                        <div class="form-group">
+                            <label for="activity" class="form-label">Activity Level</label>
+                            <select id="activity" class="form-control">
+                                <option value="" disabled selected>Select Activity Level</option>
+                                <option value="1.2">Sedentary</option>
+                                <option value="1.375">Lightly active</option>
+                                <option value="1.55">Moderately active</option>
+                                <option value="1.725">Very active</option>
+                                <option value="1.9">Extra active</option>
+                            </select>
+                        </div>
 
-        {{-- Results --}}
-        <div class="results-container">
-            <div class="result-row">
-                <span class="result-label">Basal Metabolic Rate (BMR)</span>
-                <span class="result-value" id="bmrResult">1,514 kcal/day</span>
-            </div>
-            <div class="result-row">
-                <span class="result-label">Total Daily Energy Expenditure (TDEE)</span>
-                <span class="result-value" id="tdeeResult">2,347 kcal/day</span>
-            </div>
-            <div class="result-row">
-                <span class="result-label">Body Mass Index (BMI)</span>
-                <span class="result-value" id="bmiResult">22.0</span>
+                        <!-- Buttons -->
+                        <div class="d-grid gap-2">
+                            <button type="button" class="btn btn-calculate text-white" id="calculateBtn">
+                                Calculate
+                            </button>
+                            <button type="button" class="btn btn-clear" id="clearBtn">
+                                Clear
+                            </button>
+                        </div>
+
+                        <!-- Results Section -->
+                        <div class="results-section" id="resultsSection">
+                            <div class="results-cards">
+                                <div class="result-card">
+                                    <h6>Basal Metabolic Rate (BMR)</h6>
+                                    <div class="result-value" id="bmrResult">-</div>
+                                    <div class="result-unit">calories per day</div>
+                                </div>
+                                <div class="result-card">
+                                    <h6>Total Daily Energy Expenditure (TDEE)</h6>
+                                    <div class="result-value" id="tdeeResult">-</div>
+                                    <div class="result-unit">calories per day</div>
+                                </div>
+                            </div>
+                            <div class="interpretation">
+                                <h6>What this means for you</h6>
+                                <p>Your BMR is the number of calories your body needs to perform basic life-sustaining
+                                    functions. Your TDEE is your total daily calorie expenditure including physical
+                                    activity. To
+                                    maintain your current weight, consume calories equal to your TDEE.</p>
+                            </div>
+                        </div>
+                </div>
             </div>
         </div>
 
