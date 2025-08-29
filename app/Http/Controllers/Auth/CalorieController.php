@@ -24,6 +24,8 @@ class CalorieController extends Controller
             ->whereDate('date', Carbon::today())
             ->sum('calories');
 
+
+
         return view('calorie-tracker', compact('tdee', 'todayCalories'));
     }
 

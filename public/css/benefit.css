@@ -120,30 +120,6 @@
     }
 }
 
-.mint-leaf-left {
-    position: relative;
-    bottom: 0;
-    width: 200px;
-    height: 150px;
-    background: url("../images/daun.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    z-index: 1;
-}
-
-/* Daun mint pojok kanan bawah */
-.mint-leaf-right {
-    position: absolute;
-    bottom: 0;
-    right: -40px;
-    width: 200px;
-    height: 150px;
-    background-image: url("../images/kanan.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    z-index: 1;
-}
-
 /* Floating bubbles */
 .bubble {
     position: absolute;

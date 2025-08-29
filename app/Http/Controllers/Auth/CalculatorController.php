@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -78,6 +79,12 @@ class CalculatorController extends Controller
         $bmr = round($bmr);         // BMR dibulatkan ke bilangan bulat
         $tdee = round($tdee);       // TDEE dibulatkan ke bilangan bulat
 
-        return view('auth.calc_monitor', compact('bmi', 'bmr', 'tdee'));
+        $today = date('Y-m-d');
+
+        $todayCalories = DB::table('daily_calories')
+            ->where('date', $today)
+            ->sum('calories');
+
+        return view('auth.calc_monitor', compact('bmi', 'bmr', 'tdee', 'todayCalories'));
     }
 }

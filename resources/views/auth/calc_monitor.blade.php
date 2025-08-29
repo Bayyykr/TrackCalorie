@@ -30,7 +30,7 @@
             <!-- Display current calories consumed today -->
             <div class="current-calories">
                 <span class="current-label">Today's consumed calories:</span>
-                <span class="current-value" id="currentCalories">{{ number_format($todayCalories ?? 0, 0, ',', '.') }}
+                <span class="current-value" id="currentCalories">{{ number_format($todayCalories, 0, ',', '.') }}
                     Kcal</span>
             </div>
 

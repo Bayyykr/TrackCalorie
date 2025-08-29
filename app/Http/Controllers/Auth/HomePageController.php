@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -62,7 +63,11 @@ class HomePageController extends Controller
 
 
         $calorieNeeds = $tdee;
-        $calorieConsumed = 1000;
+        $today = date('Y-m-d');
+
+        $calorieConsumed = DB::table('daily_calories')
+            ->where('date', $today)
+            ->sum('calories');
 
 
         $caloriePercentage = $calorieNeeds ? round(($calorieConsumed / $calorieNeeds) * 100) : 0;
@@ -79,6 +84,32 @@ class HomePageController extends Controller
             $greeting = 'GOOD NIGHT';
         }
 
+        $startDate = Carbon::now()->startOfWeek(); // atau ->subDays(6) kalau mau 6 hari ke belakang dari hari ini
+        $endDate = Carbon::now()->endOfWeek();
+
+        // Ambil total kalori per hari
+        $caloriesPerDay = DB::table('daily_calories')
+            ->select(DB::raw('DATE(date) as date'), DB::raw('SUM(calories) as total'))
+            ->whereBetween('date', [$startDate->format('Y-m-d'), $endDate->format('Y-m-d')])
+            ->groupBy('date')
+            ->orderBy('date')
+            ->get();
+
+        // Siapkan data array untuk 7 hari
+        $weekDays = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+        $chartData = [];
+
+        foreach ($weekDays as $index => $day) {
+            $date = $startDate->copy()->addDays($index)->format('Y-m-d');
+            $dayData = $caloriesPerDay->firstWhere('date', $date);
+            $chartData[] = $dayData ? (int)$dayData->total : 0;
+        }
+
+        $targetPerDay = $tdee;
+
+        // Buat array target untuk 7 hari (untuk chart)
+        $targetData = array_fill(0, 7, $targetPerDay);
+
         return view('auth.homepage', compact(
             'greeting',
             'currentDateTime',
@@ -90,7 +121,9 @@ class HomePageController extends Controller
             'calorieConsumed',
             'bmi',
             'bmr',
-            'tdee'
+            'tdee',
+            'chartData',
+            'targetData'
         ));
     }
 

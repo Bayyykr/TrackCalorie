@@ -274,11 +274,6 @@
                     <div class="header-title">{{ $greeting }}<br>{{ Auth::user()->name }}</div>
                     <div class="header-subtitle">Have a nice {{ $currentDay }}!</div>
                     <div class="header-illustration">
-                        <div class="illustration-item">🥕</div>
-                        <div class="illustration-item">🍅</div>
-                        <div class="chef-character">👨‍🍳</div>
-                        <div class="illustration-item">❤️</div>
-                        <div class="illustration-item">🥖</div>
                     </div>
                 </div>
                 <div class="scrollable-content">
@@ -322,7 +317,7 @@
 
                         <div class="bmr-info">
                             <div class="bmr-label">Body Mass Index (BMI) </div>
-                            <div class="bmr-value">{{ number_format($bmi, 0, ',', '.') }}</div>
+                            <div class="bmr-value">{{ number_format($bmi, 1, ',', '.') }}</div>
                         </div>
                         <div class="last-title">Based the Harris-Benedict Formula and your activity level</div>
                     </div>
@@ -436,7 +431,7 @@
                     labels: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
                     datasets: [{
                         label: 'Calories',
-                        data: [1800, 2500, 2400, 2500, 2100, 2400, 2400],
+                        data: {!! json_encode($chartData) !!},
                         backgroundColor: 'rgba(102, 126, 234, 0.3)',
                         borderColor: 'rgba(102, 126, 234, 1)',
                         borderWidth: 3,
@@ -449,7 +444,7 @@
                         pointHoverRadius: 8
                     }, {
                         label: 'Target',
-                        data: [2400, 2400, 2400, 2400, 2400, 2400, 2400],
+                        data: {!! json_encode($targetData) !!},
                         backgroundColor: 'rgba(252, 182, 159, 0.2)',
                         borderColor: 'rgba(252, 182, 159, 1)',
                         borderWidth: 2,
