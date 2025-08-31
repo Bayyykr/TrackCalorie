@@ -18,7 +18,8 @@ class DatabaseSeeder extends Seeder
             MenuSeeder::class,
             UserSeeder::class,
             PostSeeder::class,
-            CommentSeeder::class
+            CommentSeeder::class,
+            ForumSeeder::class
         ]);
 
         User::factory()->create([
