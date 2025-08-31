@@ -2,8 +2,7 @@
 <div class="footer-logo-section">
     <div class="footer-container">
         <a href="#" class="footer-logo">
-            <div class="footer-logo-icon"></div>
-            CalorieTrack
+            <img src="images/icon/logo.png" alt="">
         </a>
     </div>
 </div>

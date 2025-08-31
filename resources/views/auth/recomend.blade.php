@@ -72,7 +72,7 @@
                                 <div class="food-card">
                                     <div class="food-card-image">
                                         @if ($item->image_path)
-                                            <img src="{{ asset('storage/' . $item->image_path) }}" alt="{{ $item->name }}"
+                                            <img src="{{ $item->image_path }}" alt="{{ $item->name }}"
                                                 class="food-card-img"
                                                 onerror="this.onerror=null; this.src='{{ asset('images/fallback.jpg') }}'">
                                         @else

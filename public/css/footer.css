@@ -24,17 +24,22 @@
     font-weight: 400;
     color: #333333;
     text-decoration: none;
+
     font-style: italic;
 }
 
 .footer-logo-icon {
     width: 45px;
     height: 30px;
+    text-decoration: none;
     margin-right: 8px;
-    background: linear-gradient(45deg, #7cb342, #8bc34a);
     border-radius: 15px 15px 15px 5px;
     position: relative;
     transform: rotate(-10deg);
+}
+
+.footer-logo img {
+    scale: 0.7;
 }
 
 .footer-logo-icon::after {
@@ -50,9 +55,8 @@
 
 /* Footer - FIXED */
 footer {
-    background-color: #f8f9fa;
+    background-color: #ffffff;
     padding: 50px 0 0;
-    border-top: 1px solid #e9ecef;
     position: relative;
     width: 100%;
 }
@@ -60,10 +64,11 @@ footer {
 .footer-nav {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     margin-bottom: 40px;
     flex-wrap: wrap;
     gap: 30px;
+    margin-left: 100px;
 }
 
 .footer-nav div {
@@ -170,6 +175,7 @@ footer {
     .footer-nav {
         flex-direction: column;
         gap: 25px;
+        display: none;
     }
 
     .footer-nav > div {

@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 * {
     margin: 0;
     padding: 0;
@@ -7,7 +8,7 @@
 
 html,
 body {
-    overflow-x: hidden; /* Ubah dari auto ke hidden untuk mencegah scroll horizontal */
+    overflow-x: hidden;
     height: 100%;
 }
 
@@ -18,7 +19,6 @@ body {
     flex-direction: column;
 }
 
-/* Animasi Wave */
 @keyframes wave {
     0% {
         transform: translateX(0) translateY(0);
@@ -39,8 +39,8 @@ body {
 
 @keyframes slideInFromRight {
     0% {
-        transform: translateX(50vw) rotate(0deg); /* Kurangi jarak awal dari 100vw ke 50vw */
-        opacity: 0.5; /* Tambahkan opacity untuk transisi yang lebih smooth */
+        transform: translateX(50vw) rotate(0deg);
+        opacity: 0.5;
     }
     100% {
         transform: translateX(0) rotate(0deg);
@@ -59,12 +59,11 @@ body {
     }
 }
 
-/* Login Container - Full Screen */
 .login-container {
     background: transparent;
     display: flex;
     min-height: 100vh;
-    overflow: visible; /* Tambahkan ini untuk memastikan animasi tidak terpotong */
+    overflow: visible;
 }
 
 .left-section::before {
@@ -74,8 +73,8 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(255, 255, 255, 0.7); /* Layer semi-transparan */
-    z-index: 0; /* Di belakang konten */
+    background: rgba(255, 255, 255, 0.7);
+    z-index: -1;
 }
 
 .left-section {
@@ -87,8 +86,8 @@ body {
     align-items: flex-start;
     justify-content: center;
     padding: 100px;
-    overflow: visible; /* Pastikan tidak ada clipping */
-    position: relative; /* Tambahkan untuk positioning context */
+    overflow: visible;
+    position: relative;
 }
 
 .main-features {
@@ -101,6 +100,7 @@ body {
     font-weight: 600;
     color: #000000;
     margin-bottom: 1.5rem;
+    font-family: "Inter", sans-serif;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -119,7 +119,7 @@ body {
 }
 
 .feature-card {
-    background: #2e7d32;
+    background: linear-gradient(#a8e763 0%, #74c83d 57%, #58b030 96%);
     border-radius: 10px;
     padding: 15px;
     color: white;
@@ -169,12 +169,11 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: visible; /* Ubah dari hidden ke visible */
+    overflow: visible;
     position: relative;
     background-color: white;
 }
 
-/* Image container with wave animation */
 .image-container {
     position: relative;
     width: 100%;
@@ -184,16 +183,13 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: visible; /* Ubah dari hidden ke visible */
+    overflow: visible;
 }
 
 .food-image {
     width: 100%;
     height: 100%;
     position: relative;
-    /* z-index: 3; */
-    /* filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.2)); */
-    /* animation: wave 8s ease-in-out infinite; */
 }
 
 .food-plate {
@@ -204,12 +200,13 @@ body {
     animation: slideInFromRight 2.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)
             forwards,
         rotatePlate 35s linear infinite;
-    animation-delay: 0s, 2.5s; /* Delay rotasi sedikit lebih lama */
+    animation-delay: 0s, 2.5s;
+    filter: drop-shadow(10px 15px 20px #ffffff);
 }
 
 .food-plate,
 .floating-fruit {
-    z-index: 3; /* Paling atas */
+    z-index: 3;
 }
 
 @keyframes rotatePlate {
@@ -286,24 +283,24 @@ body {
 }
 
 .judul {
-    font-size: 30px;
-    font-weight: 700;
+    font-size: 35px;
+    font-family: "Inter", sans-serif;
+    font-weight: bold;
     color: #2e7d32;
-    margin-bottom: 1.5rem;
+    margin-bottom: 20px;
     text-align: left;
     position: relative;
     line-height: 1.2;
 }
 .description_hero {
     width: 100%;
+    font-family: "Inter", sans-serif;
+    text-align: justify;
     max-width: 450px;
-    margin-bottom: 1rem;
-    color: #000000;
+    color: rgba(0, 0, 0, 0.7);
     line-height: 1.6;
     font-size: 14px;
 }
-
-/* Responsive Design */
 @media (max-width: 1200px) {
     .judul {
         font-size: 28px;
@@ -328,6 +325,22 @@ body {
     .food-plate {
         width: 350px;
     }
+
+    .right-section {
+        display: none;
+    }
+
+    .description_hero {
+        text-align: justify;
+    }
+
+    .card-icon {
+        margin-right: 30px;
+    }
+
+    .image-container {
+        display: none;
+    }
 }
 
 @media (max-width: 768px) {
@@ -350,6 +363,10 @@ body {
     .image-container {
         max-width: 350px;
         height: 350px;
+    }
+
+    .description_hero {
+        text-align: justify;
     }
 
     .judul {
@@ -391,18 +408,6 @@ body {
     .main-features h3 {
         text-align: center;
         justify-content: center;
-    }
-
-    /* Perbaikan animasi untuk mobile */
-    @keyframes slideInFromRight {
-        0% {
-            transform: translateX(30vw) rotate(0deg); /* Kurangi jarak untuk mobile */
-            opacity: 0.5;
-        }
-        100% {
-            transform: translateX(0) rotate(0deg);
-            opacity: 1;
-        }
     }
 }
 
@@ -466,10 +471,9 @@ body {
         font-size: 14px;
     }
 
-    /* Animasi lebih konservatif untuk layar kecil */
     @keyframes slideInFromRight {
         0% {
-            transform: translateX(20vw) rotate(0deg); /* Jarak lebih pendek untuk layar kecil */
+            transform: translateX(20vw) rotate(0deg);
             opacity: 0.7;
         }
         100% {

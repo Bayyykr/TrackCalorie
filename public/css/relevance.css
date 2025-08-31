@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 .sdgs-section {
     margin: 0 auto;
     position: relative;
@@ -11,17 +12,18 @@
 }
 
 .sdgs-title {
-    font-size: 3rem;
+    font-size: 40px;
     font-weight: bold;
-    color: #2d5a27;
+    color: #00840f;
+    font-family: "Inter", sans-serif;
     margin-bottom: 10px;
     position: relative;
 }
 
 .sdgs-underline {
-    width: 200px;
+    width: 511px;
     height: 4px;
-    background: linear-gradient(90deg, #7ed321, #4caf50);
+    background: #a8e763;
     margin: 0 auto;
     border-radius: 2px;
 }
@@ -96,8 +98,6 @@
     animation: slideInRight 0.8s ease-out forwards;
 } */
 
-
-
 .sdgs-number-1 {
     width: 40px;
     height: 40px;
@@ -137,7 +137,7 @@
     text-align: justify;
     font-size: 1rem;
     line-height: 1.7;
-       margin-left: 50px;
+    margin-left: 50px;
 }
 
 .sdgs1 {
@@ -147,20 +147,6 @@
     text-align: justify;
     font-size: 1rem;
     line-height: 1.7;
-}
-
-
-
-.decorative-leaves {
-    position: absolute;
-    right: -170px;
-    width: 60%;
-    height: 60%;
-    bottom: -30px;
-    background: url("../images/sayur_kanan.png")
-        no-repeat center;
-    background-size: contain;
-    animation: float 4s ease-in-out infinite;
 }
 
 @keyframes slideInLeft {
@@ -214,8 +200,33 @@
         text-align: center;
     }
 
+    .sdgs-image {
+        display: none;
+    }
+
     .sdgs-title {
         font-size: 2rem;
+    }
+
+    .sdgs-number-1 {
+        margin-top: -300px;
+        margin-left: 20px !important;
+    }
+
+    .sdgs1 {
+        margin-left: 20px !important;
+        max-width: 350px;
+    }
+
+    .sdgs-number-2 {
+        bottom: -300px;
+        margin-left: 20px !important;
+    }
+
+    .sdgs2 {
+        margin-left: 20px !important;
+        max-width: 350px;
+        bottom: -300px;
     }
     .sdgs-number {
         font-size: 3rem;
@@ -223,5 +234,8 @@
 
     .decorative-leaves {
         display: none;
+    }
+    .sdgs-underline {
+        width: 200px;
     }
 }

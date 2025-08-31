@@ -4,29 +4,21 @@
         CalorieTrack
     </div>
     <div class="nav-center">
-        <!-- Homepage -->
         <a href="{{ route('homepage') }}" class="{{ request()->routeIs('homepage') ? 'active' : '' }}">
             Homepage
         </a>
-
-        <!-- Calculator -->
         <a href="{{ route('calculator') }}" class="{{ request()->routeIs('calculator*') ? 'active' : '' }}">
             Calculator
         </a>
-
-        <!-- Recommendations -->
         <a href="{{ route('recomend') }}" class="{{ request()->routeIs('recomend*') ? 'active' : '' }}">
             Recommendations
         </a>
-
-        <!-- Forum (Jika ada) -->
         <a href="#" class="{{ request()->routeIs('forum*') ? 'active' : '' }}">Forum</a>
-
-        <!-- Profile -->
         <a href="{{ route('profile.edit') }}" class="{{ request()->routeIs('profile*') ? 'active' : '' }}">
             Profile
         </a>
     </div>
+    <button class="get_started">Get Started</button>
     <button class="mobile-menu-toggle">☰</button>
 </nav>
 

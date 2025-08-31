@@ -8,8 +8,6 @@
                         of balanced nutrition, calculate your daily calorie needs, and build healthy habits empowering
                         you to reach your personal health and wellness goals with confidence</p>
                 </div>
-
-                <!-- Bagian baru untuk Main Features -->
                 <div class="main-features">
                     <h3>Main Fixtures <span class="flame-icon">🔥</span></h3>
                     <div class="features-grid">

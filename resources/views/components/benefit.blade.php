@@ -50,13 +50,4 @@
             </div>
         </div>
     </div>
-
-    <!-- Decorative Elements -->
-    <div class="mint-leaf-left"></div>
-    <div class="mint-leaf-right"></div>
-
-    <!-- Floating Bubbles -->
-    <div class="bubble bubble-1"></div>
-    <div class="bubble bubble-2"></div>
-    <div class="bubble bubble-3"></div>
 </section>
