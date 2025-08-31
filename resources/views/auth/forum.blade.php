@@ -42,9 +42,15 @@
                         <option value="year" {{ $timeRange=='year' ? 'selected' : '' }}>This Year</option>
                         <option value="all" {{ $timeRange=='all' ? 'selected' : '' }}>All Time</option>
                     </select>
+
+                    <div class="ask-mobile">
+                        <a onclick="openModal()" class="ask-question-btn">+ Ask Question</a>
+                    </div>
                 </form>
             </div>
         </div>
+
+
 
         <!-- Forum Posts -->
         <div class="forum-posts">
