@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\LandingPageController;
+use App\Http\Controllers\AnswerForumController;
+use App\Http\Controllers\ForumController;
 use App\Http\Controllers\Auth\CalculatorController;
 use App\Http\Controllers\Auth\RecomendationsController;
 use App\Http\Controllers\Auth\HomePageController;
@@ -40,6 +42,23 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+});
+
+Route::prefix('forum')->group(function () {
+    Route::get('/', [ForumController::class, 'forum'])->name('forum.forum');
+    Route::get('/filter', [ForumController::class, 'filterByTime'])->name('forum.filterByTime');
+    Route::post('/', [ForumController::class, 'store'])->name('forum.store');
+    // Route::post('/toggle-like', [ForumController::class, 'toggleLike'])->name('forum.toggleLike');
+    Route::post('/toggle-like', [ForumController::class, 'toggleLike'])->name('forum.toggleLike');
+    Route::post('/{user}/follow', [ForumController::class, 'follow'])->name('forum.follow');
+    Route::post('/{user}/unfollow', [ForumController::class, 'unfollow'])->name('forum.unfollow');
+    // Route untuk AJAX create post
+    Route::post('/store-ajax', [ForumController::class, 'storeAjax'])->name('forum.store.ajax');
+
+    // Answer Forum Routes - dipindah ke dalam grup forum
+    Route::get('/answer/{post}', [AnswerForumController::class, 'answer'])->name('forum.answer');
+    Route::post('/answer/store', [AnswerForumController::class, 'storeAnswer'])->name('forum.answer.store');
+    Route::post('/forum/posts/{post}/increment-views', [ForumController::class, 'incrementViews'])->name('forum.increment-views');
 });
 
 Route::middleware(['auth'])->group(function () {

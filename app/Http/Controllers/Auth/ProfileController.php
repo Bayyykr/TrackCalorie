@@ -66,20 +66,20 @@ class ProfileController extends Controller
 
         $user = Auth::user();
 
-        // Hapus foto lama jika ada
         if ($user->image_path && Storage::disk('public')->exists($user->image_path)) {
             Storage::disk('public')->delete($user->image_path);
         }
 
-        // Simpan file baru dan dapatkan full path relatif
+
         $path = $request->file('photo')->store('profile-photos', 'public');
 
-        // Debug path sebelum update
+
         logger()->info('Storing image at path:', ['path' => $path]);
 
-        // Update database dengan path lengkap
+
         $user->update([
-            'image_path' => $path // Ini akan menyimpan 'profile-photos/nama-file.jpg'
+            'image_path' => $path,
+            'avatar' => $path
         ]);
 
         return back()->with('success', 'Foto profil berhasil diupdate!');

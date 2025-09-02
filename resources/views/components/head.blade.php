@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="{{ asset('css') }}/infographic.css">
     <link rel="stylesheet" href="{{ asset('css') }}/relevance.css">
     <link rel="stylesheet" href="{{ asset('css') }}/footer.css">
+    <link rel="stylesheet" href="{{ asset('css') }}/forum.css">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body>

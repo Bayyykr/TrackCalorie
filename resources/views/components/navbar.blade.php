@@ -13,12 +13,12 @@
         <a href="{{ route('recomend') }}" class="{{ request()->routeIs('recomend*') ? 'active' : '' }}">
             Recommendations
         </a>
-        <a href="#" class="{{ request()->routeIs('forum*') ? 'active' : '' }}">Forum</a>
+        <a href="{{ route('forum.forum') }}" class="{{ request()->routeIs('forum*') ? 'active' : '' }}">Forum</a>
         <a href="{{ route('profile.edit') }}" class="{{ request()->routeIs('profile*') ? 'active' : '' }}">
             Profile
         </a>
     </div>
-    <button class="get_started">Get Started</button>
+    <button class="get_started" onclick="location.href='{{ route('register') }}'">Get Started</button>
     <button class="mobile-menu-toggle">☰</button>
 </nav>
 

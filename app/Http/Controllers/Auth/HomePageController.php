@@ -26,7 +26,7 @@ class HomePageController extends Controller
 
         // Pastikan data user lengkap
         if (!$user || is_null($user->bb) || is_null($user->tb) || is_null($user->usia) || is_null($user->jenis_kelamin) || is_null($user->aktivitas)) {
-            return null;
+            return redirect()->route('profile.edit')->with('warning', 'Lengkapi profil Anda terlebih dahulu untuk mengakses halaman ini.');
         }
 
         $tinggi_meter = $user->tb / 100; // konversi cm ke meter
