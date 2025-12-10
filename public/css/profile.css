@@ -11,13 +11,15 @@ body {
     padding: 20px;
 }
 
-.container {
-    max-width: 1000px;
+.profile-container {
+    max-width: 1200px;
     margin: 0 auto;
     margin-top: 60px;
-    display: flex;
+    display: grid !important;
+    grid-template-columns: 1fr 320px !important;
     gap: 30px;
-    flex-wrap: wrap;
+    align-items: start;
+    padding: 20px;
 }
 
 .profile-section {
@@ -25,8 +27,7 @@ body {
     border-radius: 12px;
     padding: 30px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    flex: 1;
-    min-width: 500px;
+    /* Grid handles width */
 }
 
 .progress-section {
@@ -34,7 +35,8 @@ body {
     border-radius: 12px;
     padding: 30px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    width: 300px;
+    width: 100%;
+    /* Full width of its grid cell */
     height: fit-content;
 }
 
@@ -311,9 +313,9 @@ body {
     padding: 8px;
 }
 
-@media (max-width: 768px) {
-    .container {
-        flex-direction: column;
+@media (max-width: 992px) {
+    .profile-container {
+        grid-template-columns: 1fr !important;
     }
 
     .profile-section {

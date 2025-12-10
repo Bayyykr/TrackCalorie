@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Calorie Tracker</title>
+    <title>Pemantau Kalori Harian</title>
     <link rel="stylesheet" href="{{ asset('css/calc_monitor.css') }}">
     <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -20,31 +20,31 @@
         </div>
 
         <div class="right-section">
-            <h1 class="title">Monitor Your Daily Calories</h1>
+            <h1 class="title">Pantau Kalori Harian Anda</h1>
 
             <div class="calorie-target">
-                <span class="target-label">Your daily calorie target :</span>
+                <span class="target-label">Target kalori harian Anda :</span>
                 <span class="target-value">{{ number_format($tdee, 0, ',', '.') }} Kcal</span>
             </div>
 
             <!-- Display current calories consumed today -->
             <div class="current-calories">
-                <span class="current-label">Today's consumed calories:</span>
+                <span class="current-label">Kalori yang dikonsumsi hari ini:</span>
                 <span class="current-value" id="currentCalories">{{ number_format($todayCalories, 0, ',', '.') }}
                     Kcal</span>
             </div>
 
             <div class="input-section">
-                <label class="input-label">Enter the food you've consumed</label>
-                <input type="text" class="food-input" placeholder="Enter your food here" id="foodInput">
+                <label class="input-label">Masukkan makanan yang telah Anda konsumsi</label>
+                <input type="text" class="food-input" placeholder="Masukkan makanan Anda di sini" id="foodInput">
                 <div class="suggestions" id="suggestions"></div>
             </div>
 
-            <button class="calculate-btn" onclick="calculateCalories()">Calculate</button>
+            <button class="calculate-btn" onclick="calculateCalories()">Hitung</button>
 
             <div class="action-buttons">
-                <button class="action-btn" onclick="showMore()">More</button>
-                <button class="action-btn" onclick="goBack()">Back</button>
+                <button class="action-btn" onclick="showMore()">Lainnya</button>
+                <button class="action-btn" onclick="goBack()">Kembali</button>
             </div>
 
             <div class="result-section" id="resultSection">
@@ -53,7 +53,7 @@
 
             <!-- Loading indicator -->
             <div class="loading" id="loading" style="display: none;">
-                <p>Searching menu...</p>
+                <p>Mencari menu...</p>
             </div>
         </div>
     </div>
@@ -127,7 +127,7 @@
             const loading = document.getElementById('loading');
 
             if (foodInput.value.trim() === '') {
-                alert('Please enter some food items first!');
+                alert('Silakan masukkan makanan terlebih dahulu!');
                 return;
             }
 
@@ -154,8 +154,8 @@
                         resultText.innerHTML = `
                         <div class="success-result">
                             <strong>${data.menu.nama}</strong><br>
-                            <span class="calories-added">+${data.menu.kalori} Kcal added to today's intake</span><br>
-                            <span class="total-calories">Total today: ${data.total_today} Kcal</span>
+                            <span class="calories-added">+${data.menu.kalori} Kcal ditambahkan ke konsumsi hari ini</span><br>
+                            <span class="total-calories">Total hari ini: ${data.total_today} Kcal</span>
                         </div>
                     `;
 
@@ -170,9 +170,9 @@
                     } else {
                         resultText.innerHTML = `
                         <div class="error-result">
-                            <strong>Menu not found!</strong><br>
-                            <span>"${foodInput.value}" is not available in our database.</span><br>
-                            <span class="suggestion-text">Please try searching for a different menu item.</span>
+                            <strong>Menu tidak ditemukan!</strong><br>
+                            <span>"${foodInput.value}" tidak tersedia dalam database kami.</span><br>
+                            <span class="suggestion-text">Silakan coba mencari menu lain.</span>
                         </div>
                     `;
                         resultSection.style.display = 'block';
@@ -189,8 +189,8 @@
 
                     resultText.innerHTML = `
                     <div class="error-result">
-                        <strong>Error occurred!</strong><br>
-                        <span>Please try again later.</span>
+                        <strong>Terjadi kesalahan!</strong><br>
+                        <span>Silakan coba lagi nanti.</span>
                     </div>
                 `;
                     resultSection.style.display = 'block';

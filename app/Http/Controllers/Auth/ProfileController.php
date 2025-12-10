@@ -15,6 +15,7 @@ class ProfileController extends Controller
 
         // Calculate profile completion percentage
         $requiredFields = ['name', 'email', 'usia', 'jenis_kelamin', 'tb', 'bb', 'aktivitas'];
+        $totalItems = count($requiredFields) + 2; // +1 for photo, +1 for forum
         $completedCount = 0;
 
         foreach ($requiredFields as $field) {
@@ -23,12 +24,24 @@ class ProfileController extends Controller
             }
         }
 
-        $completionPercentage = round(($completedCount / count($requiredFields)) * 100);
+        // Check for profile photo
+        if (!empty($user->image_path)) {
+            $completedCount++;
+        }
+
+        // Check for forum participation
+        $hasForumActivity = $user->forumPosts()->exists() || $user->forumAnswers()->exists();
+        if ($hasForumActivity) {
+            $completedCount++;
+        }
+
+        $completionPercentage = round(($completedCount / $totalItems) * 100);
 
         return view('auth.profile', [
             'user' => $user,
             'loading' => false,
-            'completionPercentage' => $completionPercentage
+            'completionPercentage' => $completionPercentage,
+            'hasForumActivity' => $hasForumActivity
         ]);
     }
 

@@ -1,24 +1,26 @@
 <nav class="navbar-custom">
     <div class="logo">
         <img src="{{ asset('images/logogizi.png') }}" alt="logo" class="logo-icon">
-        CalorieTrack
+        Caloriest
     </div>
     <div class="nav-center">
         <a href="{{ route('homepage') }}" class="{{ request()->routeIs('homepage') ? 'active' : '' }}">
-            Homepage
+            Beranda
         </a>
         <a href="{{ route('calculator') }}" class="{{ request()->routeIs('calculator*') ? 'active' : '' }}">
-            Calculator
+            Kalkulator
         </a>
         <a href="{{ route('recomend') }}" class="{{ request()->routeIs('recomend*') ? 'active' : '' }}">
-            Recommendations
+            Rekomendasi
         </a>
-        <a href="{{ route('forum.forum') }}" class="{{ request()->routeIs('forum*') ? 'active' : '' }}">Forum</a>
+        <a href="{{ route('forum.forum') }}" class="{{ request()->routeIs('forum*') ? 'active' : '' }}">
+            Forum
+        </a>
         <a href="{{ route('profile.edit') }}" class="{{ request()->routeIs('profile*') ? 'active' : '' }}">
-            Profile
+            Profil
         </a>
     </div>
-    <button class="get_started" onclick="location.href='{{ route('register') }}'">Get Started</button>
+    <button class="get_started" onclick="location.href='{{ route('register') }}'">Mulai</button>
     <button class="mobile-menu-toggle">☰</button>
 </nav>
 
@@ -28,19 +30,40 @@
         const navCenter = document.querySelector('.nav-center');
         navCenter.classList.toggle('show');
         this.textContent = this.textContent === '☰' ? '✕' : '☰';
-
-
     });
 
     document.addEventListener('DOMContentLoaded', function() {
         const navbar = document.querySelector('.navbar-custom');
 
-        window.addEventListener('scroll', function() {
-            if (window.scrollY > 50) { // Mulai berubah setelah scroll 50px
-                navbar.classList.add('scrolled');
+        function updateNavbar() {
+            // Check scroll position from various possible sources
+            const scrollValues = [
+                window.scrollY,
+                window.pageYOffset,
+                document.documentElement.scrollTop,
+                document.body.scrollTop
+            ];
+            
+            // Get the maximum scroll value found
+            const currentScroll = Math.max(...scrollValues);
+
+            if (currentScroll > 50) {
+                if (!navbar.classList.contains('scrolled')) {
+                    navbar.classList.add('scrolled');
+                }
             } else {
-                navbar.classList.remove('scrolled');
+                if (navbar.classList.contains('scrolled')) {
+                    navbar.classList.remove('scrolled');
+                }
             }
-        });
+        }
+
+        // Listen to scroll on window and document components
+        window.addEventListener('scroll', updateNavbar, { passive: true });
+        document.addEventListener('scroll', updateNavbar, { passive: true });
+        document.body.addEventListener('scroll', updateNavbar, { passive: true });
+
+        // Initial check
+        updateNavbar();
     });
 </script>

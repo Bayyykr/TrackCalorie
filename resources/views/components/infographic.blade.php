@@ -12,26 +12,22 @@
         <div class="sdg-container">
             <img src="../images/icon/image_goals.png" alt="">
             <div class="positioned-text text-1">
-                The Sustainable Development Goals (SDGs) are a global blueprint adopted by all United Nations member
-                states in 2015 to end poverty, protect the planet, and ensure peace and prosperity for all by 2030.
+                Tujuan Pembangunan Berkelanjutan (SDGs) adalah cetak biru global yang diadopsi oleh seluruh negara anggota Perserikatan Bangsa-Bangsa pada tahun 2015 untuk mengakhiri kemiskinan, melindungi planet, dan memastikan perdamaian serta kesejahteraan bagi semua pada tahun 2030.
             </div>
             <div class="positioned-text text-2">
-                They provide a shared framework for countries to address major global challenges, such as poverty,
-                inequality, climate change, and environmental degradation.
+                SDGs menyediakan kerangka bersama bagi negara-negara untuk menangani tantangan global utama, seperti kemiskinan, ketimpangan, perubahan iklim, dan kerusakan lingkungan.
             </div>
             <div class="positioned-text text-3">
-                They serve as a guide for governments, organizations, and individuals to align their policies and
-                actions toward sustainable progress.
+                SDGs berfungsi sebagai panduan bagi pemerintah, organisasi, dan individu untuk menyelaraskan kebijakan serta tindakan mereka menuju kemajuan yang berkelanjutan.
             </div>
             <div class="positioned-text text-4">
-                They aim to create inclusive, resilient, and sustainable societies through long-term and equitable
-                development.
+                SDGs bertujuan menciptakan masyarakat yang inklusif, tangguh, dan berkelanjutan melalui pembangunan jangka panjang yang adil.
             </div>
             <div class="positioned-text text-5">
-                The SDGs consist of 17 goals and 169 specific targets.
+                SDGs terdiri dari 17 tujuan dan 169 target spesifik.
             </div>
             <div class="positioned-text text-6">
-                They emphasize leaving no one behind, ensuring the inclusion of vulnerable and marginalized populations.
+                SDGs menekankan prinsip “tidak meninggalkan siapa pun,” memastikan bahwa kelompok rentan dan terpinggirkan tetap mendapat perhatian.
             </div>
         </div>
     </div>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up - CalorieTrack</title>
+    <title>Daftar - Caloriest</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -759,7 +759,7 @@
     <nav class="navbar-custom">
         <div class="logo">
             <img src="{{ asset('images/logogizi.png') }}" alt="logo" class="logo-icon">
-            CalorieTrack
+            Caloriest
         </div>
         <div class="nav-center">
             <a href="#">Homepage</a>
@@ -773,7 +773,7 @@
     <div class="login-container">
         <div class="left-section">
             <div class="sign-up-form">
-                <h1 class="sign-up-header">Sign Up</h1>
+                <h1 class="sign-up-header">Daftar</h1>
 
                 <!-- Error/Success Messages -->
                 <div id="errorMessage" class="alert alert-danger d-none"></div>
@@ -782,50 +782,50 @@
                 <form id="signupForm">
                     @csrf
                     <div class="form-group">
-                        <label for="name" class="form-label">Name</label>
+                        <label for="name" class="form-label">Nama</label>
                         <input type="text" class="form-control" id="name" name="name"
-                            placeholder="Enter your full name" required>
+                            placeholder="Masukkan nama lengkap Anda" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="email" class="form-label">Email Address</label>
+                        <label for="email" class="form-label">Alamat Email</label>
                         <input type="email" class="form-control" id="email" name="email"
-                            placeholder="Enter your email address" required>
+                            placeholder="Masukkan alamat email Anda" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="password" class="form-label">Password</label>
+                        <label for="password" class="form-label">Kata Sandi</label>
                         <input type="password" class="form-control" id="password" name="password"
-                            placeholder="Create a password (min. 6 characters)" required>
+                            placeholder="Buat kata sandi (min. 6 karakter)" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="password_confirmation" class="form-label">Confirm Password</label>
+                        <label for="password_confirmation" class="form-label">Konfirmasi Kata Sandi</label>
                         <input type="password" class="form-control" id="password_confirmation"
-                            name="password_confirmation" placeholder="Confirm your password" required>
+                            name="password_confirmation" placeholder="Konfirmasi kata sandi Anda" required>
                     </div>
 
                     <div class="terms-checkbox">
                         <input type="checkbox" id="terms" required>
                         <label for="terms">
-                            By signing up you agree with the <a href="#">Privacy policy</a> and <a
-                                href="#">Terms</a> of
-                            CalorieTrack.
+                            Dengan mendaftar, Anda setuju dengan <a href="#">Kebijakan privasi</a> dan <a
+                                href="#">Syarat dan Ketentuan</a> dari
+                            Caloriest.
                         </label>
                     </div>
 
-                    <button type="submit" class="btn-signup">Sign up</button>
+                    <button type="submit" class="btn-signup">Daftar</button>
                 </form>
 
-                <div class="divider-title">Or sign up with</div>
+                <div class="divider-title">Atau daftar dengan</div>
 
                 <button class="google-signup">
                     <i class="fab fa-google"></i>
-                    Sign up with Google
+                    Daftar dengan Google
                 </button>
 
                 <div class="signin-link">
-                    Already have an account? <a href="{{ route('login') }}">Sign In</a>
+                    Sudah punya akun? <a href="{{ route('login') }}">Masuk</a>
                 </div>
             </div>
         </div>
@@ -899,27 +899,27 @@
 
             // Client-side validation
             if (!name || !email || !password || !passwordConfirmation) {
-                showMessage('Please fill in all required fields', 'error');
+                showMessage('Harap isi semua kolom yang wajib diisi', 'error');
                 return;
             }
 
             if (password.length < 6) {
-                showMessage('Password must be at least 6 characters long', 'error');
+                showMessage('Kata sandi harus terdiri dari minimal 6 karakter', 'error');
                 return;
             }
 
             if (!validatePasswords()) {
-                showMessage('Passwords do not match', 'error');
+                showMessage('Kata sandi tidak cocok', 'error');
                 return;
             }
 
             if (!terms) {
-                showMessage('Please accept the terms and conditions', 'error');
+                showMessage('Harap setujui syarat dan ketentuan', 'error');
                 return;
             }
 
             // Show loading state
-            btn.textContent = 'Creating account...';
+            btn.textContent = 'Sedang membuat akun...';
             btn.disabled = true;
 
             try {
@@ -942,7 +942,7 @@
 
                 if (response.ok && data.success) {
                     showMessage(data.message, 'success');
-                    btn.textContent = '✓ Account created!';
+                    btn.textContent = '✓ Akun berhasil dibuat!';
                     btn.style.background = '#2e7d32';
 
                     // Reset form
@@ -958,7 +958,7 @@
                         const firstError = Object.values(data.errors)[0];
                         showMessage(Array.isArray(firstError) ? firstError[0] : firstError, 'error');
                     } else {
-                        showMessage(data.message || 'Registration failed. Please try again.', 'error');
+                        showMessage(data.message || 'Pendaftaran gagal. Silakan coba lagi.', 'error');
                     }
 
                     btn.textContent = originalText;
@@ -967,7 +967,7 @@
                 }
             } catch (error) {
                 console.error('Registration error:', error);
-                showMessage('Network error. Please check your connection and try again.', 'error');
+                showMessage('Kesalahan jaringan. Harap periksa koneksi Anda dan coba lagi.', 'error');
 
                 btn.textContent = originalText;
                 btn.style.background = '#4caf50';

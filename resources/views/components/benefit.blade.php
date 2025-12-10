@@ -1,7 +1,7 @@
 <section class="main-section">
     <!-- Header Section -->
     <div class="section-header">
-        <h1>Benefits – Why Use CalorieTrack?</h1>
+        <h1>Manfaat – Mengapa Menggunakan Caloriest?</h1>
     </div>
 
     <!-- Main Content -->
@@ -13,9 +13,8 @@
                     <img src="../images/icon/icon1.png" alt="Free and easy to use">
                 </div>
                 <div class="benefit-content">
-                    <h3>Free and easy to use</h3>
-                    <p>CalorieTrack is completely free and designed with a user-friendly interface, making it accessible
-                        for everyone.</p>
+                    <h3>Gratis dan mudah digunakan</h3>
+                    <p>Caloriest sepenuhnya gratis dan dirancang dengan antarmuka yang ramah pengguna, sehingga dapat diakses oleh semua orang.</p>
                 </div>
             </div>
 
@@ -24,9 +23,8 @@
                     <img src="../images/icon/icon2.png" alt="Science-based">
                 </div>
                 <div class="benefit-content">
-                    <h3>Science-based</h3>
-                    <p>All features and recommendations are grounded in reliable nutritional science to ensure accuracy
-                        and effectiveness.</p>
+                    <h3>Berbasis Ilmu</h3>
+                    <p>Semua fitur dan rekomendasi didasarkan pada ilmu gizi yang terpercaya untuk memastikan akurasi dan efektivitas.</p>
                 </div>
             </div>
 
@@ -35,9 +33,8 @@
                     <img src="../images/icon/icon3.png" alt="Suitable for all ages">
                 </div>
                 <div class="benefit-content">
-                    <h3>Suitable for all ages</h3>
-                    <p>Whether you're a student, an adult, or a senior, CalorieTrack is tailored to support health goals
-                        across different age groups.</p>
+                    <h3>Cocok untuk semua usia</h3>
+                    <p>Baik Anda seorang pelajar, dewasa, maupun lansia, Caloriest dirancang untuk mendukung tujuan kesehatan di berbagai kelompok usia.</p>
                 </div>
             </div>
         </div>
@@ -46,7 +43,7 @@
         <div class="main-visual">
             <div class="laptop-container">
                 <div class="splash-effect"></div>
-                <img src="../images/icon/jadi1.png" alt="CalorieTrack App on Laptop" class="laptop-image">
+                <img src="../images/icon/jadi1.png" alt="Caloriest App on Laptop" class="laptop-image">
             </div>
         </div>
     </div>

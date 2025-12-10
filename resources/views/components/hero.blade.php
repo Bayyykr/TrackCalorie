@@ -3,17 +3,19 @@
         <div class="login-container">
             <div class="left-section">
                 <div class="sign-in-form">
-                    <h1 class="judul">Track Your Calories, Transform Your Health</h1>
-                    <p class="description_hero">An educational platform designed to help you understand the importance
-                        of balanced nutrition, calculate your daily calorie needs, and build healthy habits empowering
-                        you to reach your personal health and wellness goals with confidence</p>
+                    <h1 class="judul">Lacak Kalorimu, Wujudkan Kesehatanmu</h1>
+                    <p class="description_hero">
+                        Sebuah platform edukasi yang dirancang untuk membantu kamu memahami pentingnya nutrisi seimbang,
+                        menghitung kebutuhan kalori harian, dan membangun kebiasaan sehat—memberdayakan kamu untuk
+                        mencapai tujuan kesehatan dan kebugaran pribadi dengan percaya diri.
+                    </p>
                 </div>
                 <div class="main-features">
-                    <h3>Main Fixtures <span class="flame-icon">🔥</span></h3>
+                    <h3>Fitur Utama <span class="flame-icon">🔥</span></h3>
                     <div class="features-grid">
                         <div class="feature-card">
                             <div class="card-content">
-                                <h4>Calories<br>Calculator</h4>
+                                <h4>Kalkulator<br>Kalori</h4>
                             </div>
                             <div class="card-icon">
                                 <img src="{{ asset('images/icon/calcu.png') }}" alt="calculate">
@@ -21,7 +23,7 @@
                         </div>
                         <div class="feature-card">
                             <div class="card-content">
-                                <h4>Recommen<br>dations</h4>
+                                <h4>Rekomendasi<br>Makanan</h4>
                             </div>
                             <div class="card-icon">
                                 <img src="{{ asset('images/icon/resto.png') }}" alt="calculate">
@@ -29,7 +31,7 @@
                         </div>
                         <div class="feature-card">
                             <div class="card-content">
-                                <h4>Forum<br>Discussion</h4>
+                                <h4>Forum<br>Diskusi</h4>
                             </div>
                             <div class="card-icon">
                                 <img src="{{ asset('images/icon/chat.png') }}" alt="calculate">

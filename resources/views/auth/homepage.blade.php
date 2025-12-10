@@ -5,7 +5,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Nutrition Dashboard</title>
+        <title>Dasbor Nutrisi</title>
         <link rel="stylesheet" href="{{ asset('css/homepage.css') }}">
         <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
 
@@ -272,7 +272,7 @@
                 <div class="header-card">
                     <div class="header-date">{{ $currentDateTime }}</div>
                     <div class="header-title">{{ $greeting }}<br>{{ Auth::user()->name }}</div>
-                    <div class="header-subtitle">Have a nice {{ $currentDay }}!</div>
+                    <div class="header-subtitle">Semoga harimu menyenangkan di hari {{ $currentDay }}!</div>
                     <div class="header-illustration">
                     </div>
                 </div>
@@ -283,11 +283,11 @@
                             <div class="status-icon">
                                 <img src="{{ asset('images/icon/clipboard.png') }}" alt="">
                             </div>
-                            Today's status
+                            Status hari ini
                         </div>
                         <div class="calorie-number">{{ number_format($calorieConsumed, 0, ',', '.') }}</div>
                         @if ($calorieNeeds)
-                            <div class="calorie-subtitle">of {{ number_format($calorieNeeds, 0, ',', '.') }} kcal per day
+                            <div class="calorie-subtitle">dari {{ number_format($calorieNeeds, 0, ',', '.') }} kkal per hari
                             </div>
                         @else
                             <div class="calorie-subtitle">Data tidak lengkap untuk menghitung kalori.</div>
@@ -296,35 +296,35 @@
                             <div class="progress-fill" style="width: {{ $caloriePercentage }}%"></div>
                         </div>
                         <div class="calories-info">
-                            <div class="calories-label">Calories less</div>
-                            <div class="calories-value">Less {{ $lessCalorie }} kcal</div>
+                            <div class="calories-label">Kurang kalori</div>
+                            <div class="calories-value">Kurang {{ $lessCalorie }} kkal</div>
                         </div>
-                        <button class="food-recommendations-btn">Food Recommendations</button>
+                        <button class="food-recommendations-btn">Rekomendasi Makanan</button>
                     </div>
 
                     <!-- Results Assessment -->
                     <div class="results-card">
-                        <div class="results-title">Results assessment</div>
+                        <div class="results-title">Penilaian hasil</div>
                         <div class="bmr-info">
-                            <div class="bmr-label">Basal Metabolic Rate (BMR)</div>
-                            <div class="bmr-value">{{ number_format($bmr, 0, ',', '.') }} kcal/day</div>
+                            <div class="bmr-label">Laju Metabolisme Basal (BMR)</div>
+                            <div class="bmr-value">{{ number_format($bmr, 0, ',', '.') }} kkal/hari</div>
                         </div>
 
                         <div class="bmr-info">
-                            <div class="bmr-label">Total Daily Energy Expenditue </div>
-                            <div class="bmr-value">{{ number_format($tdee, 0, ',', '.') }} kcal/day</div>
+                            <div class="bmr-label">Total Pengeluaran Energi Harian</div>
+                            <div class="bmr-value">{{ number_format($tdee, 0, ',', '.') }} kkal/hari</div>
                         </div>
 
                         <div class="bmr-info">
-                            <div class="bmr-label">Body Mass Index (BMI) </div>
+                            <div class="bmr-label">Indeks Massa Tubuh (BMI) </div>
                             <div class="bmr-value">{{ number_format($bmi, 1, ',', '.') }}</div>
                         </div>
-                        <div class="last-title">Based the Harris-Benedict Formula and your activity level</div>
+                        <div class="last-title">Berdasarkan Rumus Harris-Benedict dan tingkat aktivitas Anda</div>
                     </div>
 
                     {{-- GRAFIK - DIPERBAIKI --}}
                     <div class="progress-container">
-                        <h2 class="chart-title">Weekly Progress</h2>
+                        <h2 class="chart-title">Kemajuan Mingguan</h2>
 
                         <div class="chart-wrapper">
                             <div class="chart-container">
@@ -334,7 +334,7 @@
                             <div class="legend-custom">
                                 <div class="legend-item">
                                     <div class="legend-color legend-calories"></div>
-                                    <span>Calories</span>
+                                    <span>Kalori</span>
                                 </div>
                                 <div class="legend-item">
                                     <div class="legend-color legend-target"></div>
@@ -345,7 +345,7 @@
                     </div>
                     {{-- dayly breakdown --}}
                     <div class="daily-breakdown-container">
-                        <h2 class="chart-title">Daily Breakdown</h2>
+                        <h2 class="chart-title">Rincian Harian</h2>
 
                         <div class="chart-wrapper">
                             <div class="chart-container">
@@ -355,7 +355,7 @@
                             <div class="legend-custom">
                                 <div class="legend-item">
                                     <div class="legend-color legend-calories"></div>
-                                    <span>Calories</span>
+                                    <span>Kalori</span>
                                 </div>
                                 <div class="legend-item">
                                     <div class="legend-color legend-target"></div>
@@ -372,7 +372,7 @@
                 <!-- Profile Card -->
                 <div class="profile-card">
                     <div class="profile-header">
-                        <div class="profile-title">MY PROFILE</div>
+                        <div class="profile-title">PROFIL SAYA</div>
                         <div class="profile-icon">
 
                         </div>
@@ -389,9 +389,9 @@
                     <div class="profile-name">{{ Auth::user()->name }}</div>
                     {{-- <div class="profile-status">Maintain Weight</div> --}}
                     <div class="profile-stats">
-                        <span>Age now</span>
-                        <span>Weight now</span>
-                        <span>Height now</span>
+                        <span>Usia sekarang</span>
+                        <span>Berat sekarang</span>
+                        <span>Tinggi sekarang</span>
                     </div>
                     <div class="profile-values">
                         <span>{{ $user->usia }} tahun</span>
@@ -403,7 +403,7 @@
                 <!-- Calendar Card -->
                 <div class="calendar-card">
                     <div class="calendar-header">
-                        <div class="calendar-title">MY CALENDAR</div>
+                        <div class="calendar-title">KALENDER SAYA</div>
                         <div class="calendar-month" id="current-month">June</div>
                     </div>
                     <div class="calendar-grid" id="calendar-grid">
@@ -428,9 +428,9 @@
                 }
 
                 const chartData = {
-                    labels: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
+                    labels: ['MIN', 'SEN', 'SEL', 'RAB', 'KAM', 'JUM', 'SAT'],
                     datasets: [{
-                        label: 'Calories',
+                        label: 'Kalori',
                         data: {!! json_encode($chartData) !!},
                         backgroundColor: 'rgba(102, 126, 234, 0.3)',
                         borderColor: 'rgba(102, 126, 234, 1)',
@@ -569,9 +569,9 @@
             document.addEventListener('DOMContentLoaded', function() {
                 // Data untuk daily breakdown chart
                 const dailyChartData = {
-                    labels: ['Breakfast', 'Lunch', 'Dinner', 'Snacks'],
+                    labels: ['Sarapan', 'Makan Siang', 'Makan Malam', 'Camilan'],
                     datasets: [{
-                        label: 'Calories',
+                        label: 'Kalori',
                         data: [500, 800, 700, 300],
                         backgroundColor: 'rgba(139, 92, 246, 0.7)',
                         borderColor: 'rgba(139, 92, 246, 1)',
@@ -598,7 +598,7 @@
                             tooltip: {
                                 callbacks: {
                                     label: function(context) {
-                                        return context.dataset.label + ': ' + context.raw + ' kcal';
+                                        return context.dataset.label + ': ' + context.raw + ' kkal';
                                     }
                                 }
                             }
@@ -689,9 +689,9 @@
                 const day = today.getDate();
                 const month = today.getMonth();
                 const year = today.getFullYear();
-                const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-                const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
-                    'October', 'November', 'December'
+                const daysOfWeek = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
+                const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September',
+                    'Oktober', 'November', 'Desember'
                 ];
 
                 // Set bulan saat ini
@@ -753,7 +753,7 @@
                 const scheduleItems = document.getElementById('schedule-items');
                 const sampleEvent = {
                     time: '2:00 pm',
-                    activity: 'eat sate madura'
+                    activity: 'makan sate madura'
                 };
 
                 // Contoh: tambahkan 2 acara di jam yang sama
@@ -768,6 +768,22 @@
                 }
             });
         </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollContainer = document.querySelector('.scrollable-content');
+            const navbar = document.querySelector('.navbar-custom');
+
+            if (scrollContainer && navbar) {
+                scrollContainer.addEventListener('scroll', function() {
+                    if (scrollContainer.scrollTop > 50) {
+                        navbar.classList.add('scrolled');
+                    } else {
+                        navbar.classList.remove('scrolled');
+                    }
+                });
+            }
+        });
+    </script>
     </body>
 
     </html>

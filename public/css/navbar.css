@@ -22,7 +22,7 @@
 }
 
 .navbar-custom.scrolled {
-    background: white;
+    background: white !important;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Shadow untuk efek "mengambang" */
 }
 

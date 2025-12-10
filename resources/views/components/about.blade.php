@@ -12,17 +12,13 @@
         </div>
 
         <div class="content">
-            <h1>About CalorieTrack</h1>
+            <h1>Tentang Caloriest</h1>
             <p>
-                CalorieTrack is an educational website that raises awareness about
-                balanced calorie intake and healthy habits. It offers tools and information
-                to help users make smarter food choices and supports SDG 3:
-                Good Health and Well-being by promoting nutrition education
-                and daily self-monitoring.
+                Caloriest adalah situs edukasi yang meningkatkan kesadaran tentang asupan kalori seimbang dan kebiasaan sehat. Situs ini menawarkan alat dan informasi untuk membantu pengguna membuat pilihan makanan yang lebih cerdas serta mendukung SDG 3: Kesehatan yang Baik dan Kesejahteraan dengan mempromosikan pendidikan gizi dan pemantauan diri harian.
             </p>
 
             <div class="developer-section">
-                <h2>Developer Team</h2>
+                <h2>Tim Pengembang</h2>
                 <div class="developer-team">
                     <div class="developer-card">
                         <div class="developer-avatar">

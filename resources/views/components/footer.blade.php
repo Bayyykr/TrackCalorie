@@ -9,43 +9,20 @@
 
 <!-- Footer -->
 <footer>
-    <div class="footer-container">
-        <!-- Main Navigation -->
-        <div class="footer-nav">
-            <div>
-                <h4>Pages</h4>
-            </div>
-            <div>
-                <h4>About us</h4>
-            </div>
-            <div>
-                <h4>Features</h4>
-            </div>
-            <div>
-                <h4>Benefits</h4>
-            </div>
-            <div>
-                <h4>SDGs</h4>
-            </div>
-            <div>
-                <h4>Sign in</h4>
-            </div>
-        </div>
-
         <!-- Secondary Links -->
         <div class="footer-links">
-            <a href="#">Terms & conditions</a>
-            <a href="#">Privacy policy</a>
-            <a href="#">Contact</a>
-            <a href="#">Cookie policy</a>
-            <a href="#">Support</a>
+            <a href="#">Syarat & Ketentuan</a>
+            <a href="#">Kebijakan Privasi</a>
+            <a href="#">Kontak</a>
+            <a href="#">Kebijakan Cookie</a>
+            <a href="#">Dukungan</a>
         </div>
 
         <!-- Contact Section -->
         <div class="footer-contact-section">
-            <div class="footer-contact-title">📞 Contact & Social Media</div>
+            <div class="footer-contact-title">📞 Kontak & Media Sosial</div>
             <div class="footer-contact-info">
-                Instagram: <a href="https://instagram.com/calorietrack" target="_blank">@calorietrack</a>
+                Instagram: <a href="https://instagram.com/caloriest" target="_blank">@caloriest</a>
             </div>
             <div class="footer-contact-info">
                 Email: <a href="mailto:ananghyeong@gmail.com">ananghyeong@gmail.com</a>
@@ -56,8 +33,8 @@
     <!-- Copyright -->
     <div class="footer-copyright">
         <div class="footer-container">
-            <p>© 2025 CalorieTrack. All rights reserved.</p>
-            <p>Developed by Team CalorieTrack – Informatics Engineering, Jember.</p>
+            <p>© 2025 Caloriest. Semua hak dilindungi.</p>
+            <p>Dikembangkan oleh Tim Caloriest – Teknik Informatika, Jember.</p>
         </div>
     </div>
 </footer>

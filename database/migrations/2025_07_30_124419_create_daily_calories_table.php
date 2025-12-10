@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('daily_calories');
         Schema::create('daily_calories', function (Blueprint $table) {
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('menu_id')->constrained('menu')->onDelete('cascade');
+            $table->unsignedInteger('menu_id');
+        $table->foreign('menu_id')->references('id_menu')->on('menu')->onDelete('cascade');
             $table->integer('calories');
             $table->date('date');
             $table->timestamps();

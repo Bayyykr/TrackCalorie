@@ -15,14 +15,8 @@
             <div class="question">
                 <div class="question-header">
 
-                    {{-- @php
-                        $userAvatar = isset($post->user->avatar_url)
-                            ? $post->user->avatar_url
-                            : asset('images/default-avatar.png');
-                        $userName = isset($post->user->name) ? $post->user->name : 'Deleted User';
-                    @endphp --}}
                     @php
-                        $userName = isset($post->user->name) ? $post->user->name : 'Deleted User';
+                        $userName = isset($post->user->name) ? $post->user->name : 'Pengguna Dihapus';
                     @endphp
                     @auth
                         <img src="{{ asset('storage/' . Auth::user()->image_path) }}" alt="{{ $userName }}"
@@ -30,8 +24,8 @@
                     @endauth
                     <div class="question-meta">
                         <div class="question-author">{{ $userName }}</div>
-                        <div class="question-date">Asked June 20, 2025 <span class="question-tag">Build Muscle
-                                Mass</span>
+                        <div class="question-date">Ditanyakan pada 20 Juni 2025 
+                            <span class="question-tag">Membangun Massa Otot</span>
                         </div>
                     </div>
                 </div>
@@ -46,7 +40,7 @@
                             $answerUserAvatar = isset($answer->user->avatar_url)
                                 ? $answer->user->avatar_url
                                 : asset('images/default-avatar.png');
-                            $answerUserName = isset($answer->user->name) ? $answer->user->name : 'Deleted User';
+                            $answerUserName = isset($answer->user->name) ? $answer->user->name : 'Pengguna Dihapus';
                         @endphp
                         @auth
                             <img src="{{ asset('storage/' . Auth::user()->image_path) }}" alt="{{ $answerUserName }}"
@@ -54,8 +48,8 @@
                         @endauth
                         <div class="answer-meta">
                             <div class="answer-author">{{ $answerUserName }}</div>
-                            <div class="answer-date">Asked June 20, 2025 <span class="question-tag">Build Muscle
-                                    Mass</span>
+                            <div class="answer-date">Dijawab pada 20 Juni 2025 
+                                <span class="question-tag">Membangun Massa Otot</span>
                             </div>
                         </div>
                     </div>
@@ -66,7 +60,7 @@
             <form action="{{ route('forum.answer.store') }}" method="POST" class="response-box" id="answerForm">
                 @csrf
                 <input type="hidden" name="post_id" value="{{ $post->id }}">
-                <textarea class="response-input" name="content" placeholder="Enter your response here!" rows="1" required>{{ old('content', '') }}</textarea>
+                <textarea class="response-input" name="content" placeholder="Masukkan jawaban Anda di sini!" rows="1" required>{{ old('content', '') }}</textarea>
                 <button type="submit" class="send-button">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
@@ -75,7 +69,7 @@
             </form>
         @else
             <div class="alert alert-danger">
-                Question not found.
+                Pertanyaan tidak ditemukan.
             </div>
         @endif
     </div>
@@ -87,12 +81,12 @@
         const textarea = form.querySelector('textarea');
 
         // Cek jika halaman dimuat ulang setelah submit berhasil
-        if (performance.navigation.type === 1) { // 1 berarti page was reloaded
+        if (performance.navigation.type === 1) { // 1 berarti halaman di-reload
             textarea.value = ''; // Kosongkan textarea
         }
 
         form.addEventListener('submit', function() {
-            // Set timeout untuk mengosongkan textarea setelah form submit
+            // Kosongkan textarea setelah form disubmit
             setTimeout(function() {
                 textarea.value = '';
             }, 100);

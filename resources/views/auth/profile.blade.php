@@ -4,22 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile</title>
-    <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
+    <title>Profil</title>
     <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
-    <style>
-
-    </style>
+    <link rel="stylesheet" href="{{ asset('css/profile.css') }}?v={{ time() }}">
 </head>
 
 <body>
     @include('components.navbar')
-    <div class="container">
+    <div class="profile-container">
         <div class="profile-section">
-            <h1 class="section-title">Edit Profile</h1>
+            <h1 class="section-title">Edit Profil</h1>
 
             @if ($loading)
-                <div class="loading">Loading profile data...</div>
+                <div class="loading">Memuat data profil...</div>
             @endif
 
             @if ($errors->any())
@@ -33,7 +30,7 @@
                     <div class="photo-circle" id="profilePhotoDisplay">
                         @if ($user->image_path && Storage::disk('public')->exists($user->image_path))
                             <img src="{{ asset('storage/' . $user->image_path) }}?v={{ time() }}"
-                                alt="Profile Photo">
+                                alt="Foto Profil">
                         @else
                             <span id="photoInitial">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
                         @endif
@@ -43,18 +40,18 @@
                             id="photoUploadForm">
                             @csrf
                             <div class="upload-btn">
-                                Upload new photo
+                                Unggah foto baru
                                 <input type="file" id="photoUpload" name="photo"
                                     accept="image/jpeg,image/png,image/jpg"
                                     onchange="document.getElementById('photoUploadForm').submit()">
                             </div>
                         </form>
-                        <div class="photo-info">At least 800 x 800 x recommended<br>JPG or PNG is allowed</div>
+                        <div class="photo-info">Minimal 800 x 800 disarankan<br>JPG atau PNG diperbolehkan</div>
                     </div>
                 </div>
 
                 <div class="personal-info-header">
-                    <h2 style="font-size: 18px; color: #333; font-weight: 600; margin: 0;">Personal Informations</h2>
+                    <h2 style="font-size: 18px; color: #333; font-weight: 600; margin: 0;">Informasi Pribadi</h2>
                     <button type="button" class="edit-toggle-btn" id="editToggleBtn" onclick="toggleAllEdit()">
                         <span class="edit-icon">✎</span>
                         <span id="editBtnText">Edit</span>
@@ -66,36 +63,36 @@
                     @method('PUT')
 
                     <div class="form-group">
-                        <label class="form-label">Full Name</label>
+                        <label class="form-label">Nama Lengkap</label>
                         <input type="text" class="form-input editable-field" id="name" name="name"
-                            value="{{ old('name', $user->name) }}" placeholder="Enter your full name" readonly>
+                            value="{{ old('name', $user->name) }}" placeholder="Masukkan nama lengkap Anda" readonly>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label">Height (cm)</label>
+                        <label class="form-label">Tinggi (cm)</label>
                         <input type="number" class="form-input editable-field" id="tb" name="tb"
-                            value="{{ old('tb', $user->tb) }}" placeholder="Enter height in cm" readonly>
+                            value="{{ old('tb', $user->tb) }}" placeholder="Masukkan tinggi dalam cm" readonly>
                     </div>
 
                     <div class="form-group full-width">
                         <label class="form-label">Email</label>
                         <input type="email" class="form-input editable-field" id="email" name="email"
-                            value="{{ old('email', $user->email) }}" placeholder="Enter your email" readonly>
+                            value="{{ old('email', $user->email) }}" placeholder="Masukkan email Anda" readonly>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label">Weight (kg)</label>
+                        <label class="form-label">Berat (kg)</label>
                         <input type="number" class="form-input editable-field" id="bb" name="bb"
-                            value="{{ old('bb', $user->bb) }}" placeholder="Enter weight in kg" readonly>
+                            value="{{ old('bb', $user->bb) }}" placeholder="Masukkan berat dalam kg" readonly>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Age</label>
+                        <label class="form-label">Usia</label>
                         <input type="number" class="form-input editable-field" id="usia" name="usia"
-                            value="{{ old('usia', $user->usia) }}" placeholder="Enter your age" readonly>
+                            value="{{ old('usia', $user->usia) }}" placeholder="Masukkan usia Anda" readonly>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label">Password</label>
+                        <label class="form-label">Kata Sandi</label>
                         <div class="password-container">
                             <input type="password" class="form-input editable-field" id="password" name="password"
                                 value="********" placeholder="********" readonly
@@ -107,46 +104,46 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label">Activity Level</label>
+                    <div class="form-group">
+                        <label class="form-label">Tingkat Aktivitas</label>
                         <select class="form-input editable-field" id="aktivitas" name="aktivitas" disabled>
-                            <option value="">Select activity level</option>
+                            <option value="">Pilih tingkat aktivitas</option>
                             <option value="Sedentary"
-                                {{ old('aktivitas', $user->aktivitas) == 'Sedentary' ? 'selected' : '' }}>Sedentary
+                                {{ old('aktivitas', $user->aktivitas) == 'Sedentary' ? 'selected' : '' }}>Sedenter
                             </option>
                             <option value="Lightly Active"
-                                {{ old('aktivitas', $user->aktivitas) == 'Lightly Active' ? 'selected' : '' }}>Lightly
-                                Active</option>
+                                {{ old('aktivitas', $user->aktivitas) == 'Lightly Active' ? 'selected' : '' }}>Aktif Ringan</option>
                             <option value="Moderately Active"
                                 {{ old('aktivitas', $user->aktivitas) == 'Moderately Active' ? 'selected' : '' }}>
-                                Moderately Active</option>
+                                Cukup Aktif</option>
                             <option value="Very Active"
-                                {{ old('aktivitas', $user->aktivitas) == 'Very Active' ? 'selected' : '' }}>Very Active
+                                {{ old('aktivitas', $user->aktivitas) == 'Very Active' ? 'selected' : '' }}>Sangat Aktif
                             </option>
                             <option value="Extra Active"
                                 {{ old('aktivitas', $user->aktivitas) == 'Extra Active' ? 'selected' : '' }}>
-                                Extra Active</option>
+                                Ekstra Aktif</option>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label">Gender</label>
+                        <label class="form-label">Jenis Kelamin</label>
                         <select class="form-input editable-field" id="jenis_kelamin" name="jenis_kelamin" disabled>
-                            <option value="">Select gender</option>
+                            <option value="">Pilih jenis kelamin</option>
                             <option value="L"
-                                {{ old('jenis_kelamin', $user->jenis_kelamin) == 'L' ? 'selected' : '' }}>Male</option>
+                                {{ old('jenis_kelamin', $user->jenis_kelamin) == 'L' ? 'selected' : '' }}>Laki-laki</option>
                             <option value="P"
-                                {{ old('jenis_kelamin', $user->jenis_kelamin) == 'P' ? 'selected' : '' }}>Female
+                                {{ old('jenis_kelamin', $user->jenis_kelamin) == 'P' ? 'selected' : '' }}>Perempuan
                             </option>
                         </select>
                     </div>
 
-                    <button class="save-btn" id="saveBtn" type="submit" disabled>Save</button>
+                    <button class="save-btn" id="saveBtn" type="submit" disabled>Simpan</button>
                 </form>
             </div>
         </div>
-
-        <div class="progress-section">
-            <h2 class="section-title">Complete your profile</h2>
+    </div>
+    <div class="progress-section">
+            <h2 class="section-title">Lengkapi profil Anda</h2>
 
             <div class="progress-circle">
                 <div class="circle-progress" id="progressCircle">
@@ -157,29 +154,28 @@
             <ul class="checklist" id="progressChecklist">
                 <li class="checklist-item">
                     <span class="check-icon {{ $user->email ? '' : 'incomplete' }}" id="check-account">✓</span>
-                    <span>Setup account</span>
+                    <span>Pengaturan akun</span>
                 </li>
                 <li class="checklist-item">
                     <span class="check-icon {{ $user->image_path ? '' : 'incomplete' }}" id="check-photo">✓</span>
-                    <span>Upload photo</span>
+                    <span>Unggah foto</span>
                 </li>
                 <li class="checklist-item">
                     <span class="check-icon {{ $user->aktivitas ? '' : 'incomplete' }}"
                         id="check-assessment">✓</span>
-                    <span>Assessment completed</span>
+                    <span>Penilaian selesai</span>
                 </li>
                 <li class="checklist-item">
                     <span class="check-icon {{ $user->name && $user->usia ? '' : 'incomplete' }}"
                         id="check-info">✓</span>
-                    <span>Personal information</span>
+                    <span>Informasi pribadi</span>
                 </li>
                 <li class="checklist-item">
-                    <span class="check-icon incomplete" id="check-forum">✓</span>
-                    <span>Join a forum</span>
+                    <span class="check-icon {{ $hasForumActivity ? '' : 'incomplete' }}" id="check-forum">✓</span>
+                    <span>Bergabung di forum</span>
                 </li>
             </ul>
         </div>
-    </div>
 
     <script>
         let isEditMode = false;
@@ -223,7 +219,7 @@
             }
 
             if (isEditMode) {
-                editBtnText.textContent = 'Done';
+                editBtnText.textContent = 'Selesai';
                 editBtn.style.color = '#667eea';
                 saveBtn.disabled = false;
             } else {

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In - CalorieTrack</title>
+    <title>Masuk - Caloriest</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
     <link rel="stylesheet" href="{{ asset('css/login.css') }}">
@@ -16,7 +16,7 @@
     <div class="login-container">
         <div class="left-section">
             <div class="sign-in-form">
-                <h1 class="sign-in-header">Sign in to your account</h1>
+                <h1 class="sign-in-header">Masuk ke akun Anda</h1>
 
                 <!-- Error Messages -->
                 <div id="errorMessage" class="alert alert-danger d-none"></div>
@@ -25,31 +25,31 @@
                 <form id="loginForm">
                     @csrf
                     <div class="form-group">
-                        <label for="email" class="form-label">Email Address</label>
+                        <label for="email" class="form-label">Alamat Email</label>
                         <input type="email" class="form-control" id="email" name="email"
-                            placeholder="Enter your email address" required>
+                            placeholder="Masukkan alamat email Anda" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="password" class="form-label">Password</label>
+                        <label for="password" class="form-label">Kata Sandi</label>
                         <input type="password" class="form-control" id="password" name="password"
-                            placeholder="Enter your password" required>
+                            placeholder="Masukkan kata sandi Anda" required>
                     </div>
 
                     <div class="remember-forgot">
                         <div class="remember-me">
                             <input type="checkbox" id="remember" name="remember">
-                            <label for="remember">Remember me</label>
+                            <label for="remember">Ingat saya</label>
                         </div>
                         <div class="forgot-password">
-                            <a href="#">Forgot password?</a>
+                            <a href="#">Lupa kata sandi?</a>
                         </div>
                     </div>
 
-                    <button type="submit" class="btn-signin">Sign in</button>
+                    <button type="submit" class="btn-signin">Masuk</button>
 
                     <div class="signup-link">
-                        Don't have an account? <a href="{{ route('register') }}">Sign up now</a>
+                        Belum punya akun? <a href="{{ route('register') }}">Daftar sekarang</a>
                     </div>
                 </form>
             </div>
@@ -98,12 +98,12 @@
 
             // Basic validation
             if (!email || !password) {
-                showMessage('Please fill in all required fields', 'error');
+                showMessage('Harap isi semua kolom yang wajib diisi', 'error');
                 return;
             }
 
             // Disable button and show loading state
-            btn.textContent = 'Signing in...';
+            btn.textContent = 'Sedang masuk...';
             btn.disabled = true;
 
             try {

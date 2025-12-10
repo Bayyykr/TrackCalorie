@@ -6,7 +6,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>Food Menu - Scrollable Layout</title>
+        <title>Menu Makanan</title>
         <link rel="stylesheet" href="{{ asset('css/recomend.css') }}">
         <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
         <style>
@@ -43,23 +43,23 @@
         @include('components.navbar')
 
         <header class="header">
-            <h1 class="greeting">Hello {{ Auth::user()->name }}</h1>
+            <h1 class="greeting">Halo {{ Auth::user()->name }}</h1>
             <div class="underline"></div>
-            <p class="subtitle">Pick one category to filter meals or search by name</p>
+            <p class="subtitle">Pilih satu kategori untuk menyaring makanan atau cari berdasarkan nama</p>
 
             <div class="search-container">
                 <div class="search-box">
-                    <input type="text" class="search-input" id="searchInput" placeholder="Search your meals">
+                    <input type="text" class="search-input" id="searchInput" placeholder="Cari makanan Anda">
                     <button class="search-btn" id="searchBtn">🔍</button>
                 </div>
-                <p>or</p>
+                <p>atau</p>
                 <select class="dropdown" id="categoryFilter">
-                    <option value="all">Select your dining preference</option>
+                    <option value="all">Pilih preferensi makan Anda</option>
                     @foreach ($categories as $category)
                         <option value="{{ $category }}">{{ $category }}</option>
                     @endforeach
                 </select>
-                <button class="my-list-btn" type="button">My list menu</button>
+                <button class="my-list-btn" type="button">Menu pilihan saya</button>
             </div>
         </header>
 
@@ -96,7 +96,7 @@
                                                 </span>
                                             </div>
                                         @endif
-                                        <button class="food-card-button">Read more</button>
+                                        <button class="food-card-button">Baca selengkapnya</button>
                                     </div>
                                 </div>
                             @endforeach
@@ -111,8 +111,8 @@
             <div class="popup-container">
                 <img src="{{ asset('images/chef.png') }}" alt="Menu Header" class="popup-header-image">
                 <div class="popup-content">
-                    <h3 class="popup-title">Welcome to your menu!</h3>
-                    <p class="popup-message">Here is the list of menus you have saved</p>
+                    <h3 class="popup-title">Selamat datang di menu Anda!</h3>
+                    <p class="popup-message">Berikut adalah daftar menu yang telah Anda simpan</p>
 
                     <div class="menu-list" id="userMenuList">
                         <!-- Data akan diisi oleh JavaScript -->
@@ -204,7 +204,7 @@
                 if (!section.querySelector('.loading-overlay')) {
                     const loadingDiv = document.createElement('div');
                     loadingDiv.className = 'loading-overlay';
-                    loadingDiv.innerHTML = 'Loading recommendations...';
+                    loadingDiv.innerHTML = 'Memuat rekomendasi...';
                     section.appendChild(loadingDiv);
                 }
 
@@ -241,9 +241,9 @@
                     console.error('Error filtering recommendations:', error);
                     container.innerHTML = `
                     <div style="text-align: center; padding: 40px; color: #666;">
-                        <p>Failed to load recommendations</p>
+                        <p>Gagal memuat rekomendasi</p>
                         <button onclick="location.reload()" style="padding: 10px 20px; background: #4caf50; color: white; border: none; border-radius: 5px; cursor: pointer;">
-                            Reload Page
+                            Muat Ulang Halaman
                         </button>
                     </div>
                 `;
@@ -262,9 +262,9 @@
                 if (!pageRows || pageRows.length === 0) {
                     container.innerHTML = `
                     <div style="text-align: center; padding: 40px; color: #666;">
-                        <p>No recommendations found</p>
+                        <p>Tidak ada rekomendasi ditemukan</p>
                         <button onclick="clearFilters()" style="padding: 10px 20px; background: #4caf50; color: white; border: none; border-radius: 5px; cursor: pointer;">
-                            Clear Filters
+                            Hapus Filter
                         </button>
                     </div>
                 `;
@@ -295,7 +295,7 @@
                                 <h3>${item.name}</h3>
                                 <p>${item.description.length > 100 ? item.description.substr(0, 100) + '...' : item.description}</p>
                                 ${categoryBadge}
-                                <button class="food-card-button">Read more</button>
+                                <button class="food-card-button">Baca selengkapnya</button>
                             </div>
                         </div>
                     `;
@@ -321,7 +321,7 @@
                     return;
                 }
 
-                menuList.innerHTML = '<div class="loading-message">Loading menus...</div>';
+                menuList.innerHTML = '<div class="loading-message">Memuat menu...</div>';
 
                 try {
                     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -358,22 +358,22 @@
                         </div>
                     `).join('');
                     } else {
-                        menuList.innerHTML = '<div class="empty-message">No saved menus yet</div>';
+                        menuList.innerHTML = '<div class="empty-message">Belum ada menu yang disimpan</div>';
                     }
 
                 } catch (error) {
                     console.error('Error loading menus:', error);
                     menuList.innerHTML = `
                     <div class="error-message">
-                        Failed to load menus: ${error.message}
-                        <br><button onclick="loadUserMenus()" style="margin-top: 10px; padding: 5px 10px; background: #4caf50; color: white; border: none; border-radius: 5px; cursor: pointer;">Retry</button>
+                        Gagal memuat menu: ${error.message}
+                        <br><button onclick="loadUserMenus()" style="margin-top: 10px; padding: 5px 10px; background: #4caf50; color: white; border: none; border-radius: 5px; cursor: pointer;">Coba lagi</button>
                     </div>
                 `;
                 }
             }
 
             async function deleteMenu(menuId) {
-                if (!confirm('Are you sure you want to delete this menu?')) {
+                if (!confirm('Apakah Anda yakin ingin menghapus menu ini?')) {
                     return;
                 }
 
@@ -397,7 +397,7 @@
                     }
                 } catch (error) {
                     console.error('Error deleting menu:', error);
-                    alert('Failed to delete menu. Please try again.');
+                    alert('Gagal menghapus menu. Silakan coba lagi.');
                 }
             }
 
