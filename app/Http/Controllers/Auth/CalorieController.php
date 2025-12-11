@@ -160,7 +160,7 @@ class CalorieController extends Controller
         $user = Auth::user();
 
         $history = DB::table('daily_calories')
-            ->join('menu', 'daily_calories.menu_id', '=', 'menu.id')
+            ->join('menu', 'daily_calories.menu_id', '=', 'menu.id_menu')
             ->where('daily_calories.user_id', $user->id)
             ->whereDate('daily_calories.date', Carbon::today())
             ->select(

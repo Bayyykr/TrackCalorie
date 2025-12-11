@@ -13,14 +13,22 @@
         <a href="{{ route('recomend') }}" class="{{ request()->routeIs('recomend*') ? 'active' : '' }}">
             Rekomendasi
         </a>
-        <a href="{{ route('forum.forum') }}" class="{{ request()->routeIs('forum*') ? 'active' : '' }}">
+        <a href="{{ Auth::check() ? route('forum.forum') : route('login') }}" class="{{ request()->routeIs('forum*') ? 'active' : '' }}">
             Forum
         </a>
         <a href="{{ route('profile.edit') }}" class="{{ request()->routeIs('profile*') ? 'active' : '' }}">
             Profil
         </a>
     </div>
-    <button class="get_started" onclick="location.href='{{ route('register') }}'">Mulai</button>
+    @guest
+        <button class="get_started" onclick="location.href='{{ route('login') }}'">Mulai</button>
+    @endguest
+    @auth
+        <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+            @csrf
+            <button type="submit" class="get_started">Logout</button>
+        </form>
+    @endauth
     <button class="mobile-menu-toggle">☰</button>
 </nav>
 

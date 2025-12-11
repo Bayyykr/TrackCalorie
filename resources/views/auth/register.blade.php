@@ -186,7 +186,7 @@
             justify-content: center;
             padding: 2rem;
             background: white;
-            padding-top: 80px;
+            padding-top: 50px;
         }
 
         .right-section {
@@ -756,19 +756,7 @@
 </head>
 
 <body>
-    <nav class="navbar-custom">
-        <div class="logo">
-            <img src="{{ asset('images/logogizi.png') }}" alt="logo" class="logo-icon">
-            Caloriest
-        </div>
-        <div class="nav-center">
-            <a href="#">Homepage</a>
-            <a href="#">Calculator</a>
-            <a href="#">Recommendations</a>
-            <a href="#">Forum</a>
-        </div>
-        <button class="mobile-menu-toggle">☰</button>
-    </nav>
+
 
     <div class="login-container">
         <div class="left-section">

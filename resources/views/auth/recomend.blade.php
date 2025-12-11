@@ -36,10 +36,170 @@
             .section {
                 position: relative;
             }
+
+            /* Toast Notification Styles */
+            .toast-container {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 9999;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .toast {
+                background: white;
+                border-left: 4px solid #4caf50;
+                padding: 15px 25px;
+                border-radius: 4px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                display: flex;
+                align-items: center;
+                animation: slideIn 0.3s ease-out forwards;
+                min-width: 300px;
+            }
+
+            .toast.error {
+                border-left-color: #f44336;
+            }
+
+            .toast-content {
+                margin-right: 15px;
+            }
+
+            .toast-title {
+                font-weight: bold;
+                font-size: 14px;
+                margin-bottom: 2px;
+            }
+
+            .toast-message {
+                font-size: 13px;
+                color: #666;
+            }
+
+            .toast-close {
+                margin-left: auto;
+                cursor: pointer;
+                color: #999;
+                font-size: 18px;
+            }
+
+            @keyframes slideIn {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+
+            @keyframes slideOut {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+            }
+
+            /* Confirmation Modal Styles */
+            .confirm-modal-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.5);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10000;
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+            }
+
+            .confirm-modal-overlay.active {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .confirm-modal {
+                background: white;
+                padding: 25px;
+                border-radius: 12px;
+                width: 90%;
+                max-width: 400px;
+                transform: scale(0.9);
+                transition: transform 0.3s ease;
+                text-align: center;
+            }
+
+            .confirm-modal-overlay.active .confirm-modal {
+                transform: scale(1);
+            }
+
+            .confirm-modal-icon {
+                font-size: 40px;
+                margin-bottom: 15px;
+                display: block;
+            }
+
+            .confirm-modal h3 {
+                margin: 0 0 10px 0;
+                color: #333;
+            }
+
+            .confirm-modal p {
+                color: #666;
+                margin-bottom: 20px;
+                line-height: 1.5;
+            }
+
+            .confirm-modal-buttons {
+                display: flex;
+                gap: 10px;
+                justify-content: center;
+            }
+
+            .confirm-btn {
+                padding: 10px 24px;
+                border: none;
+                border-radius: 8px;
+                cursor: pointer;
+                font-weight: 600;
+                transition: all 0.2s;
+            }
+
+            .confirm-btn.cancel {
+                background: #f5f5f5;
+                color: #666;
+            }
+
+            .confirm-btn.cancel:hover {
+                background: #e0e0e0;
+            }
+
+            .confirm-btn.delete {
+                background: #f44336;
+                color: white;
+            }
+
+            .confirm-btn.delete:hover {
+                background: #d32f2f;
+            }
+            }
         </style>
     </head>
 
     <body>
+        <div class="toast-container" id="toastContainer"></div>
         @include('components.navbar')
 
         <header class="header">
@@ -106,6 +266,19 @@
                 </div>
             </section>
         </main>
+
+        <!-- Confirmation Modal -->
+        <div class="confirm-modal-overlay" id="deleteConfirmModal">
+            <div class="confirm-modal">
+                <span class="confirm-modal-icon">⚠️</span>
+                <h3>Hapus Menu?</h3>
+                <p>Apakah Anda yakin ingin menghapus menu ini dari daftar pilihan Anda?</p>
+                <div class="confirm-modal-buttons">
+                    <button class="confirm-btn cancel" onclick="closeDeleteModal()">Batal</button>
+                    <button class="confirm-btn delete" id="confirmDeleteBtn">Hapus</button>
+                </div>
+            </div>
+        </div>
 
         <!-- Modal Popup -->
         <div class="popup-overlay" id="menuListPopup">
@@ -214,8 +387,15 @@
 
                     const params = new URLSearchParams();
                     params.append('filter', categoryValue);
-                    if (searchValue.trim()) {
+                    if (searchValue.trim() !== '') {
                         params.append('search', searchValue.trim());
+                    } else {
+                        // Explicitly send empty search or don't send at all?
+                        // Controller logic: if ($search) ...
+                        // If we skip 'search' param, $search is null -> false.
+                        // If we send 'search=', $search is "" -> false.
+                        // Both work. But let's be explicit in our intent.
+                        params.append('search', '');
                     }
 
                     const response = await fetch(`/recomend?${params}`, {
@@ -374,34 +554,71 @@
                 }
             }
 
-            async function deleteMenu(menuId) {
-                if (!confirm('Apakah Anda yakin ingin menghapus menu ini?')) {
-                    return;
-                }
+            let menuToDeleteId = null;
 
-                try {
-                    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            function deleteMenu(menuId) {
+                menuToDeleteId = menuId;
+                const modal = document.getElementById('deleteConfirmModal');
+                modal.classList.add('active');
+            }
 
-                    const response = await fetch(`/recomend/${menuId}`, {
-                        method: 'DELETE',
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json',
-                            'X-Requested-With': 'XMLHttpRequest',
-                            'X-CSRF-TOKEN': csrfToken
+            function closeDeleteModal() {
+                const modal = document.getElementById('deleteConfirmModal');
+                modal.classList.remove('active');
+                menuToDeleteId = null;
+            }
+
+            // Setup delete confirmation listener
+            document.addEventListener('DOMContentLoaded', function() {
+                const confirmBtn = document.getElementById('confirmDeleteBtn');
+                if (confirmBtn) {
+                    confirmBtn.addEventListener('click', async function() {
+                        if (!menuToDeleteId) return;
+                        
+                        // Store ID locally before clearing global state
+                        const idToDelete = menuToDeleteId;
+
+                        // Close modal immediately for better UX
+                        closeDeleteModal();
+                        
+                        try {
+                            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+                            const response = await fetch(`/recomend/${idToDelete}`, {
+                                method: 'DELETE',
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json',
+                                    'X-Requested-With': 'XMLHttpRequest',
+                                    'X-CSRF-TOKEN': csrfToken
+                                }
+                            });
+
+                            if (response.ok) {
+                                showToast('Berhasil!', 'Menu berhasil dihapus dari daftar.', 'success');
+                                loadUserMenus();
+                            } else {
+                                const errData = await response.json().catch(() => ({}));
+                                const errMsg = errData.error || `Status: ${response.status}`;
+                                throw new Error(errMsg);
+                            }
+                        } catch (error) {
+                            console.error('Error deleting menu:', error);
+                            showToast('Error!', `Gagal menghapus menu: ${error.message}`, 'error');
                         }
                     });
-
-                    if (response.ok) {
-                        loadUserMenus();
-                    } else {
-                        throw new Error('Failed to delete menu');
-                    }
-                } catch (error) {
-                    console.error('Error deleting menu:', error);
-                    alert('Gagal menghapus menu. Silakan coba lagi.');
                 }
-            }
+                
+                // Close modal on click outside
+                const deleteOverlay = document.getElementById('deleteConfirmModal');
+                if (deleteOverlay) {
+                    deleteOverlay.addEventListener('click', function(e) {
+                         if (e.target === this) {
+                             closeDeleteModal();
+                         }
+                    });
+                }
+            });
 
             function escapeHtml(text) {
                 const map = {
@@ -437,22 +654,50 @@
                     const result = await response.json();
 
                     if (result.success) {
-                        alert('Menu berhasil disimpan ke daftar pilihan Anda!');
-                        // Auto open popup to show updated list?
+                        showToast('Berhasil!', 'Menu berhasil disimpan ke daftar pilihan Anda.', 'success');
+                        
+                        // Auto open popup to show updated list
                         const popup = document.getElementById('menuListPopup');
                         if (popup) {
-                            // If popup is already active, reload list. If not, maybe don't force open it, just notify.
                             if (popup.classList.contains('active')) {
                                 loadUserMenus();
                             }
                         }
                     } else {
-                        alert('Gagal menyimpan menu: ' + (result.error || 'Terjadi kesalahan'));
+                        showToast('Gagal!', 'Gagal menyimpan menu: ' + (result.error || 'Terjadi kesalahan'), 'error');
                     }
                 } catch (error) {
                     console.error('Error saving menu:', error);
-                    alert('Terjadi kesalahan koneksi saat menyimpan menu');
+                    showToast('Error!', 'Terjadi kesalahan koneksi saat menyimpan menu', 'error');
                 }
+            }
+
+            // Toast Notification Function
+            function showToast(title, message, type = 'success') {
+                const container = document.getElementById('toastContainer');
+                
+                const toast = document.createElement('div');
+                toast.className = `toast ${type}`;
+                
+                toast.innerHTML = `
+                    <div class="toast-content">
+                        <div class="toast-title">${title}</div>
+                        <div class="toast-message">${message}</div>
+                    </div>
+                    <div class="toast-close" onclick="this.parentElement.remove()">&times;</div>
+                `;
+                
+                container.appendChild(toast);
+                
+                // Auto remove after 3 seconds
+                setTimeout(() => {
+                    toast.style.animation = 'slideOut 0.3s ease-in forwards';
+                    setTimeout(() => {
+                        if (toast.parentElement) {
+                            toast.remove();
+                        }
+                    }, 300);
+                }, 3000);
             }
         </script>
     </body>

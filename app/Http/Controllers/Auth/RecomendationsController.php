@@ -17,6 +17,56 @@ class RecomendationsController extends Controller
         $this->middleware('auth');
     }
 
+    private function getCategory($name)
+    {
+        $name = strtolower($name);
+        if (preg_match('/(nasi|bubur|lontong|kentang|ubi|singkong|roti)/i', $name)) {
+            return 'Makanan Pokok';
+        } elseif (preg_match('/(ayam|daging|sapi|ikan|lele|telur|udang|cumi|sate|rendang|bebek)/i', $name)) {
+            return 'Lauk Pauk';
+        } elseif (preg_match('/(sayur|tumis|bayam|kangkung|brokoli|tomat|kubis|timun|wortel|buncis|kacang|tauge)/i', $name)) {
+            return 'Sayuran';
+        } elseif (preg_match('/(mie|bihun|kwetiau|pasta|spaghetti)/i', $name)) {
+            return 'Mie & Pasta';
+        } elseif (preg_match('/(tahu|tempe|jamur|perkedel|bakwan)/i', $name)) {
+            return 'Lauk Nabati';
+        } elseif (preg_match('/(soto|sop|bakso|gulai|rawon|kari)/i', $name)) {
+            return 'Makanan Berkuah';
+        } elseif (preg_match('/(apel|jeruk|pisang|mangga|anggur|semangka|melon|pepaya|salak|duku|alpukat)/i', $name)) {
+            return 'Buah-buahan';
+        }
+        return 'Lainnya';
+    }
+
+    private function getImagePath($name)
+    {
+        $snakeName = str_replace(' ', '_', strtolower($name));
+        
+        if (file_exists(public_path('images/makanan/' . $snakeName . '.png'))) {
+            return 'images/makanan/' . $snakeName . '.png';
+        } elseif (file_exists(public_path('images/makanan/' . $snakeName . '.jpg'))) {
+            return 'images/makanan/' . $snakeName . '.jpg';
+        }
+        return null;
+    }
+
+    private function transformItem($item)
+    {
+        $category = $this->getCategory($item->nama_menu);
+        $imagePath = $this->getImagePath($item->nama_menu);
+
+        return (object) [
+            'id' => $item->id_menu,
+            'name' => $item->nama_menu,
+            'description' => 'Kalori per ' . $item->jumlah . 'g/ml' . ($item->keterangan ? '. ' . $item->keterangan : ''),
+            'calorie_range' => $item->jumlah_kalori . ' Kcal',
+            'raw_calories' => $item->jumlah_kalori, 
+            'image_path' => $imagePath, 
+            'image_color' => '#' . substr(md5($item->nama_menu), 0, 6),
+            'category' => $category
+        ];
+    }
+
     public function showRecommendations(Request $request)
     {
         // Jika request AJAX untuk mengambil menu user
@@ -57,6 +107,8 @@ class RecomendationsController extends Controller
             try {
                 $category = $request->get('filter');
                 $search = $request->get('search');
+                
+                Log::info('Filter recommendations', ['category' => $category, 'search' => $search]);
 
                 $query = \App\Models\MasterMenu::query();
 
@@ -68,50 +120,9 @@ class RecomendationsController extends Controller
                 $items = $query->get();
 
                 // Helper transformation for consistency
-                $transformMenu = function($item) {
-                     $name = strtolower($item->nama_menu);
-                     // Category logic (simplified for readability, keeping same logic)
-                     $category = 'Lainnya';
-                     
-                     if (preg_match('/(nasi|bubur|lontong|kentang|ubi|singkong|roti)/i', $name)) {
-                         $category = 'Makanan Pokok';
-                     } elseif (preg_match('/(ayam|daging|sapi|ikan|lele|telur|udang|cumi|sate|rendang|bebek)/i', $name)) {
-                         $category = 'Lauk Pauk';
-                     } elseif (preg_match('/(sayur|tumis|bayam|kangkung|brokoli|tomat|kubis|timun|wortel|buncis|kacang|tauge)/i', $name)) {
-                         $category = 'Sayuran';
-                     } elseif (preg_match('/(mie|bihun|kwetiau|pasta|spaghetti)/i', $name)) {
-                         $category = 'Mie & Pasta';
-                     } elseif (preg_match('/(tahu|tempe|jamur|perkedel|bakwan)/i', $name)) {
-                         $category = 'Lauk Nabati';
-                     } elseif (preg_match('/(soto|sop|bakso|gulai|rawon|kari)/i', $name)) {
-                         $category = 'Makanan Berkuah';
-                     } elseif (preg_match('/(apel|jeruk|pisang|mangga|anggur|semangka|melon|pepaya|salak|duku|alpukat)/i', $name)) {
-                         $category = 'Buah-buahan';
-                     }
-
-                     $snakeName = str_replace(' ', '_', strtolower($item->nama_menu));
-                     $imagePath = null;
-                     
-                     if (file_exists(public_path('images/makanan/' . $snakeName . '.png'))) {
-                         $imagePath = 'images/makanan/' . $snakeName . '.png';
-                     } elseif (file_exists(public_path('images/makanan/' . $snakeName . '.jpg'))) {
-                         $imagePath = 'images/makanan/' . $snakeName . '.jpg';
-                     } 
-                     
-                     return (object) [
-                        'id' => $item->id_menu, // Uses ID from MasterMenu can be used as reference if needed, but we save name/cal
-                        'name' => $item->nama_menu,
-                        'description' => 'Kalori per ' . $item->jumlah . 'g/ml' . ($item->keterangan ? '. ' . $item->keterangan : ''),
-                        'calorie_range' => $item->jumlah_kalori . ' Kcal',
-                        'raw_calories' => $item->jumlah_kalori, 
-                        'image_path' => $imagePath, 
-                        'image_color' => '#' . substr(md5($item->nama_menu), 0, 6),
-                        'category' => $category
-                     ];
-                };
-
-                // Transform all items first
-                $allRecommendations = $items->map($transformMenu);
+                $allRecommendations = $items->map(function($item) {
+                    return $this->transformItem($item);
+                });
 
                 // Filter by category if requested
                 if ($category && $category !== 'all') {
@@ -125,7 +136,9 @@ class RecomendationsController extends Controller
 
                 // Flatten the pages for grid layout - standard 4-col grid doesn't strictly need chunking 
                 // but if the view expects chunks, we keep chunks.
-                $pageRows = $allRecommendations->chunk(4);
+                $pageRows = $allRecommendations->chunk(4)->map(function($chunk) {
+                    return $chunk->values();
+                });
 
                 return response()->json([
                     'success' => true,
@@ -141,57 +154,18 @@ class RecomendationsController extends Controller
         // Tampilan normal untuk halaman rekomendasi
         $items = \App\Models\MasterMenu::all();
         
-        // Helper helper for transformation (duplicated for initial load, ideally refactor to method)
-        $transformMenu = function($item) {
-             $name = strtolower($item->nama_menu);
-             $category = 'Lainnya';
-             
-             if (str_contains($name, 'nasi') || str_contains($name, 'bubur') || str_contains($name, 'lontong') || str_contains($name, 'kentang') || str_contains($name, 'ubi') || str_contains($name, 'singkong') || str_contains($name, 'roti')) {
-                 $category = 'Makanan Pokok';
-             } elseif (str_contains($name, 'ayam') || str_contains($name, 'daging') || str_contains($name, 'sapi') || str_contains($name, 'ikan') || str_contains($name, 'lele') || str_contains($name, 'telur') || str_contains($name, 'udang') || str_contains($name, 'cumi') || str_contains($name, 'sate') || str_contains($name, 'rendang') || str_contains($name, 'bebek')) {
-                 $category = 'Lauk Pauk';
-             } elseif (str_contains($name, 'sayur') || str_contains($name, 'tumis') || str_contains($name, 'bayam') || str_contains($name, 'kangkung') || str_contains($name, 'brokoli') || str_contains($name, 'tomat') || str_contains($name, 'kubis') || str_contains($name, 'timun') || str_contains($name, 'wortel') || str_contains($name, 'buncis') || str_contains($name, 'kacang') || str_contains($name, 'tauge')) {
-                 $category = 'Sayuran';
-             } elseif (str_contains($name, 'mie') || str_contains($name, 'bihun') || str_contains($name, 'kwetiau') || str_contains($name, 'pasta') || str_contains($name, 'spaghetti')) {
-                 $category = 'Mie & Pasta';
-             } elseif (str_contains($name, 'tahu') || str_contains($name, 'tempe') || str_contains($name, 'jamur') || str_contains($name, 'perkedel') || str_contains($name, 'bakwan')) {
-                 $category = 'Lauk Nabati';
-             } elseif (str_contains($name, 'soto') || str_contains($name, 'sop') || str_contains($name, 'bakso') || str_contains($name, 'gulai') || str_contains($name, 'rawon') || str_contains($name, 'kari')) {
-                 $category = 'Makanan Berkuah';
-             } elseif (str_contains($name, 'apel') || str_contains($name, 'jeruk') || str_contains($name, 'pisang') || str_contains($name, 'mangga') || str_contains($name, 'anggur') || str_contains($name, 'semangka') || str_contains($name, 'melon') || str_contains($name, 'pepaya') || str_contains($name, 'salak') || str_contains($name, 'duku') || str_contains($name, 'alpukat')) {
-                 $category = 'Buah-buahan';
-             } else {
-                $category = 'Lainnya';
-             }
-
-             $snakeName = str_replace(' ', '_', $name);
-             $imagePath = null;
-             
-             if (file_exists(public_path('images/makanan/' . $snakeName . '.png'))) {
-                 $imagePath = 'images/makanan/' . $snakeName . '.png';
-             } elseif (file_exists(public_path('images/makanan/' . $snakeName . '.jpg'))) {
-                 $imagePath = 'images/makanan/' . $snakeName . '.jpg';
-             }
-
-             return (object) [
-                'id' => $item->id_menu,
-                'name' => $item->nama_menu,
-                'description' => 'Kalori per ' . $item->jumlah . 'g/ml',
-                'calorie_range' => $item->jumlah_kalori . ' Kcal',
-                'image_path' => $imagePath,
-                'image_color' => '#' . substr(md5($item->nama_menu), 0, 6),
-                'category' => $category
-             ];
-        };
-        
-        $recommendations = $items->map($transformMenu);
+        $recommendations = $items->map(function($item) {
+            return $this->transformItem($item);
+        });
         
         // Sort: Items with images first
         $recommendations = $recommendations->sortByDesc(function($item) {
             return $item->image_path ? 1 : 0;
         })->values();
 
-        $pageRows = $recommendations->chunk(4);
+        $pageRows = $recommendations->chunk(4)->map(function($chunk) {
+            return $chunk->values();
+        });
 
         // Get unique categories for dropdown
         $categories = $recommendations->pluck('category')->unique()->sort()->values();
@@ -199,14 +173,25 @@ class RecomendationsController extends Controller
         return view('auth.recomend', compact('pageRows', 'categories'));
     }
 
-    public function destroyMenu(Menu $menu)
+    public function destroyMenu($id)
     {
         try {
+            Log::info('Attempting to delete menu (manual lookup)', ['requested_id' => $id, 'user_id' => Auth::id()]);
+
+            $menu = Menu::find($id);
+
+            if (!$menu) {
+                Log::warning('Menu not found during manual lookup', ['requested_id' => $id]);
+                return response()->json(['error' => 'Menu not found'], 404);
+            }
+
             if ($menu->users_id !== Auth::id()) {
+                Log::warning('Unauthorized delete attempt', ['menu_id' => $menu->id, 'user_id' => Auth::id()]);
                 return response()->json(['error' => 'Unauthorized'], 403);
             }
 
             $menu->delete();
+            Log::info('Menu deleted successfully', ['menu_id' => $menu->id]);
             return response()->json(['success' => true]);
         } catch (Exception $e) {
             Log::error('Failed to delete menu: ' . $e->getMessage());

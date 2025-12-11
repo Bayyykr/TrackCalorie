@@ -43,7 +43,6 @@
             <button class="calculate-btn" onclick="calculateCalories()">Hitung</button>
 
             <div class="action-buttons">
-                <button class="action-btn" onclick="showMore()">Lainnya</button>
                 <button class="action-btn" onclick="goBack()">Kembali</button>
             </div>
 
@@ -203,13 +202,8 @@
         }
 
         function goBack() {
-            const foodInput = document.getElementById('foodInput');
-            const resultSection = document.getElementById('resultSection');
-            const suggestions = document.getElementById('suggestions');
-
-            foodInput.value = '';
-            resultSection.style.display = 'none';
-            suggestions.innerHTML = '';
+            // Navigate back to the previous page
+            window.history.back();
         }
 
         // Enter key support

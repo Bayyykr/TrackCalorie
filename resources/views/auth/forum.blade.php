@@ -1,6 +1,81 @@
 @include('components.head')
 @include('components.navbar')
 
+<style>
+    /* Toast Notification Styles */
+    .toast-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .toast {
+        background: white;
+        border-left: 4px solid #4caf50;
+        padding: 15px 25px;
+        border-radius: 4px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        display: flex;
+        align-items: center;
+        animation: slideIn 0.3s ease-out forwards;
+        min-width: 300px;
+    }
+
+    .toast.error {
+        border-left-color: #f44336;
+    }
+
+    .toast-content {
+        margin-right: 15px;
+    }
+
+    .toast-title {
+        font-weight: bold;
+        font-size: 14px;
+        margin-bottom: 2px;
+    }
+
+    .toast-message {
+        font-size: 13px;
+        color: #666;
+    }
+
+    .toast-close {
+        margin-left: auto;
+        cursor: pointer;
+        color: #999;
+        font-size: 18px;
+    }
+
+    @keyframes slideIn {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes slideOut {
+        from {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        to {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+    }
+</style>
+
+
+<div class="toast-container" id="toastContainer"></div>
 <div class="container main-body">
     <!-- Main Content -->
     <main>
@@ -355,8 +430,10 @@
 
             if (data.success) {
                 closeModal();
-                alert('Pertanyaan berhasil diposting!');
-                window.location.reload();
+                showToast('Berhasil!', 'Pertanyaan berhasil diposting!', 'success');
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
             } else {
                 let errorMsg = 'Gagal memposting pertanyaan';
 
@@ -469,12 +546,40 @@
                     buttonElement.style.fill = '#9CA3AF';
                 }
             } else {
-                alert('Gagal memperbarui suka. Silakan coba lagi.');
+                showToast('Gagal!', 'Gagal memperbarui suka. Silakan coba lagi.', 'error');
             }
         } catch (error) {
-            alert('Kesalahan jaringan. Silakan coba lagi.');
+            showToast('Error!', 'Kesalahan jaringan. Silakan coba lagi.', 'error');
         } finally {
             buttonElement.classList.remove('processing');
         }
+    }
+
+    // Toast Notification Function
+    function showToast(title, message, type = 'success') {
+        const container = document.getElementById('toastContainer');
+        
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        
+        toast.innerHTML = `
+            <div class="toast-content">
+                <div class="toast-title">${title}</div>
+                <div class="toast-message">${message}</div>
+            </div>
+            <div class="toast-close" onclick="this.parentElement.remove()">&times;</div>
+        `;
+        
+        container.appendChild(toast);
+        
+        // Auto remove after 3 seconds
+        setTimeout(() => {
+            toast.style.animation = 'slideOut 0.3s ease-in forwards';
+            setTimeout(() => {
+                if (toast.parentElement) {
+                    toast.remove();
+                }
+            }, 300);
+        }, 3000);
     }
 </script>

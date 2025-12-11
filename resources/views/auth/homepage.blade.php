@@ -370,7 +370,7 @@
                             <div class="calories-label">Kurang kalori</div>
                             <div class="calories-value">Kurang {{ $lessCalorie }} kkal</div>
                         </div>
-                        <button class="food-recommendations-btn">Rekomendasi Makanan</button>
+                        <button class="food-recommendations-btn" onclick="window.location.href='/recomend'">Rekomendasi Makanan</button>
                     </div>
 
                     <!-- Results Assessment -->

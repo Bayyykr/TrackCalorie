@@ -219,6 +219,13 @@ body {
     overflow-y: auto;
     z-index: 1000;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: none;
+    /* Hide by default to prevent ghost lines */
+}
+
+/* Show suggestions when they have content */
+.suggestions:not(:empty) {
+    display: block;
 }
 
 .suggestion-list {
@@ -324,6 +331,7 @@ body {
         font-size: 24px;
         margin-bottom: 30px;
     }
+
     .current-calories {
         flex-direction: column;
         gap: 5px;
