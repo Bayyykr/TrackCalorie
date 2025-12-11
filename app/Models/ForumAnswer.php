@@ -51,6 +51,15 @@ class ForumAnswer extends Model
         return $this->likes()->where('user_id', auth()->id())->exists();
     }
 
+    public function isLikedByCurrentUser()
+    {
+        if (auth()->check()) {
+            return $this->likes()->where('user_id', auth()->id())->exists();
+        }
+        $session_id = session()->getId();
+        return $this->likes()->where('session_id', $session_id)->exists();
+    }
+
     // app/Models/ForumAnswer.php
     public function getAvatarUrlAttribute()
     {

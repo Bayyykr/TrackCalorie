@@ -10,13 +10,13 @@ class Menu extends Model
     protected $table = 'menu_list'; // Sesuaikan dengan nama tabel
 
     protected $fillable = [
-        'user_id',
+        'users_id',
         'name',
         'calories'
     ];
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'users_id');
     }
 }

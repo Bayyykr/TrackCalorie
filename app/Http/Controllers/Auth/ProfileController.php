@@ -25,7 +25,7 @@ class ProfileController extends Controller
         }
 
         // Check for profile photo
-        if (!empty($user->image_path)) {
+        if (!empty($user->avatar)) {
             $completedCount++;
         }
 
@@ -79,8 +79,8 @@ class ProfileController extends Controller
 
         $user = Auth::user();
 
-        if ($user->image_path && Storage::disk('public')->exists($user->image_path)) {
-            Storage::disk('public')->delete($user->image_path);
+        if ($user->avatar && Storage::disk('public')->exists($user->avatar)) {
+            Storage::disk('public')->delete($user->avatar);
         }
 
 
@@ -91,7 +91,6 @@ class ProfileController extends Controller
 
 
         $user->update([
-            'image_path' => $path,
             'avatar' => $path
         ]);
 

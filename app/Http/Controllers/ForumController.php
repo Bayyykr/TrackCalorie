@@ -51,19 +51,26 @@ class ForumController extends Controller
         // Ambil aktivitas terbaru dari post dan answer
         $recentPosts = ForumPost::with('user')
             ->select('id', 'user_id', 'title', 'created_at', DB::raw("'post' as type"))
+            ->where('created_at', '<=', now())
             ->orderBy('created_at', 'desc')
-            ->limit(3)
+            ->limit(10)
             ->get();
 
         $recentAnswers = ForumAnswer::with('user', 'post')
             ->select('id', 'user_id', 'post_id', 'created_at', DB::raw("'answer' as type"))
+            ->where('created_at', '<=', now())
             ->orderBy('created_at', 'desc')
-            ->limit(3)
+            ->limit(10)
             ->get();
 
         // Gabungkan kedua koleksi
         $recentActivity = $recentPosts->concat($recentAnswers)
-            ->sortByDesc('created_at') // Urutkan berdasarkan created_at
+            ->sort(function ($a, $b) {
+                $timeA = \Carbon\Carbon::parse($a->created_at);
+                $timeB = \Carbon\Carbon::parse($b->created_at);
+                return $timeB->getTimestamp() <=> $timeA->getTimestamp();
+            })
+            ->values() // Reset keys to ensure correct iteration order
             ->take(5); // Ambil 5 aktivitas teratas
 
         // Active users dengan safe access
@@ -82,14 +89,8 @@ class ForumController extends Controller
             })
             ->distinct()
             ->limit(10)
-            ->get()
-            ->map(function ($user) {
-                return (object) [
-                    'id' => $user->id,
-                    'name' => $user->name,
-                    'avatar_url' => $user->avatar ? asset('storage/' . $user->avatar) : asset('images/default-avatar.png')
-                ];
-            });
+            ->limit(10)
+            ->get();
 
         $stats = [
             'total_questions' => ForumPost::count(),

@@ -27,7 +27,6 @@ class User extends Authenticatable
         'tb',
         'bb',
         'aktivitas',
-        'image_path',
         'avatar',
     ];
 
@@ -56,7 +55,7 @@ class User extends Authenticatable
 
     public function menus(): HasMany
     {
-        return $this->hasMany(Menu::class, 'user_id');
+        return $this->hasMany(Menu::class, 'users_id');
     }
 
     public function profile()
@@ -102,6 +101,8 @@ class User extends Authenticatable
         return $this->followers()->where('follower_id', $user->id)->exists();
     }
 
+
+
     // Accessor for safe avatar access
     public function getAvatarUrlAttribute()
     {
@@ -109,6 +110,28 @@ class User extends Authenticatable
             return asset('storage/' . $this->avatar);
         }
 
-        return asset('images/default-avatar.png');
+        return null; // Return null if no avatar, so views can switch to initials
+    }
+
+    public function getInitialsAttribute()
+    {
+        $name = $this->name;
+        $words = explode(' ', $name);
+        $initials = '';
+
+        if (count($words) >= 2) {
+            $initials = strtoupper(substr($words[0], 0, 1) . substr($words[1], 0, 1));
+        } else {
+            $initials = strtoupper(substr($name, 0, 2));
+        }
+
+        return $initials;
+    }
+
+    public function getAvatarColorAttribute()
+    {
+        $hash = md5($this->name);
+        $color = substr($hash, 0, 6);
+        return '#' . $color;
     }
 }

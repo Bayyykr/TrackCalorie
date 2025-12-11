@@ -23,6 +23,8 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/recomend', [RecomendationsController::class, 'showRecommendations'])
     ->name('recomend')
     ->middleware('auth');
+Route::post('/recomend', [RecomendationsController::class, 'storeMenu'])
+    ->middleware('auth');
 Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
 Route::delete('/recomend/{menu}', [RecomendationsController::class, 'destroyMenu'])

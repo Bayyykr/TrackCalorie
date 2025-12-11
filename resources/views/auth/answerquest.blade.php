@@ -18,14 +18,22 @@
                     @php
                         $userName = isset($post->user->name) ? $post->user->name : 'Pengguna Dihapus';
                     @endphp
-                    @auth
-                        <img src="{{ asset('storage/' . Auth::user()->image_path) }}" alt="{{ $userName }}"
-                            class="avatar">
-                    @endauth
+                    @php
+                        $user = $post->user;
+                        $questionAvatarUrl = $user && $user->avatar_url ? $user->avatar_url : null;
+                    @endphp
+                    @if($questionAvatarUrl)
+                        <img src="{{ $questionAvatarUrl }}" alt="{{ $userName }}" class="avatar">
+                    @elseif($user)
+                        <div class="avatar dynamic-avatar" style="background-color: {{ $user->avatar_color }}">
+                            {{ $user->initials }}
+                        </div>
+                    @else
+                        <img src="{{ asset('images/default-avatar.png') }}" alt="{{ $userName }}" class="avatar">
+                    @endif
                     <div class="question-meta">
                         <div class="question-author">{{ $userName }}</div>
-                        <div class="question-date">Ditanyakan pada 20 Juni 2025 
-                            <span class="question-tag">Membangun Massa Otot</span>
+                        <div class="question-date">Ditanyakan pada {{ $post->created_at->translatedFormat('d F Y') }}
                         </div>
                     </div>
                 </div>
@@ -37,19 +45,20 @@
                 <div class="answer">
                     <div class="answer-header">
                         @php
-                            $answerUserAvatar = isset($answer->user->avatar_url)
-                                ? $answer->user->avatar_url
-                                : asset('images/default-avatar.png');
                             $answerUserName = isset($answer->user->name) ? $answer->user->name : 'Pengguna Dihapus';
                         @endphp
-                        @auth
-                            <img src="{{ asset('storage/' . Auth::user()->image_path) }}" alt="{{ $answerUserName }}"
-                                class="avatar">
-                        @endauth
+                        @if($answer->user && $answer->user->avatar_url)
+                            <img src="{{ $answer->user->avatar_url }}" alt="{{ $answerUserName }}" class="avatar">
+                        @elseif($answer->user)
+                            <div class="avatar dynamic-avatar" style="background-color: {{ $answer->user->avatar_color }}">
+                                {{ $answer->user->initials }}
+                            </div>
+                        @else
+                            <img src="{{ asset('images/default-avatar.png') }}" alt="{{ $answerUserName }}" class="avatar">
+                        @endif
                         <div class="answer-meta">
                             <div class="answer-author">{{ $answerUserName }}</div>
-                            <div class="answer-date">Dijawab pada 20 Juni 2025 
-                                <span class="question-tag">Membangun Massa Otot</span>
+                            <div class="answer-date">Dijawab pada {{ $answer->created_at->translatedFormat('d F Y') }}
                             </div>
                         </div>
                     </div>

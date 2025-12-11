@@ -27,12 +27,12 @@
 
             <div id="profileContent" @if ($loading) style="display: none;" @endif>
                 <div class="profile-photo">
-                    <div class="photo-circle" id="profilePhotoDisplay">
-                        @if ($user->image_path && Storage::disk('public')->exists($user->image_path))
-                            <img src="{{ asset('storage/' . $user->image_path) }}?v={{ time() }}"
-                                alt="Foto Profil">
+                    <div class="photo-circle" id="profilePhotoDisplay" 
+                         @if(!$user->avatar_url) style="background: {{ $user->avatar_color }};" @endif>
+                        @if ($user->avatar_url)
+                            <img src="{{ $user->avatar_url }}?v={{ time() }}" alt="Foto Profil">
                         @else
-                            <span id="photoInitial">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
+                            <span id="photoInitial">{{ $user->initials }}</span>
                         @endif
                     </div>
                     <div class="upload-container">
@@ -157,7 +157,7 @@
                     <span>Pengaturan akun</span>
                 </li>
                 <li class="checklist-item">
-                    <span class="check-icon {{ $user->image_path ? '' : 'incomplete' }}" id="check-photo">✓</span>
+                    <span class="check-icon {{ $user->avatar ? '' : 'incomplete' }}" id="check-photo">✓</span>
                     <span>Unggah foto</span>
                 </li>
                 <li class="checklist-item">

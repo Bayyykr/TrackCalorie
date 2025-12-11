@@ -8,6 +8,7 @@
         <title>Dasbor Nutrisi</title>
         <link rel="stylesheet" href="{{ asset('css/homepage.css') }}">
         <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
         <!-- TAMBAHKAN CHART.JS -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
@@ -261,12 +262,82 @@
                     gap: 15px;
                 }
             }
+
+            /* Profile Completion Overlay & Blur */
+            .blurred-content {
+                filter: blur(8px);
+                pointer-events: none;
+                user-select: none;
+                overflow: hidden;
+            }
+
+            .profile-completion-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 900;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background: rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(2px);
+            }
+
+            .overlay-card {
+                background: white;
+                padding: 40px;
+                border-radius: 20px;
+                box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+                text-align: center;
+                max-width: 450px;
+                width: 90%;
+                animation: slideUp 0.5s ease-out;
+                border: 1px solid rgba(0,0,0,0.05);
+            }
+
+            @keyframes slideUp {
+                from { transform: translateY(20px); opacity: 0; }
+                to { transform: translateY(0); opacity: 1; }
+            }
+
+            .overlay-title {
+                font-size: 24px;
+                font-weight: 700;
+                color: #2c3e50;
+                margin-bottom: 15px;
+            }
+
+            .overlay-text {
+                color: #64748b;
+                margin-bottom: 30px;
+                line-height: 1.6;
+                font-size: 16px;
+            }
+
+            .overlay-btn {
+                display: inline-block;
+                background: linear-gradient(135deg, #7cb342 0%, #8bc34a 100%);
+                color: white;
+                padding: 14px 35px;
+                border-radius: 50px;
+                text-decoration: none;
+                font-weight: 600;
+                transition: all 0.3s ease;
+                box-shadow: 0 4px 15px rgba(124, 180, 66, 0.4);
+            }
+
+            .overlay-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 25px rgba(124, 180, 66, 0.5);
+            }
         </style>
     </head>
 
     <body>
         @include('components.navbar')
-        <div class="container">
+        <div class="container {{ isset($isProfileComplete) && !$isProfileComplete ? 'blurred-content' : '' }}">
             <div class="main-content">
                 <!-- Header Card -->
                 <div class="header-card">
@@ -378,11 +449,11 @@
                         </div>
                     </div>
                     <div class="profile-avatar">
-                        @if ($user->image_path && Storage::disk('public')->exists($user->image_path))
-                            <img src="{{ asset('storage/' . $user->image_path) }}" alt="{{ $user->name }}">
+                        @if ($user->avatar_url)
+                            <img src="{{ $user->avatar_url }}" alt="{{ $user->name }}">
                         @else
-                            <div class="avatar-placeholder">
-                                {{ strtoupper(substr($user->name, 0, 1)) }}
+                            <div class="avatar-placeholder" style="background-color: {{ $user->avatar_color }}">
+                                {{ $user->initials }}
                             </div>
                         @endif
                     </div>
@@ -418,6 +489,22 @@
                 </div>
             </div>
         </div>
+
+        @if(isset($isProfileComplete) && !$isProfileComplete)
+        <div class="profile-completion-overlay">
+            <div class="overlay-card">
+                <div style="font-size: 48px; margin-bottom: 20px; color: #7cb342;">
+                    <i class="bi bi-postcard-heart"></i>
+                </div>
+                <div class="overlay-title">Profil Belum Lengkap</div>
+                <p class="overlay-text">Halo! Untuk mendapatkan analisis nutrisi yang akurat dan personal, mohon lengkapi data profil Anda terlebih dahulu.</p>
+                <a href="{{ route('profile.edit') }}" class="overlay-btn">
+                    <i class="bi bi-pencil-square" style="margin-right: 8px;"></i>Lengkapi Profil Sekarang
+                </a>
+            </div>
+        </div>
+        @endif
+
         <script>
             // Tunggu sampai DOM dan Chart.js ready
             document.addEventListener('DOMContentLoaded', function() {

@@ -5,6 +5,16 @@
     gap: 12px;
 }
 
+.dynamic-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 0.9em;
+    /* Adjust scaling as needed */
+}
+
 .post {
     background: linear-gradient(135deg, #f0f8e8 0%, #e8f5e8 100%);
     border-radius: 12px;
@@ -67,7 +77,8 @@
 /* Post Content */
 .post-content-section {
     margin: 12px 0 16px 0;
-    padding-left: 52px; /* Align with avatar */
+    padding-left: 52px;
+    /* Align with avatar */
 }
 
 .post-title {
@@ -257,11 +268,9 @@
 .sidebar {
     display: flex;
     flex-direction: column;
-    background: linear-gradient(
-        to right,
-        rgba(138, 203, 36, 0.2) 0%,
-        rgba(69, 101, 18, 0.2) 100%
-    );
+    background: linear-gradient(to right,
+            rgba(138, 203, 36, 0.2) 0%,
+            rgba(69, 101, 18, 0.2) 100%);
     border-radius: 20px;
     height: 101vh;
 }
@@ -443,6 +452,23 @@
     background-size: cover;
     background-position: center;
     position: relative;
+    overflow: hidden;
+    /* Ensure content stays inside */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    /* Fallback */
+}
+
+.user-avatar-large img,
+.user-avatar-large .dynamic-avatar {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+    margin: 0 !important;
+    /* Override any margins */
+    border-radius: 50%;
 }
 
 .user-avatar-large:last-child {
@@ -485,7 +511,7 @@
 }
 
 /* Laravel pagination flex wrapper */
-.pagination-container nav > div {
+.pagination-container nav>div {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -643,8 +669,7 @@
     }
 
     /* Hide middle page numbers on very small screens */
-    .pagination-container
-        a:not([rel]):not(.active):nth-child(n + 4):nth-last-child(n + 4) {
+    .pagination-container a:not([rel]):not(.active):nth-child(n + 4):nth-last-child(n + 4) {
         display: none !important;
     }
 }
@@ -669,15 +694,13 @@
 .pagination-container p.text-sm.text-gray-700.leading-5,
 .pagination-container p.text-sm.leading-5.text-gray-700,
 .pagination-container div.hidden.sm\\:flex-1 p,
-.pagination-container nav > div:first-of-type p {
+.pagination-container nav>div:first-of-type p {
     display: none !important;
 }
 
 /* More specific targeting for Laravel pagination info */
-.pagination-container
-    .sm\\:flex-1.sm\\:flex.sm\\:items-center.sm\\:justify-between
-    > div:first-child,
-.pagination-container .flex.items-center.justify-between > div:first-child p,
+.pagination-container .sm\\:flex-1.sm\\:flex.sm\\:items-center.sm\\:justify-between>div:first-child,
+.pagination-container .flex.items-center.justify-between>div:first-child p,
 .pagination-container .text-sm.text-gray-700.leading-5.dark\\:text-gray-400 {
     display: none !important;
 }
@@ -688,7 +711,7 @@
 }
 
 /* Alternative - hide first div that contains only text */
-.pagination-container nav > div:first-child:not(.flex) {
+.pagination-container nav>div:first-child:not(.flex) {
     display: none !important;
 }
 
@@ -700,10 +723,10 @@
 .pagination-container ul.pagination li,
 .pagination-container ul.pagination li a,
 .pagination-container ul.pagination li span,
-.pagination-container .flex > a,
-.pagination-container .flex > span,
-.pagination-container nav > div:last-child,
-.pagination-container nav > div.flex {
+.pagination-container .flex>a,
+.pagination-container .flex>span,
+.pagination-container nav>div:last-child,
+.pagination-container nav>div.flex {
     display: inline-flex !important;
     visibility: visible !important;
 }
@@ -829,6 +852,7 @@
         opacity: 0;
         transform: scale(0.9) translateY(-20px);
     }
+
     to {
         opacity: 1;
         transform: scale(1) translateY(0);
@@ -1065,11 +1089,9 @@
     line-height: 1.33;
     color: #1c1e21;
     width: 90%;
-    background: linear-gradient(
-        to right,
-        rgba(138, 203, 36, 0.2) 0%,
-        rgba(69, 101, 18, 0.2) 100%
-    );
+    background: linear-gradient(to right,
+            rgba(138, 203, 36, 0.2) 0%,
+            rgba(69, 101, 18, 0.2) 100%);
     margin-left: 40px;
 }
 

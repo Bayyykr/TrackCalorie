@@ -72,7 +72,7 @@
                                 <div class="food-card">
                                     <div class="food-card-image">
                                         @if ($item->image_path)
-                                            <img src="{{ $item->image_path }}" alt="{{ $item->name }}"
+                                            <img src="{{ asset($item->image_path) }}" alt="{{ $item->name }}"
                                                 class="food-card-img"
                                                 onerror="this.onerror=null; this.src='{{ asset('images/fallback.jpg') }}'">
                                         @else
@@ -96,7 +96,8 @@
                                                 </span>
                                             </div>
                                         @endif
-                                        <button class="food-card-button">Baca selengkapnya</button>
+
+                                        <button class="food-card-button" onclick="saveMenu('{{ $item->name }}', '{{ $item->calorie_range }}')">Simpan Menu</button>
                                     </div>
                                 </div>
                             @endforeach
@@ -276,7 +277,7 @@
                     html += '<div class="food-cards-row">';
                     row.forEach(item => {
                         const imageHtml = item.image_path ?
-                            `<img src="/storage/${item.image_path}" alt="${item.name}" class="food-card-img" onerror="this.onerror=null; this.src='/images/fallback.jpg'">` :
+                            `<img src="/${item.image_path}" alt="${item.name}" class="food-card-img" onerror="this.onerror=null; this.src='/images/fallback.jpg'">` :
                             `<div class="food-card-fallback" style="background: linear-gradient(45deg, ${item.image_color || '#4caf50'});"><span>${item.name.substr(0, 15)}</span></div>`;
 
                         const categoryBadge = item.category ?
@@ -295,7 +296,8 @@
                                 <h3>${item.name}</h3>
                                 <p>${item.description.length > 100 ? item.description.substr(0, 100) + '...' : item.description}</p>
                                 ${categoryBadge}
-                                <button class="food-card-button">Baca selengkapnya</button>
+
+                                <button class="food-card-button" onclick="saveMenu('${escapeHtml(item.name)}', '${item.calorie_range}')">Simpan Menu</button>
                             </div>
                         </div>
                     `;
@@ -412,6 +414,45 @@
                 return text.replace(/[&<>"']/g, function(m) {
                     return map[m];
                 });
+            }
+
+            async function saveMenu(name, calories) {
+                try {
+                    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                    
+                    const response = await fetch('/recomend', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'X-CSRF-TOKEN': csrfToken
+                        },
+                        body: JSON.stringify({
+                            name: name,
+                            calories: calories
+                        })
+                    });
+
+                    const result = await response.json();
+
+                    if (result.success) {
+                        alert('Menu berhasil disimpan ke daftar pilihan Anda!');
+                        // Auto open popup to show updated list?
+                        const popup = document.getElementById('menuListPopup');
+                        if (popup) {
+                            // If popup is already active, reload list. If not, maybe don't force open it, just notify.
+                            if (popup.classList.contains('active')) {
+                                loadUserMenus();
+                            }
+                        }
+                    } else {
+                        alert('Gagal menyimpan menu: ' + (result.error || 'Terjadi kesalahan'));
+                    }
+                } catch (error) {
+                    console.error('Error saving menu:', error);
+                    alert('Terjadi kesalahan koneksi saat menyimpan menu');
+                }
             }
         </script>
     </body>

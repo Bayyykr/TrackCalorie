@@ -137,7 +137,8 @@ class HomePageController extends Controller
             'bmr',
             'tdee',
             'chartData',
-            'targetData'
+            'targetData',
+            'isProfileComplete'
         ));
     }
 

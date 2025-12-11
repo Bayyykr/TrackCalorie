@@ -7,8 +7,13 @@
         <section class="welcome-section">
             <div class="welcome-header">
                 @auth
-                    <img src="{{ Auth::user()->avatar ? asset('storage/' . Auth::user()->avatar) : asset('images/pisang.png') }}"
-                        alt="profile-image" class="welcome-avatar">
+                    @if(Auth::user()->avatar_url)
+                        <img src="{{ Auth::user()->avatar_url }}" alt="profile-image" class="welcome-avatar">
+                    @else
+                        <div class="welcome-avatar" style="background-color: {{ Auth::user()->avatar_color }}">
+                            {{ Auth::user()->initials }}
+                        </div>
+                    @endif
                 @else
                     <img src="{{ asset('images/pisang.png') }}" alt="profile-image" class="welcome-avatar">
                 @endauth
@@ -63,12 +68,20 @@
                             $userName = isset($post->user->name) ? $post->user->name : 'Pengguna Dihapus';
                         @endphp
 
-                        <img class="post-avatar" src="{{ $userAvatar }}" alt="{{ $userName }}">
+                        @if($post->user && $post->user->avatar_url)
+                            <img class="post-avatar" src="{{ $post->user->avatar_url }}" alt="{{ $userName }}">
+                        @elseif($post->user)
+                            <div class="post-avatar dynamic-avatar" style="background-color: {{ $post->user->avatar_color }}">
+                                {{ $post->user->initials }}
+                            </div>
+                        @else
+                             <img class="post-avatar" src="{{ asset('images/default-avatar.png') }}" alt="Deleted User">
+                        @endif
 
                         <div class="post-meta-info">
                             <div class="post-author-name">{{ $userName }}</div>
                             <div class="post-date-category">
-                                <span>Ditanyakan {{ $post->created_at->format('M j, Y') }}</span>
+                                <span>Ditanyakan {{ $post->created_at->translatedFormat('d F Y') }}</span>
                                 <span class="post-category-tag">{{ $post->category }}</span>
                             </div>
                         </div>
@@ -162,9 +175,13 @@
                 @foreach ($recentActivity as $activity)
                     <div class="activity-item">
                         <div class="activity-avatar">
-                            @if ($activity->user)
-                                <img src="{{ $activity->user->avatar ? asset('storage/' . $activity->user->avatar) : asset('images/default-avatar.png') }}"
+                            @if ($activity->user && $activity->user->avatar_url)
+                                <img src="{{ $activity->user->avatar_url }}"
                                     alt="profile-image" class="activity-img-avatar">
+                            @elseif ($activity->user)
+                                <div class="activity-img-avatar dynamic-avatar" style="background-color: {{ $activity->user->avatar_color }}; font-size: 12px;">
+                                    {{ $activity->user->initials }}
+                                </div>
                             @else
                                 <img src="{{ asset('images/default-avatar.png') }}" alt="profile-image"
                                     class="activity-img-avatar">
@@ -207,8 +224,14 @@
                 <div class="user-avatars-row">
                     @foreach ($activeUsers->take(5) as $user)
                         <div class="user-avatar-large">
-                            <img src="{{ $user->avatar_url ?? asset('images/pisang.png') }}" alt="profile-image"
-                                class="activity-user-avatar" title="{{ $user->name ?? 'Pengguna Tidak Dikenal' }}">
+                            @if($user->avatar_url)
+                                <img src="{{ $user->avatar_url }}" alt="profile-image"
+                                    class="activity-user-avatar" title="{{ $user->name ?? 'Pengguna Tidak Dikenal' }}">
+                            @else
+                                <div class="activity-user-avatar dynamic-avatar" style="background-color: {{ $user->avatar_color }}; font-size: 12px;" title="{{ $user->name ?? 'Pengguna Tidak Dikenal' }}">
+                                    {{ $user->initials }}
+                                </div>
+                            @endif
                         </div>
                     @endforeach
                 </div>

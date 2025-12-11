@@ -81,6 +81,9 @@ class ForumPost extends Model
 
     public function isLikedByCurrentUser()
     {
+        if (Auth::check()) {
+            return $this->likes()->where('user_id', Auth::id())->exists();
+        }
         $session_id = session()->getId();
         return $this->likes()->where('session_id', $session_id)->exists();
     }
