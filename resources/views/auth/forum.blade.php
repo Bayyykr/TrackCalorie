@@ -157,12 +157,21 @@
                             <div class="post-author-name">{{ $userName }}</div>
                             <div class="post-date-category">
                                 <span>Ditanyakan {{ $post->created_at->translatedFormat('d F Y') }}</span>
-                                <span class="post-category-tag">{{ $post->category }}</span>
+                                @php
+                                    $categoryMap = [
+                                        'Weight Loss' => 'Penurunan Berat Badan',
+                                        'Weight Gain' => 'Kenaikan Berat Badan',
+                                        'Maintain Weight' => 'Menjaga Berat Badan',
+                                        'Nutrition' => 'Nutrisi',
+                                        'Exercise' => 'Olahraga',
+                                        'General Health' => 'Kesehatan Umum',
+                                    ];
+                                    $translatedCategory = $categoryMap[$post->category] ?? $post->category;
+                                @endphp
+                                <span class="post-category-tag">{{ $translatedCategory }}</span>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Post Content -->
                     <div class="post-content-section">
                         <h3 class="post-title">{{ $post->title }}</h3>
                         <p class="post-content">{{ Str::limit($post->content, 150) }}</p>
@@ -549,7 +558,7 @@
                 showToast('Gagal!', 'Gagal memperbarui suka. Silakan coba lagi.', 'error');
             }
         } catch (error) {
-            showToast('Error!', 'Kesalahan jaringan. Silakan coba lagi.', 'error');
+            showToast('Kesalahan!', 'Kesalahan jaringan. Silakan coba lagi.', 'error');
         } finally {
             buttonElement.classList.remove('processing');
         }

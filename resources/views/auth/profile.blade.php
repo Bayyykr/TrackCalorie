@@ -11,6 +11,8 @@
 
 <body>
     @include('components.navbar')
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
     <div class="profile-container">
         <div class="profile-section">
             <h1 class="section-title">Edit Profil</h1>
@@ -98,7 +100,7 @@
                                 value="********" placeholder="********" readonly
                                 data-has-password="{{ $user->password ? 'true' : 'false' }}">
                             <button type="button" class="password-toggle" onclick="togglePasswordVisibility(this)">
-                                👁️
+                                <i class="bi bi-eye"></i>
                             </button>
                         </div>
                     </div>
@@ -244,14 +246,145 @@
             if (input.type === 'password') {
                 input.type = 'text';
                 input.value = 'Password tersimpan (terenkripsi)';
-                button.textContent = '🙈';
+                button.innerHTML = '<i class="bi bi-eye-slash"></i>';
             } else {
                 input.type = 'password';
                 input.value = '********';
-                button.textContent = '👁️';
+                button.innerHTML = '<i class="bi bi-eye"></i>';
             }
         }
+
+        // Toast Notification Function
+        function showToast(title, message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            if (!container) return;
+            
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            
+            toast.innerHTML = `
+                <div class="toast-content">
+                    <div class="toast-title">${title}</div>
+                    <div class="toast-message">${message}</div>
+                </div>
+                <div class="toast-close" onclick="this.parentElement.remove()">&times;</div>
+            `;
+            
+            container.appendChild(toast);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                toast.classList.add('hiding');
+                setTimeout(() => {
+                    if (toast.parentElement) {
+                        toast.remove();
+                    }
+                }, 400);
+            }, 5000);
+        }
     </script>
+
+    <style>
+        /* Toast Notification Styles */
+        .toast-container {
+            position: fixed !important;
+            top: 20px !important;
+            right: 20px !important;
+            z-index: 99999 !important;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            pointer-events: none;
+        }
+
+        .toast {
+            background: white;
+            border-left: 4px solid #4CAF50;
+            padding: 16px 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            min-width: 320px;
+            max-width: 400px;
+            pointer-events: auto;
+            position: relative;
+            overflow: hidden;
+            animation: toastSlideIn 0.4s ease-out forwards;
+            transition: all 0.3s ease;
+        }
+
+        .toast.error {
+            border-left-color: #ef4444;
+        }
+
+        .toast-content {
+            flex: 1;
+            margin-right: 12px;
+        }
+
+        .toast-title {
+            font-weight: 700;
+            font-size: 15px;
+            color: #1f2937;
+            margin-bottom: 4px;
+        }
+
+        .toast-message {
+            font-size: 14px;
+            color: #6b7280;
+            line-height: 1.4;
+        }
+
+        .toast-close {
+            color: #9ca3af;
+            cursor: pointer;
+            font-size: 20px;
+            padding: 4px;
+            border-radius: 4px;
+            transition: all 0.2s;
+            line-height: 1;
+        }
+
+        .toast-close:hover {
+            background: #f3f4f6;
+            color: #4b5563;
+        }
+
+        .toast.hiding {
+            animation: toastSlideOut 0.4s ease-in forwards;
+        }
+
+        @keyframes toastSlideIn {
+            0% {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes toastSlideOut {
+            0% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+    </style>
+    @if (session('success'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Use existing showToast function from global scripts
+            showToast('Berhasil!', '{{ session('success') }}', 'success');
+        });
+    </script>
+    @endif
 </body>
 
 </html>

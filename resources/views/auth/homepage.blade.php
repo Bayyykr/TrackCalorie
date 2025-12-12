@@ -836,22 +836,25 @@
                     calendarGrid.appendChild(dayElement);
                 }
 
-                // Tambahkan contoh jadwal (Anda bisa mengganti ini dengan data nyata)
+                // Tampilkan jadwal makan dari controller
                 const scheduleItems = document.getElementById('schedule-items');
-                const sampleEvent = {
-                    time: '2:00 pm',
-                    activity: 'makan sate madura'
-                };
+                const mealPlan = @json($mealPlan ?? []);
 
-                // Contoh: tambahkan 2 acara di jam yang sama
-                for (let i = 0; i < 2; i++) {
-                    const scheduleItem = document.createElement('div');
-                    scheduleItem.className = 'schedule-item';
-                    scheduleItem.innerHTML = `
-                <span>${sampleEvent.time}</span>
-                <span>${sampleEvent.activity}</span>
-            `;
-                    scheduleItems.appendChild(scheduleItem);
+                if (mealPlan.length > 0) {
+                    mealPlan.forEach(item => {
+                        const scheduleItem = document.createElement('div');
+                        scheduleItem.className = 'schedule-item';
+                        scheduleItem.innerHTML = `
+                            <span>${item.time}</span>
+                            <span>${item.activity}</span>
+                        `;
+                        scheduleItems.appendChild(scheduleItem);
+                    });
+                } else {
+                    const emptyItem = document.createElement('div');
+                    emptyItem.className = 'schedule-item';
+                    emptyItem.innerHTML = '<span>-</span><span>Belum ada jadwal makan</span>';
+                    scheduleItems.appendChild(emptyItem);
                 }
             });
         </script>

@@ -23,6 +23,18 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [LoginController::class, 'login']);
     Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('register');
     Route::post('/register', [RegisterController::class, 'register']);
+    
+
+
+    // Google Auth Routes
+    Route::get('auth/google', [App\Http\Controllers\Auth\GoogleController::class, 'redirectToGoogle'])->name('google.login');
+    Route::get('auth/google/callback', [App\Http\Controllers\Auth\GoogleController::class, 'handleGoogleCallback']);
+
+    // Password Reset Routes
+    Route::get('password/reset', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+    Route::post('password/email', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+    Route::get('password/reset/{token}', [App\Http\Controllers\Auth\ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+    Route::post('password/reset', [App\Http\Controllers\Auth\ResetPasswordController::class, 'reset'])->name('password.update');
 });
 
 // Authenticated routes - Accessible only by logged in users
@@ -45,9 +57,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/api/add-calories', [CalorieController::class, 'addCalories'])->name('api.add.calories');
     Route::get('/calorie-history', [CalorieController::class, 'getCalorieHistory'])->name('calorie.history');
 
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    // Route::get('/dashboard', function () {
+    //     return view('dashboard');
+    // })->name('dashboard');
 });
 
 Route::middleware('auth')->prefix('forum')->group(function () {

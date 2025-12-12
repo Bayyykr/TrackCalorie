@@ -22,19 +22,19 @@
                 <div class="developer-team">
                     <div class="developer-card">
                         <div class="developer-avatar">
-                            <img src="{{ asset('images/avatar/bayu.jpeg') }}" alt="Avatar">
+                            <img src="<?php echo e(asset('images/avatar/bayu.jpeg')); ?>" alt="Avatar">
                         </div>
                         <div class="developer-name">Bayu Kristanto</div>
                     </div>
                     <div class="developer-card">
                         <div class="developer-avatar">
-                            <img src="{{ asset('images/avatar/doni.jpg') }}" alt="Avatar">
+                            <img src="<?php echo e(asset('images/avatar/doni.jpg')); ?>" alt="Avatar">
                         </div>
                         <div class="developer-name">Doni Wahyudi</div>
                     </div>
                     <div class="developer-card">
                         <div class="developer-avatar">
-                            <img src="{{ asset('images/avatar/anang.jpg') }}" alt="Avatar">
+                            <img src="<?php echo e(asset('images/avatar/anang.jpg')); ?>" alt="Avatar">
                         </div>
                         <div class="developer-name">M. Anang Ma'ruf</div>
                     </div>
@@ -43,3 +43,4 @@
         </div>
     </div>
 </section>
+<?php /**PATH D:\lomba\TrackCalorie\resources\views/components/about.blade.php ENDPATH**/ ?>

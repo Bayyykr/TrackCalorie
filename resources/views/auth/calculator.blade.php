@@ -2,6 +2,84 @@
 
 @include('components.navbar')
 
+<style>
+    /* Profile Completion Modal Overlay */
+    .profile-modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(8px);
+    }
+
+    .profile-modal-overlay.active {
+        display: flex;
+    }
+
+    .profile-modal-card {
+        background: white;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        text-align: center;
+        max-width: 450px;
+        width: 90%;
+        animation: slideUp 0.5s ease-out;
+        border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    @keyframes slideUp {
+        from { transform: translateY(20px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    .profile-modal-icon {
+        font-size: 48px;
+        margin-bottom: 20px;
+        color: #7cb342;
+    }
+
+    .profile-modal-title {
+        font-size: 24px;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 15px;
+    }
+
+    .profile-modal-text {
+        color: #64748b;
+        margin-bottom: 30px;
+        line-height: 1.6;
+        font-size: 16px;
+    }
+
+    .profile-modal-btn {
+        display: inline-block;
+        background: linear-gradient(135deg, #7cb342 0%, #8bc34a 100%);
+        color: white;
+        padding: 14px 35px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(124, 180, 66, 0.4);
+        border: none;
+        cursor: pointer;
+    }
+
+    .profile-modal-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(124, 180, 66, 0.5);
+        color: white;
+    }
+</style>
+
 <div class="main-container">
     <!-- Left Column - Food Image -->
     <div class="image-column">
@@ -78,8 +156,21 @@
 
             <button type="button" class="btn-calculate" id="calculateBtn">Hitung</button>
         </form>
-        <button type="button" class="btn-monitor" id="monitorBtn"
-            onclick="location.href='{{ route('calculate.monitor') }}'">Monitor Kalori</button>
+        <button type="button" class="btn-monitor" id="monitorBtn">Monitor Kalori</button>
+    </div>
+</div>
+
+<!-- Profile Completion Modal -->
+<div id="profileModal" class="profile-modal-overlay">
+    <div class="profile-modal-card">
+        <div class="profile-modal-icon">
+            📋
+        </div>
+        <div class="profile-modal-title">Profil Belum Lengkap</div>
+        <p class="profile-modal-text">Untuk menggunakan Monitor Kalori, mohon lengkapi data profil Anda terlebih dahulu (usia, berat badan, tinggi badan, jenis kelamin, dan tingkat aktivitas).</p>
+        <a href="{{ route('profile.edit') }}" class="profile-modal-btn">
+            ✏️ Lengkapi Profil Sekarang
+        </a>
     </div>
 </div>
 
@@ -117,6 +208,9 @@
 </div>
 
 <script>
+    // Profile check - from Laravel
+    const isProfileComplete = {{ Auth::check() && Auth::user()->usia && Auth::user()->bb && Auth::user()->tb && Auth::user()->jenis_kelamin && Auth::user()->aktivitas ? 'true' : 'false' }};
+
     function calculateBMR(weight, height, age, gender) {
         if (gender === 'male') {
             return Math.round(88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age));
@@ -151,6 +245,18 @@
         setTimeout(() => {
             document.body.style.overflow = 'auto';
         }, 300);
+    }
+
+    function showProfileModal() {
+        const modal = document.getElementById('profileModal');
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeProfileModal() {
+        const modal = document.getElementById('profileModal');
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
     }
 
     function validateInputs() {
@@ -193,6 +299,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
+        // Calculate Button
         const calculateBtn = document.getElementById('calculateBtn');
         if (calculateBtn) {
             calculateBtn.addEventListener('click', function(e) {
@@ -225,20 +332,51 @@
             });
         }
 
-        const modal = document.getElementById('calculationModal');
-        if (modal) {
-            modal.addEventListener('click', function(e) {
+        // Monitor Button - check profile first
+        const monitorBtn = document.getElementById('monitorBtn');
+        if (monitorBtn) {
+            monitorBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                if (isProfileComplete) {
+                    // Profile complete, redirect to monitor
+                    window.location.href = '{{ route("calculate.monitor") }}';
+                } else {
+                    // Profile incomplete, show modal
+                    showProfileModal();
+                }
+            });
+        }
+
+        // Close modals on click outside
+        const calculationModal = document.getElementById('calculationModal');
+        if (calculationModal) {
+            calculationModal.addEventListener('click', function(e) {
                 if (e.target === this) {
                     closeModal();
                 }
             });
         }
 
+        const profileModal = document.getElementById('profileModal');
+        if (profileModal) {
+            profileModal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeProfileModal();
+                }
+            });
+        }
+
+        // Close on Escape key
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
-                const modal = document.getElementById('calculationModal');
-                if (modal && modal.classList.contains('active')) {
+                const calcModal = document.getElementById('calculationModal');
+                if (calcModal && calcModal.classList.contains('active')) {
                     closeModal();
+                }
+                const profModal = document.getElementById('profileModal');
+                if (profModal && profModal.classList.contains('active')) {
+                    closeProfileModal();
                 }
             }
         });

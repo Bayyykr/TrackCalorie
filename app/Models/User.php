@@ -28,6 +28,7 @@ class User extends Authenticatable
         'bb',
         'aktivitas',
         'avatar',
+        'google_id',
     ];
 
     /**
@@ -107,6 +108,9 @@ class User extends Authenticatable
     public function getAvatarUrlAttribute()
     {
         if ($this->avatar) {
+            if (filter_var($this->avatar, FILTER_VALIDATE_URL)) {
+                return $this->avatar;
+            }
             return asset('storage/' . $this->avatar);
         }
 

@@ -454,6 +454,7 @@
             cursor: pointer;
             transition: all 0.3s ease;
             margin: 1.5rem 0 1rem;
+            text-decoration: none; /* Add this */
         }
 
         .google-signup:hover {
@@ -497,43 +498,105 @@
             font-weight: 500;
         }
 
-        /* Mobile Menu Toggle */
-        .mobile-menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 28px;
-            color: #666;
-            cursor: pointer;
-            z-index: 1001;
-        }
+            .mobile-menu-toggle {
+                display: none;
+                background: none;
+                border: none;
+                font-size: 28px;
+                color: #666;
+                cursor: pointer;
+                z-index: 1001;
+            }
 
-        /* Alert Messages */
-        .alert {
-            padding: 0.75rem 1rem;
-            margin-bottom: 1rem;
-            border: 1px solid transparent;
-            border-radius: 0.375rem;
-            font-size: 13px;
-        }
+            /* Toast Notification Styles - FIXED */
+            .toast-container {
+                position: fixed !important;
+                top: 20px !important;
+                right: 20px !important;
+                z-index: 99999 !important;
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 10px !important;
+                pointer-events: none;
+            }
 
-        .alert-danger {
-            color: #721c24;
-            background-color: #f8d7da;
-            border-color: #f5c6cb;
-        }
+            .toast {
+                background: white !important;
+                border-left: 4px solid #4caf50 !important;
+                padding: 15px 25px !important;
+                border-radius: 8px !important;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.25) !important;
+                display: flex !important;
+                align-items: center !important;
+                min-width: 320px !important;
+                max-width: 400px !important;
+                opacity: 1 !important;
+                transform: translateX(0) !important;
+                animation: toastSlideIn 0.4s ease-out !important;
+                pointer-events: auto;
+            }
 
-        .alert-success {
-            color: #155724;
-            background-color: #d4edda;
-            border-color: #c3e6cb;
-        }
+            .toast.error {
+                border-left-color: #f44336 !important;
+            }
 
-        .d-none {
-            display: none !important;
-        }
+            .toast.hiding {
+                animation: toastSlideOut 0.4s ease-in forwards !important;
+            }
 
-        /* Responsive Design */
+            .toast-content {
+                margin-right: 15px;
+                flex: 1;
+            }
+
+            .toast-title {
+                font-weight: bold;
+                font-size: 14px;
+                margin-bottom: 4px;
+                color: #333;
+            }
+
+            .toast-message {
+                font-size: 13px;
+                color: #666;
+                line-height: 1.4;
+            }
+
+            .toast-close {
+                margin-left: auto;
+                cursor: pointer;
+                color: #999;
+                font-size: 20px;
+                padding: 0 5px;
+                pointer-events: auto;
+            }
+
+            .toast-close:hover {
+                color: #333;
+            }
+
+            @keyframes toastSlideIn {
+                0% {
+                    transform: translateX(120%);
+                    opacity: 0;
+                }
+                100% {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+
+            @keyframes toastSlideOut {
+                0% {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                100% {
+                    transform: translateX(120%);
+                    opacity: 0;
+                }
+            }
+        
         @media (max-width: 1200px) {
             .nav-center {
                 gap: 2.2rem;
@@ -752,22 +815,20 @@
                 margin: 0.8rem 0 1.2rem;
             }
         }
-    </style>
+</style>
 </head>
 
 <body>
 
+    <!-- Toast Container - HARUS di level body -->
+    <div class="toast-container" id="toastContainer"></div>
 
     <div class="login-container">
         <div class="left-section">
             <div class="sign-up-form">
                 <h1 class="sign-up-header">Daftar</h1>
 
-                <!-- Error/Success Messages -->
-                <div id="errorMessage" class="alert alert-danger d-none"></div>
-                <div id="successMessage" class="alert alert-success d-none"></div>
-
-                <form id="signupForm">
+                <form id="signupForm" method="POST" action="{{ route('register') }}">
                     @csrf
                     <div class="form-group">
                         <label for="name" class="form-label">Nama</label>
@@ -805,12 +866,18 @@
                     <button type="submit" class="btn-signup">Daftar</button>
                 </form>
 
-                <div class="divider-title">Atau daftar dengan</div>
 
-                <button class="google-signup">
-                    <i class="fab fa-google"></i>
+
+                <div style="display: flex; align-items: center; margin: 20px 0;">
+                    <div style="flex: 1; height: 1px; background: #ddd;"></div>
+                    <span style="padding: 0 10px; color: #777; font-size: 12px;">ATAU</span>
+                    <div style="flex: 1; height: 1px; background: #ddd;"></div>
+                </div>
+
+                <a href="{{ route('google.login') }}" style="display: flex; align-items: center; justify-content: center; gap: 10px; background: white; border: 1px solid #ddd; border-radius: 6px; padding: 10px; text-decoration: none; color: #555; font-weight: 500; font-size: 14px; margin-bottom: 20px; transition: all 0.3s;">
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" style="width: 18px; height: 18px;">
                     Daftar dengan Google
-                </button>
+                </a>
 
                 <div class="signin-link">
                     Sudah punya akun? <a href="{{ route('login') }}">Masuk</a>
@@ -831,21 +898,52 @@
     </div>
 
     <script>
-        function showMessage(message, type = 'error') {
-            const errorDiv = document.getElementById('errorMessage');
-            const successDiv = document.getElementById('successMessage');
+        // Check for server-side messages on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            @if (session('success'))
+                showToast('Berhasil!', '{{ session('success') }}', 'success');
+            @endif
+            
+            @if (session('error'))
+                showToast('Gagal!', '{{ session('error') }}', 'error');
+            @endif
+            
+            @if ($errors->any())
+                @foreach ($errors->all() as $error)
+                    showToast('Gagal!', '{{ $error }}', 'error');
+                @endforeach
+            @endif
+        });
 
-            // Hide both messages first
-            errorDiv.classList.add('d-none');
-            successDiv.classList.add('d-none');
-
-            if (type === 'error') {
-                errorDiv.textContent = message;
-                errorDiv.classList.remove('d-none');
-            } else {
-                successDiv.textContent = message;
-                successDiv.classList.remove('d-none');
+        function showToast(title, message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            if (!container) {
+                console.error('Toast container not found!');
+                return;
             }
+            
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            
+            toast.innerHTML = `
+                <div class="toast-content">
+                    <div class="toast-title">${title}</div>
+                    <div class="toast-message">${message}</div>
+                </div>
+                <div class="toast-close" onclick="this.parentElement.remove()">&times;</div>
+            `;
+            
+            container.appendChild(toast);
+            
+            // Auto remove after 5 seconds (5000ms)
+            setTimeout(() => {
+                toast.classList.add('hiding');
+                setTimeout(() => {
+                    if (toast.parentElement) {
+                        toast.remove();
+                    }
+                }, 400);
+            }, 5000);
         }
 
         function validatePasswords() {
@@ -863,11 +961,14 @@
         }
 
         // Mobile menu toggle functionality
-        document.querySelector('.mobile-menu-toggle').addEventListener('click', function() {
-            const navCenter = document.querySelector('.nav-center');
-            navCenter.classList.toggle('show');
-            this.textContent = this.textContent === '☰' ? '✕' : '☰';
-        });
+        const mobileToggle = document.querySelector('.mobile-menu-toggle');
+        if (mobileToggle) {
+            mobileToggle.addEventListener('click', function() {
+                const navCenter = document.querySelector('.nav-center');
+                navCenter.classList.toggle('show');
+                this.textContent = this.textContent === '☰' ? '✕' : '☰';
+            });
+        }
 
         // Real-time password confirmation validation
         document.getElementById('password_confirmation').addEventListener('input', validatePasswords);
@@ -887,22 +988,22 @@
 
             // Client-side validation
             if (!name || !email || !password || !passwordConfirmation) {
-                showMessage('Harap isi semua kolom yang wajib diisi', 'error');
+                showToast('Gagal!', 'Harap isi semua kolom yang wajib diisi', 'error');
                 return;
             }
 
             if (password.length < 6) {
-                showMessage('Kata sandi harus terdiri dari minimal 6 karakter', 'error');
+                showToast('Gagal!', 'Kata sandi harus terdiri dari minimal 6 karakter', 'error');
                 return;
             }
 
             if (!validatePasswords()) {
-                showMessage('Kata sandi tidak cocok', 'error');
+                showToast('Gagal!', 'Kata sandi tidak cocok', 'error');
                 return;
             }
 
             if (!terms) {
-                showMessage('Harap setujui syarat dan ketentuan', 'error');
+                showToast('Gagal!', 'Harap setujui syarat dan ketentuan', 'error');
                 return;
             }
 
@@ -929,12 +1030,12 @@
                 const data = await response.json();
 
                 if (response.ok && data.success) {
-                    showMessage(data.message, 'success');
+                    showToast('Berhasil!', data.message || 'Akun berhasil dibuat!', 'success');
                     btn.textContent = '✓ Akun berhasil dibuat!';
                     btn.style.background = '#2e7d32';
 
                     // Reset form
-                    this.reset();
+                    document.getElementById('signupForm').reset();
 
                     // Redirect to login page after delay
                     setTimeout(() => {
@@ -944,9 +1045,9 @@
                     // Handle validation errors
                     if (data.errors) {
                         const firstError = Object.values(data.errors)[0];
-                        showMessage(Array.isArray(firstError) ? firstError[0] : firstError, 'error');
+                        showToast('Gagal!', Array.isArray(firstError) ? firstError[0] : firstError, 'error');
                     } else {
-                        showMessage(data.message || 'Pendaftaran gagal. Silakan coba lagi.', 'error');
+                        showToast('Gagal!', data.message || 'Pendaftaran gagal. Silakan coba lagi.', 'error');
                     }
 
                     btn.textContent = originalText;
@@ -955,7 +1056,7 @@
                 }
             } catch (error) {
                 console.error('Registration error:', error);
-                showMessage('Kesalahan jaringan. Harap periksa koneksi Anda dan coba lagi.', 'error');
+                showToast('Kesalahan!', 'Kesalahan jaringan. Harap periksa koneksi Anda dan coba lagi.', 'error');
 
                 btn.textContent = originalText;
                 btn.style.background = '#4caf50';

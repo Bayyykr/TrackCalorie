@@ -68,7 +68,7 @@ class ProfileController extends Controller
 
         $user->update($validated);
 
-        return redirect()->route('profile.edit')->with('success', 'Profile updated successfully!');
+        return redirect()->route('profile.edit')->with('success', 'Profil berhasil diperbarui!');
     }
 
     public function uploadPhoto(Request $request)
@@ -94,6 +94,6 @@ class ProfileController extends Controller
             'avatar' => $path
         ]);
 
-        return back()->with('success', 'Foto profil berhasil diupdate!');
+        return back()->with('success', 'Foto profil berhasil diperbarui!');
     }
 }

@@ -1,0 +1,2 @@
+
+<?php echo $__env->make('layouts.masterLayout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH D:\lomba\TrackCalorie\resources\views/index.blade.php ENDPATH**/ ?>

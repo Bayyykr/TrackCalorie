@@ -13,7 +13,8 @@
 /* Logo Section */
 .footer-logo-section {
     text-align: center;
-    padding: 60px 0 40px;
+    padding: 0;
+    margin-top: 20px;
     background-color: #ffffff;
 }
 
@@ -24,7 +25,6 @@
     font-weight: 400;
     color: #333333;
     text-decoration: none;
-
     font-style: italic;
 }
 
@@ -38,8 +38,12 @@
     transform: rotate(-10deg);
 }
 
+/* ... */
+
 .footer-logo img {
-    scale: 0.7;
+    /* Use width instead of scale to properly affect layout size */
+    width: 150px;
+    height: auto;
 }
 
 .footer-logo-icon::after {
@@ -178,7 +182,7 @@ footer {
         display: none;
     }
 
-    .footer-nav > div {
+    .footer-nav>div {
         text-align: center;
     }
 

@@ -38,3 +38,4 @@
         </div>
     </div>
 </footer>
+<?php /**PATH D:\lomba\TrackCalorie\resources\views/components/footer.blade.php ENDPATH**/ ?>

@@ -122,6 +122,64 @@ class HomePageController extends Controller
 
             // Buat array target untuk 7 hari (untuk chart)
             $targetData = array_fill(0, 7, $targetPerDay);
+
+            // FOOD RECOMMENDATION LOGIC - SMART DISTRIBUTION
+            // Target: Memenuhi kebutuhan kalori harian (TDEE) dengan distribusi sehat
+            // Pagi (Sarapan): ~30%
+            // Siang (Makan Siang): ~40%
+            // Malam (Makan Malam): ~30%
+            
+            $mealPlan = [];
+            $allMenus = \App\Models\Menu::all(); // Ambil semua menu untuk dipilih
+            
+            if ($allMenus->count() > 0) {
+                // Target kalori per waktu makan
+                $targets = [
+                    ['time' => '07:00 am', 'percent' => 0.30, 'label' => 'Sarapan'],
+                    ['time' => '01:00 pm', 'percent' => 0.40, 'label' => 'Makan Siang'],
+                    ['time' => '07:00 pm', 'percent' => 0.30, 'label' => 'Makan Malam'],
+                ];
+
+                foreach ($targets as $target) {
+                    $targetCal = $tdee * $target['percent'];
+                    $bestMenu = null;
+                    $minDiff = PHP_INT_MAX;
+
+                    // Cari menu dengan kalori paling mendekati target
+                    // Logika ini mencari menu tunggal yang mendekati target. 
+                    // Jika menu kecil-kecil, mungkin perlu kombinasi, tapi untuk simplifikasi kita cari 1 menu utama.
+                    foreach ($allMenus as $menu) {
+                        $cal = intval(preg_replace('/[^0-9]/', '', $menu->calories));
+                        if ($cal > 0) {
+                            $diff = abs($targetCal - $cal);
+                            if ($diff < $minDiff) {
+                                $minDiff = $diff;
+                                $bestMenu = $menu;
+                            }
+                        }
+                    }
+
+                    if ($bestMenu) {
+                        // Hapus menu terpilih dari list agar tidak dipilih lagi (opsional, jika stok menu cukup)
+                        $allMenus = $allMenus->reject(function ($value, $key) use ($bestMenu) {
+                            return $value->id == $bestMenu->id;
+                        });
+
+                        $mealPlan[] = [
+                            'time' => $target['time'],
+                            'activity' => $target['label'] . ': ' . $bestMenu->name . ' (' . $bestMenu->calories . ')',
+                            'calories' => $bestMenu->calories
+                        ];
+                    }
+                }
+                
+                // Urutkan berdasarkan waktu (walaupun array targets sudah urut)
+                usort($mealPlan, function($a, $b) {
+                    return strtotime($a['time']) - strtotime($b['time']);
+                });
+            }
+        } else {
+             $mealPlan = []; // Kosongkan jika profil belum lengkap
         }
 
         return view('auth.homepage', compact(
@@ -138,7 +196,8 @@ class HomePageController extends Controller
             'tdee',
             'chartData',
             'targetData',
-            'isProfileComplete'
+            'isProfileComplete',
+            'mealPlan'
         ));
     }
 

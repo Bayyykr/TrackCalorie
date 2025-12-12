@@ -37,23 +37,23 @@ class RegisterController extends Controller
             if ($request->expectsJson() || $request->ajax()) {
                 return response()->json([
                     'success' => true,
-                    'message' => 'Registration successful! Please login.',
+                    'message' => 'Pendaftaran berhasil! Silakan masuk.',
                     'redirect' => route('login')
                 ], 201);
             }
 
-            return redirect()->route('login')->with('success', 'Registration successful! Please login.');
+            return redirect()->route('login')->with('success', 'Pendaftaran berhasil! Silakan masuk.');
         } catch (\Exception $e) {
             // Handle any errors
             if ($request->expectsJson() || $request->ajax()) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Registration failed. Please try again.',
-                    'errors' => ['general' => 'Something went wrong during registration.']
+                    'message' => 'Pendaftaran gagal. Silakan coba lagi.',
+                    'errors' => ['general' => 'Terjadi kesalahan saat pendaftaran.']
                 ], 500);
             }
 
-            return back()->withErrors(['general' => 'Registration failed. Please try again.'])
+            return back()->withErrors(['general' => 'Pendaftaran gagal: ' . $e->getMessage()])
                 ->withInput($request->except('password', 'password_confirmation'));
         }
     }
