@@ -16,8 +16,8 @@ class RecommendationSeeder extends Seeder
         $recomendations = [
             [
                 'name' => 'Nasi Goreng Spesial',
-                'description' => 'Indonesian fried rice with special seasoning...',
-                'calorie_range' => '400-500 kcal',
+                'description' => 'Nasi goreng Indonesia dengan bumbu spesial...',
+                'calorie_range' => '400-500 kkal',
                 'image_color' => '#ff6b6b,#ffe66d'
             ],
 

@@ -161,26 +161,26 @@ class ForumSeeder extends Seeder
     private function generatePostTitle()
     {
         $titles = [
-            "How do you prevent overeating without tracking every calorie?",
-            "What are the best high-protein snacks for weight loss?",
-            "How many calories should I eat to maintain my current weight?",
-            "Is intermittent fasting effective for long-term weight management?",
-            "What are some healthy alternatives to sugar cravings?",
-            "How to stay motivated when weight loss plateaus?",
-            "Best exercises for burning calories at home?",
-            "How to calculate calorie needs based on activity level?",
-            "Are calorie-tracking apps accurate?",
-            "What's the role of metabolism in weight management?",
-            "How to deal with emotional eating?",
-            "What are the healthiest cooking oils for calorie counting?",
-            "How much water should I drink for weight loss?",
-            "Can you build muscle while in a calorie deficit?",
-            "What are the best low-calorie, high-volume foods?",
-            "How to track calories when eating out?",
-            "What's the truth about 'calories in, calories out'?",
-            "How do hormones affect weight loss and calorie needs?",
-            "Best practices for meal prepping for calorie control?",
-            "How to break through a weight loss plateau?"
+            "Bagaimana cara mencegah makan berlebihan tanpa melacak setiap kalori?",
+            "Apa camilan tinggi protein terbaik untuk menurunkan berat badan?",
+            "Berapa banyak kalori yang harus saya makan untuk mempertahankan berat badan saya saat ini?",
+            "Apakah puasa intermiten efektif untuk manajemen berat badan jangka panjang?",
+            "Apa saja alternatif sehat untuk keinginan makan gula?",
+            "Bagaimana cara tetap termotivasi ketika penurunan berat badan terhenti?",
+            "Latihan terbaik untuk membakar kalori di rumah?",
+            "Bagaimana cara menghitung kebutuhan kalori berdasarkan tingkat aktivitas?",
+            "Apakah aplikasi pelacak kalori akurat?",
+            "Apa peran metabolisme dalam manajemen berat badan?",
+            "Bagaimana cara mengatasi makan emosional?",
+            "Apa minyak goreng paling sehat untuk menghitung kalori?",
+            "Berapa banyak air yang harus saya minum untuk menurunkan berat badan?",
+            "Bisakah Anda membangun otot saat defisit kalori?",
+            "Apa makanan rendah kalori bervolume tinggi terbaik?",
+            "Bagaimana cara melacak kalori saat makan di luar?",
+            "Apa kebenaran tentang 'kalori masuk, kalori keluar'?",
+            "Bagaimana hormon memengaruhi penurunan berat badan dan kebutuhan kalori?",
+            "Praktik terbaik untuk persiapan makanan guna kontrol kalori?",
+            "Bagaimana cara menembus dataran tinggi penurunan berat badan?"
         ];
 
         return $titles[array_rand($titles)];
@@ -189,11 +189,11 @@ class ForumSeeder extends Seeder
     private function generatePostContent()
     {
         $contents = [
-            "I've been struggling with this issue for a while and would appreciate any advice from the community. I find that tracking every single calorie is becoming obsessive and time-consuming. How do you manage to maintain a healthy diet without micromanaging every bite?",
-            "I'm looking to make some changes to my diet but I'm not sure where to start. I've heard different opinions from various sources and would like to know what has worked for real people in their daily lives.",
-            "As someone new to calorie counting, I'm curious about the best approaches. I want to develop sustainable habits rather than quick fixes. What strategies have helped you maintain your goals long-term?",
-            "I've noticed that my weight fluctuates quite a bit even when I think I'm eating consistently. Are there factors beyond simple calorie counting that I should be considering? How do you account for these variables?",
-            "With so much conflicting information online, it's hard to know what's evidence-based and what's just another fad. I'd love to hear from people who have successfully managed their weight through sustainable calorie management."
+            "Saya telah berjuang dengan masalah ini untuk sementara waktu dan akan sangat menghargai saran dari komunitas. Saya merasa melacak setiap kalori menjadi obsesif dan memakan waktu. Bagaimana Anda mengelola diet sehat tanpa mengatur setiap gigitan secara mikro?",
+            "Saya ingin membuat beberapa perubahan pada diet saya tetapi saya tidak yakin harus mulai dari mana. Saya telah mendengar pendapat berbeda dari berbagai sumber dan ingin tahu apa yang berhasil bagi orang sungguhan dalam kehidupan sehari-hari mereka.",
+            "Sebagai seseorang yang baru dalam penghitungan kalori, saya penasaran dengan pendekatan terbaik. Saya ingin mengembangkan kebiasaan berkelanjutan daripada perbaikan cepat. Strategi apa yang telah membantu Anda mempertahankan tujuan jangka panjang Anda?",
+            "Saya perhatikan berat badan saya cukup berfluktuasi bahkan ketika saya pikir saya makan secara konsisten. Apakah ada faktor di luar penghitungan kalori sederhana yang harus saya pertimbangkan? Bagaimana Anda memperhitungkan variabel-variabel ini?",
+            "Dengan begitu banyak informasi yang bertentangan di online, sulit untuk mengetahui apa yang berbasis bukti dan apa yang hanya iseng belaka. Saya ingin mendengar dari orang-orang yang telah berhasil mengelola berat badan mereka melalui manajemen kalori yang berkelanjutan."
         ];
 
         return $contents[array_rand($contents)];
@@ -202,16 +202,16 @@ class ForumSeeder extends Seeder
     private function generateAnswerContent()
     {
         $answers = [
-            "In my experience, the key is to focus on whole foods and listen to your body's hunger signals. It takes time to develop this intuition, but it's worth it for long-term success.",
-            "I've found that meal prepping on Sundays helps me stay on track throughout the week without having to count every calorie. I prepare balanced meals with protein, healthy carbs, and vegetables.",
-            "Don't forget the importance of hydration! Sometimes we mistake thirst for hunger. Drinking a glass of water before meals has helped me control portions naturally.",
-            "I recommend using the plate method: half vegetables, quarter protein, quarter carbs. This visual approach eliminates the need for precise counting while ensuring balanced nutrition.",
-            "It's helpful to remember that not all calories are equal. 100 calories of vegetables affects your body differently than 100 calories of processed sugar. Focus on food quality alongside quantity.",
-            "I've had success with mindful eating practices. Eating slowly without distractions allows me to recognize when I'm full and avoid overeating.",
-            "Consider working with a registered dietitian if possible. They can help you develop personalized strategies that don't require obsessive tracking.",
-            "I keep a food journal without counting calories. Just writing down what I eat helps me stay accountable and notice patterns in my eating habits.",
-            "Intermittent fasting has worked for me. By limiting my eating window, I naturally consume fewer calories without detailed tracking.",
-            "Remember that consistency is more important than perfection. Having a rough idea of calorie ranges is often sufficient without needing to track every single calorie."
+            "Pengalaman saya, kuncinya adalah fokus pada makanan utuh dan mendengarkan sinyal lapar tubuh Anda. Butuh waktu untuk mengembangkan intuisi ini, tetapi itu sepadan untuk kesuksesan jangka panjang.",
+            "Saya menemukan bahwa persiapan makan pada hari Minggu membantu saya tetap di jalur sepanjang minggu tanpa harus menghitung setiap kalori. Saya menyiapkan makanan seimbang dengan protein, karbohidrat sehat, dan sayuran.",
+            "Jangan lupa pentingnya hidrasi! Terkadang kita salah mengira haus sebagai lapar. Minum segelas air sebelum makan telah membantu saya mengontrol porsi secara alami.",
+            "Saya merekomendasikan menggunakan metode piring: setengah sayuran, seperempat protein, seperempat karbohidrat. Pendekatan visual ini menghilangkan kebutuhan akan penghitungan yang tepat sambil memastikan nutrisi seimbang.",
+            "Sangat membantu untuk mengingat bahwa tidak semua kalori itu sama. 100 kalori sayuran memengaruhi tubuh Anda secara berbeda dari 100 kalori gula olahan. Fokus pada kualitas makanan di samping kuantitas.",
+            "Saya telah sukses dengan praktik makan sadar. Makan perlahan tanpa gangguan memungkinkan saya mengenali kapan saya kenyang dan menghindari makan berlebihan.",
+            "Pertimbangkan untuk bekerja sama dengan ahli diet terdaftar jika memungkinkan. Mereka dapat membantu Anda mengembangkan strategi yang dipersonalisasi yang tidak memerlukan pelacakan obsesif.",
+            "Saya menyimpan jurnal makanan tanpa menghitung kalori. Cukup menuliskan apa yang saya makan membantu saya tetap bertanggung jawab dan memperhatikan pola dalam kebiasaan makan saya.",
+            "Puasa intermiten telah berhasil bagi saya. Dengan membatasi jendela makan saya, saya secara alami mengonsumsi lebih sedikit kalori tanpa pelacakan terperinci.",
+            "Ingatlah bahwa konsistensi lebih penting daripada kesempurnaan. Memiliki gambaran kasar tentang kisaran kalori seringkali cukup tanpa perlu melacak setiap kalori."
         ];
 
         return $answers[array_rand($answers)];

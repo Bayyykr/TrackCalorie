@@ -20,8 +20,10 @@ class HomePageController extends Controller
         $user = Auth::user();
 
         $hour = Carbon::now()->hour;
-        $currentDateTime = Carbon::now()->format('j M Y, H:i');
-        $currentDay = Carbon::now()->format('l');
+        // Set locale ke Indonesia
+        Carbon::setLocale('id');
+        $currentDateTime = Carbon::now()->isoFormat('D MMM Y, HH:mm');
+        $currentDay = Carbon::now()->isoFormat('dddd');
         $user = Auth::user();
 
         // Cek kelengkapan profil
@@ -41,14 +43,14 @@ class HomePageController extends Controller
         $chartData = array_fill(0, 7, 0);
         $targetData = array_fill(0, 7, 0);
 
-        if ($hour >= 5 && $hour < 12) {
-            $greeting = 'GOOD MORNING';
-        } elseif ($hour >= 12 && $hour < 17) {
-            $greeting = 'GOOD AFTERNOON';
-        } elseif ($hour >= 17 && $hour < 21) {
-            $greeting = 'GOOD EVENING';
+        if ($hour >= 5 && $hour < 11) {
+            $greeting = 'SELAMAT PAGI';
+        } elseif ($hour >= 11 && $hour < 15) {
+            $greeting = 'SELAMAT SIANG';
+        } elseif ($hour >= 15 && $hour < 18) {
+            $greeting = 'SELAMAT SORE';
         } else {
-            $greeting = 'GOOD NIGHT';
+            $greeting = 'SELAMAT MALAM';
         }
 
         if ($isProfileComplete) {
